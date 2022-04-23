@@ -1,5 +1,5 @@
 import * as path from 'https://deno.land/std@0.136.0/path/mod.ts';
-import { renderToString } from 'https://esm.sh/react-dom/server';
+import { render } from 'https://cdn.skypack.dev/preact-render-to-string';
 import {
   InvalidModuleExported,
   TemplateNotFound,
@@ -21,8 +21,9 @@ async function renderJSXTemplate(
     }
 
     const jsxComponent = jsxFile.default;
-    return renderToString(jsxComponent(params));
+    return render(jsxComponent(params));
   } catch (error) {
+    console.error('Error rendering jsx template: ', error)
     if (error instanceof TypeError) {
       throw new TemplateNotFound(fileNameWithExtension);
     }
