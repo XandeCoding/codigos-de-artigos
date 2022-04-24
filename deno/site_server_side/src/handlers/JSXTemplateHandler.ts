@@ -1,6 +1,6 @@
 import renderJSXTemplate from "./utils/renderJSXTemplate.ts";
 
-function jsxTemplateHandler(
+function JSXTemplateHandler(
   templateName: string,
   params?: Record<string, unknown>,
 ): () => Promise<Response> {
@@ -16,4 +16,4 @@ function jsxTemplateHandler(
   };
 }
 
-export default jsxTemplateHandler;
+export default JSXTemplateHandler;

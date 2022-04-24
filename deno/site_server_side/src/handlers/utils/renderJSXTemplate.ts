@@ -1,5 +1,5 @@
-import * as path from "https://deno.land/std@0.136.0/path/mod.ts";
-import { render } from "https://cdn.skypack.dev/preact-render-to-string";
+import { join } from "https://deno.land/std@0.136.0/path/mod.ts";
+import { render } from "https://cdn.skypack.dev/pin/preact-render-to-string@v5.1.21-ATsqxwkCuj8sDBnzlZ6a/mode=imports/optimized/preact-render-to-string.js";
 import {
   InvalidModuleExported,
   TemplateNotFound,
@@ -13,7 +13,7 @@ async function renderJSXTemplate(
 
   try {
     const jsxFile = await import(
-      path.join("../../templates/", fileNameWithExtension)
+      join("../../templates/", fileNameWithExtension)
     );
 
     if (!jsxFile?.default) {
@@ -23,7 +23,7 @@ async function renderJSXTemplate(
     const jsxComponent = jsxFile.default;
     return render(jsxComponent(params));
   } catch (error) {
-    console.error("Error rendering jsx template: ", error);
+    console.error("Error rendering JSX template: ", error);
     if (error instanceof TypeError) {
       throw new TemplateNotFound(fileNameWithExtension);
     }

@@ -1,9 +1,10 @@
 import HTTPServer from "./core/HTTPServer.ts";
-import jsxTemplateHandler from "./handlers/jsxTemplateHandler.ts";
+import HTMLTemplateHandler from "./handlers/HTMLTemplateHandler.ts";
+import JSXTemplateHandler from "./handlers/JSXTemplateHandler.ts";
 
 const HTTPServerInstance = new HTTPServer({
-  "/": jsxTemplateHandler("index", { phrase: "Hello World" }),
-  "/teste": jsxTemplateHandler("index", { phrase: "Testando" }),
+  "/": JSXTemplateHandler("index", { phrase: "Hello World" }),
+  "/teste": HTMLTemplateHandler("teste"),
 });
 
 HTTPServerInstance.serve();
