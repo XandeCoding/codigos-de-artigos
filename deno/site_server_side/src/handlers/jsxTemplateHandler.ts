@@ -1,4 +1,4 @@
-import renderJSXTemplate from './utils/renderJSXTemplate.ts';
+import renderJSXTemplate from "./utils/renderJSXTemplate.ts";
 
 function jsxTemplateHandler(
   templateName: string,
@@ -9,7 +9,7 @@ function jsxTemplateHandler(
       await renderJSXTemplate(templateName, params),
       {
         headers: {
-          'content-type': 'text/html; charset=utf-8',
+          "content-type": "text/html; charset=utf-8",
         },
       },
     );
