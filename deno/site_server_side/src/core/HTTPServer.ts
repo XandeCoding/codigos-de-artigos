@@ -1,6 +1,7 @@
 import { serve } from "https://deno.land/std@0.135.0/http/server.ts";
 
-type Iroute = { [k: string]: () => Promise<Response> };
+// type Iroute = { [k: string]: () => Promise<Response> };
+type Iroute = Record<string, (() => Promise<Response>)>;
 
 class HTTPServer {
   private routes: Iroute;
@@ -11,7 +12,7 @@ class HTTPServer {
     this.port = port ?? 7000;
   }
 
-  private async initServerHandler(request: Request): Promise<Response> {
+  private async serverHandler(request: Request): Promise<Response> {
     if (request.method !== "GET") {
       return new Response("Unsuported method received!", { status: 405 });
     }
@@ -29,7 +30,7 @@ class HTTPServer {
 
   public serve() {
     console.info(`>> Serving in port ${this.port}`);
-    serve(this.initServerHandler.bind({ routes: this.routes }), {
+    serve(this.serverHandler.bind({ routes: this.routes }), {
       port: this.port,
     });
   }
