@@ -1,4 +1,4 @@
-# Criando uma API de páginas estáticas básica com Deno :t-rex:
+# Criando uma API de páginas estáticas básica com Deno 🦕
 
 Bom dia! meus caros compatriotas mineradores das profundezas do StackOverflow, esses últimos dias me veio uma vontade de como bom goiano dar uma sofrida e ao invés de botar Marilía Mendonça preferi mexer com o famoso (ainda é?) Deno que para minha grata supresa não foi sofrimento nenhum! :laughing:
 
