@@ -1,7 +1,6 @@
-
 # Criando uma API de páginas estáticas básica com Deno :t-rex:
 
-Bom dia! meus caros compatriotas mineradores das profundezas do StackOverflow, esses últimos dias meu uma vontade de como bom goiano dar uma sofrida e ao invés de botar Marilía Mendonça preferi mexer com o famoso (ainda é?) Deno que para minha grata supresa não foi sofrimento nenhum! :laughing:
+Bom dia! meus caros compatriotas mineradores das profundezas do StackOverflow, esses últimos dias me veio uma vontade de como bom goiano dar uma sofrida e ao invés de botar Marilía Mendonça preferi mexer com o famoso (ainda é?) Deno que para minha grata supresa não foi sofrimento nenhum! :laughing:
 
 Porque minha surpresa? Primeiro o ecossistema é bem simplista e receptivo para novos usuários a toolkit que vem instalada trazem ferramentas como `deno fmt` que formata o código de forma automática e um `deno lint` que achei sensacional fora que consegui configurar o debug no vscode tranquilamente, outro ponto que gostei bastante foi a standard library ser bem completa e vir com uma tipagem bem rica (sim sou um type junky).
 
@@ -12,13 +11,13 @@ Claro que há outros pontos que são os principais diferencias para o seu irmão
 Bem como objeto de estudo fiz uma API bem simples para testar algumas coisas como a integração do TypeScript com arquivos JSX que é algo que eu li na documentação do Deno e curti bastante, então tive a ideia de fazer algo só para servir páginas estáticas e ponto:thumbsup:, único diferencial aqui é que usei o máximo possível da standard library.
 
 
-_**Disclaimer:**_ Olha a ideia não é ser perfeito inclusive se tiverem erros por favor me avise :rolling_on_the_floor_laughing: mas tentei deixar o escopo bem fechado porque se não nunca iria terminar fiz o que tinha proposto para mim mesmo e fiquei feliz com o resultado, tinha como fazer mais algumas coisas legais mas é aquilo quem não faz deploy de bug em produção não se diverte!. (Sim é só uma piada, caso esteja se perguntando)
+_**Disclaimer:**_ Olha a ideia não é ser perfeito inclusive se tiverem erros por favor me avise :rolling_on_the_floor_laughing: mas tentei deixar o escopo bem fechado porque se não nunca iria terminar o que tinha proposto para mim mesmo e fiquei feliz com o resultado, tinha como fazer mais algumas coisas legais mas é aquilo quem não faz deploy de bug em produção não se diverte!. (Sim é só uma piada, caso esteja se perguntando)
 
 ### E a aventura se inicia
 
-De início foi bem simples de instalar inclusive foi só um comando que baixava já um script de instalação e já o executava e pronto já estava com o deno instalado fiz alguns testes e depois configurei para usar o [asdf](https://asdf-vm.com/) e pronto com tudo configurado comecei a programar.
+De início foi bem simples de instalar inclusive foi só um comando que baixava já um script de instalação e já o executava e pronto já estava com o deno instalado fiz alguns testes e depois configurei para usar o [asdf](https://asdf-vm.com/) o que não é necessário mas eu gosto da ferramenta pela possibilidade de versionar a runtime e pronto com tudo configurado comecei a programar.
 
-E começar a botar a mão na massa foi algo bem simples, por assim dizer, não é necessário criar dar um init para rodar basta dar um `deno run` e se tiver algo que ele precise instalar ele baixa na hora da execução e adiciona as informações da versão em um _package-lock.json_ algo bem semelhante ao que acontece no Node.js, mas de forma mais minimalista, por assim dizer já que não é necessário ter um _package.json_ para interagirmos e configurarmos, algo que achei ruim disso é que para o meu caso tive que criar um _makefile_ para agilizar um pouco a execução vamos falar disso mais à frente.
+E começar a botar a mão na massa foi algo bem simples, por assim dizer, não é necessário dar um init para rodar basta dar um `deno run` e se tiver algo que ele precise instalar ele baixa na hora da execução e adiciona as informações da versão em um _package-lock.json_ algo bem semelhante ao que acontece no Node.js, mas de forma mais minimalista, por assim dizer já que não é necessário ter um _package.json_ para interagirmos e configurarmos, algo que achei ruim disso é que para o meu caso tive que criar um _makefile_ para agilizar um pouco a execução vamos falar disso mais à frente.
 
 Olha aqui eu vou aos pouquinhos e vou explicar alguns detalhes de TypeScript para quem não está muito familiarizado não se perder.
 
@@ -39,7 +38,7 @@ Agora vamos fazer o core da nossa aplicação que é o que vai receber as chamad
 
 ![Classe http server](doc_images/http-server.png)
 
-Bem vou me aprofundar mais na função _initServerHandler_ nela eu filtro os métodos como vou somente servir páginas estáticas quero receber somente chamadas do tipo 'GET', depois eu crio uma url isso é legal para poder pegar o pathname que o caminho, por exemplo, se eu colocar no meu navegador o endereço _https://localhost:7000/teste_ o pathname é _/teste_ isso é bem trivial, mas para nosso caso serve muito bem.
+Bem vou me aprofundar mais na função _initServerHandler_ nela eu filtro os métodos como vou somente servir páginas estáticas quero receber somente chamadas do tipo 'GET', depois eu crio uma url isso é legal para poder pegar o pathname que o caminho, por exemplo, se eu colocar no meu navegador o endereço _https://localhost:7000/teste_ o pathname é _/teste_ isso é uma abordagem bem simplista, mas para nosso caso serve muito bem.
 
 Lembra da nossa declaração _IRoute_ aqui que começa a brincadeira vamos acessar de forma direta a rota e já vamos executar a função que está salva nela, por exemplo, em um objeto como o abaixo:
 
@@ -57,11 +56,11 @@ Ao entrar na chave '/' ele me traz a função que mostra um _Hello World_ bem bo
 
 Agora mais abaixo temos a função **serve** nela que a brincadeira já começa a rolar, ela inicia a função _initServerHandler_ e faz um _bind_? O que seria esse tal de bind?
 
-Bem para entendermos isso precisamos pensar em como essa função vai ser executada, pois, essa função ela vai ser entregue para o server, mas não irá ser executada ali, mas quando ele receber uma requisição e isso ocorre dentro de outro escopo e não na função, e, nessa altura como a função vai achar a instância se ele é somente uma função e nem sequer foi executada dentro da mesma? Para isso usamos o bind ele insere a propriedade **routes** que foi colocada na classe no momento da criação da instanciação do _**HTTPServer**_ que criamos e a deixa acessível dentro dela quase como se ela fosse um "parâmetro", mas é acessada como uma propriedade da função, por isso quando damos um _this.routes_ conseguimos acessar as rotas, ele acessa a propriedade routes da função e não da classe **HTTPServer**.
+Bem para entendermos isso precisamos pensar em como essa função vai ser executada, pois, essa função ela vai ser entregue para o server, mas não irá ser executada ali, mas quando ele receber uma requisição e isso ocorre dentro de outro escopo e não na função **_serve_**, e nessa altura como a função vai achar a instância de HTTPServer com as rotas se ele é somente uma função que foi passada para outro escopo? Para isso usamos o bind ele insere a propriedade **routes** que foi colocada na classe no momento da criação da instanciação do _**HTTPServer**_ que criamos e a deixa acessível dentro dela quase como se ela fosse um "parâmetro", mas é acessada como uma propriedade da função, por isso quando damos um _this.routes_ conseguimos acessar as rotas, ele acessa a propriedade routes da função e não da classe **HTTPServer**.
 
 ### E a aventura estava ficando sem fim
 
-Essa brincadeira estava até bem divertida, mas eu já tinha tido ido o suficiente adentro da toca do coelho e estava satisfeito (Mundo de Alice vibes :leaves:). Então fiz uma função para renderizar HTML puro e arquivos JSX, bem arquivos HTML não tem muito segredo então vamos dar uma olhada em como fazer isso.
+Essa brincadeira estava até bem divertida, mas eu já tinha tido ido o suficiente adentro da toca do coelho e estava satisfeito (Mundo de Alice vibes :leaves:). Então fiz uma função para renderizar HTML puro e arquivos JSX, bem arquivos HTML não tem muito segredo então vamos dar uma olhada em como fazer isso usando JSX.
 
 Algo que não sabia era que Typescript estava dando suporte nativo para JSX isso significa que podemos com algumas configurações importar estes arquivos e usá-los para renderizar páginas para nossos clientes.
 
@@ -95,7 +94,7 @@ Não vou me apegar muito os detalhes de import ou da tipagem dos tipos, pois iss
 
 ![Inicialização das rotas](doc_images/main.png)
 
-Se você tem uma memória boa (ou somente rolou a página para cima) vai lembrar da interface que o nosso `HTTPServer` recebe, basta mandar a rota e o _handler_ que é a função que executa a ação ao acessamos aquele endpoint e depois usarmos a função _serve_.
+Se você tem uma memória boa (ou somente rolou a página para cima 🤷) vai lembrar da interface que o nosso `HTTPServer` recebe, basta mandar a rota e o _handler_ que é a função que executa a ação ao acessamos aquele endpoint e depois usarmos a função _serve_.
 
 #### Executando
 
@@ -109,4 +108,4 @@ Segue abaixo o código para executar o brinquedo.
 
 #### Depois de 20 mil léguas submarinas
 
-Chegamos ao final espero que não tenha sido uma viagem para o mundo da Chatolândia a leitura desse texto, mas sim uma olhada pelo retrovisor após o hype do Deno passar do ecossistema e de algumas diferenças do seu irmão mais velho Node.js.
+Chegamos ao final espero que não tenha sido uma viagem para o mundo da Chatolândia a leitura desse texto, mas sim uma olhada pelo retrovisor após o hype do Deno passar de seu ecossistema e de algumas diferenças do seu irmão mais velho Node.js. 👋👋👋
