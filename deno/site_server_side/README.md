@@ -32,7 +32,7 @@ Abaixo temos um tipo que explicita qual vai ser o "formato" de um objeto de rota
 
 Criei isso para facilitar para quem for criar uma rota no futuro não ter que adivinhar ou ter que dar uma de detetive para descobrir os dados necessários para uma rota funcional ser criada.
 
-Basicamente esse _**k**_ se refere a chave do objeto e que deve ser string, e essa mesma chave vai receber como valor uma Promise que retorna uma instância de response. Tabom ficou meio confuso mas basicamente eu vou ter um objeto JSON que só recebe chaves em texto como letras e frases e elas vão ter como valor uma função assincrona que retorna a resposta para o cliente, isso vai ficar mais claro mais a frente.
+Basicamente esse _**k**_ se refere a chave do objeto e que deve ser string, e essa mesma chave vai receber como valor uma Promise que retorna uma instância de response. Tabom ficou meio confuso mas basicamente eu vou ter um objeto JSON que só recebe chaves em texto como letras e frases e elas vão ter como valor uma função assíncrona que retorna a resposta para o cliente, isso vai ficar mais claro mais a frente.
 
 Agora vamos fazer o core da nossa aplicação que é o que vai receber as chamadas e encaminhar para as rotas certas.
 
@@ -52,4 +52,46 @@ Ao entrar na chave '/' ele me traz a função que mostra um _Hello World_ bem bo
 
 Agora mais abaixo temos a função **serve** nela que a brincadeira já começa a rolar, ela inicia a função _initServerHandler_ e faz um _bind_? o que seria esse tal de bind?
 
-Bem para entendermos isso precisamos pensar em como essa função vai ser executada, pois essa função ela vai ser entregue para o server mas não vai ser executada ali mas quando ele receber uma requisição e isso ocorre dentro de outro escopo e não dentro da função, e aí como a função vai achar a instância se ele é somente uma função e nem sequer foi executada dentro da mesma? Para isso usamos o bind ele insere a propriedade **routes** que foi colocada na classe no momento da criação da instanciação do _**HTTPServer**_ que criamos e a deixa acessível dentro dela quase como se ela fosse um "parametro" mas é acessada como uma propriedade da função, por isso quando damos um _this.routes_ conseguimos acessar as rotas ele acessa a propriedade routes da função e não da classe **HTTPServer**.
+Bem para entendermos isso precisamos pensar em como essa função vai ser executada, pois essa função ela vai ser entregue para o server mas não vai ser executada ali mas quando ele receber uma requisição e isso ocorre dentro de outro escopo e não dentro da função, e aí como a função vai achar a instância se ele é somente uma função e nem sequer foi executada dentro da mesma? Para isso usamos o bind ele insere a propriedade **routes** que foi colocada na classe no momento da criação da instanciação do _**HTTPServer**_ que criamos e a deixa acessível dentro dela quase como se ela fosse um "parametro" mas é acessada como uma propriedade da função, por isso quando damos um _this.routes_ conseguimos acessar as rotas, ele acessa a propriedade routes da função e não da classe **HTTPServer**.
+
+### E a aventura estava ficando sem fim
+
+Essa brincadeira estava até bem divertida mas eu já tinha tido ido o suficiente adentro da toca do coelho e estava satisfeito (Mundo de Alice vibes :leaves:). Então fiz uma função para renderizar HTML puro e arquivos JSX, bem arquivos HTML não tem muito segredo então vamos dar uma olhada em como fazer isso.
+
+Algo que não sabia era que Typescript estava dando suporte nativo para JSX isso significa que podemos com algumas configurações importar estes arquivos e usá-los para renderizar páginas para nossos clientes.
+
+Para isso precisamos fazer uma pequena configuração no nosso arquivo `tsconfig.json` o meu ficou dessa forma.
+
+![Arquivo tsconfig.json](doc_images/ts-config.png)
+
+- O [`jsx`](https://www.typescriptlang.org/tsconfig#jsx) se refere a como o arquivo JSX vai ser construído ao ser importado, essa config `react-jsx` permite que usemos outra runtime, nesse caso estamos usando o preact como vamos ver abaixo
+
+- [`jsxImportSource`](https://www.typescriptlang.org/tsconfig#jsxImportSource) Essa propriedade em conjunto com a opção acima define qual vai ser o módulo que vai ser usado para importar o JSX e construir o componente ao ser exportado.
+
+Agora temos a função que importa o arquivo JSX de forma genérica (não queremos ter que criar uma função para cada JSX que criemos não é?)
+
+![Função que faz a renderização do componente JSX](doc_images/renderJSXTemplate.png)
+
+Não vou me apegar muito os detalhes de import ou da tipagem dos tipos pois isso não é a mágica (e já conversamos sobre esse _Record_ mais acima também). O que ela faz é basicamente importar o arquivo e usar uma função de render do preact e aqui está a mágica.
+ - Primeiro importamos a lib `preact-render-to-string` do cdn skypack ele tem bastante libs já configuradas para rodar no Deno, muita coisa que roda no Node funciona no Deno mas algumas precisam de alteração principalmente as que fazem operações no disco, então já ter algo configurado facilita bastante.
+
+ - Mas dentro da função nós importamos o componente de forma assincrona (legal né? JavaScript às vezes nos proporciona essas boas surpresas :the_horns:), quando esse arquivo é importado a função já passa por uma transformação usando o _Preact_ que configuramos mais cedo e se torna um arquivo utilizável dentro do nosso código, não se esqueça que TypeScript transforma tudo em JavaScript antes de ser executado o JSX só passa por um processo um pouco diferente.
+
+
+![Componente JSX](doc_images/jsx.png)
+
+ - Este arquivo acima é um componente que criei bem simples somente para demonstrar, veja que estou exportando ele como default isso ajuda na hora de importar na função acima pois já sei bem onde acessar o componente no módulo.
+
+![JSX Template Handler](doc_images/JSXTemplateHandler.png)
+
+ - Com essa função de renderização podemos já usá-la no nosso handler e nele o arquivo é renderizado e adicionado um headers e uma response válida é retornada (sim algumas coisas são bem chatas quando não se usa um framework :cry:)
+
+ - E para utilizarmos este handler basta configurarmos a nossa rota, lembra do nosso HTTPServer vamos brincar com ele agora, mas não tem muita emoção (felizmente).
+
+ ![Inicialização das rotas](doc_images/main.png)
+
+Se você tem uma memória boa (ou somente rolou a página para cima) vai lembrar da interface que o nosso `HTTPServer` recebe, basta mandar a rota e o _handler_ que é a função que executa a ação ao acessamos aquele endpoint e depois usarmos a função _serve_.
+
+#### Depois de 20 mil léguas submarinas
+
+Chegamos ao final espero que não tenha sido uma viagem para o mundo da Chatolândia a leitura desse texto, mas sim uma olhada pelo retrovisor após o hype do Deno passar do ecossistema e de algumas diferenças do seu irmão mais velho Node.js.
