@@ -1,0 +1,20 @@
+{
+  "name": "pokedex",
+  "version": "1.0.0",
+  "source": "script.ts",
+  "description": "",
+  "scripts": {
+    "serve": "parcel serve index.html",
+    "watch": "parcel watch",
+    "build": "parcel build"
+  },
+  "targets": {
+    "main": false
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@typescript/lib-dom": "npm:@types/web@^0.0.69",
+    "parcel": "^2.6.2"
+  }
+}
