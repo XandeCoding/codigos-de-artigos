@@ -1,24 +1,7 @@
-const https = require('https');
+import https from 'https'
+import { BASE_URL, FetchType, Pokemon } from './commons'
 
-const BASE_URL = "https://pokeapi.co/api/v2";
-
-enum FetchType {
-    item = 'item',
-    pokemon = 'pokemon',
-}
-
-interface Pokemon {
-    id: number;
-    name: string;
-}
-
-interface Item {
-    name: string;
-    cost: number;
-    fling_power: number;
-}
-
-const genericFetch = <T>(url: string): Promise<T> => {
+const genericFetchTyped = <T>(url: string): Promise<T> => {
     return new Promise((resolve, reject) => {
         type httpEvents = 'response' | 'data' | 'end'
         type httpResponse = {
@@ -52,28 +35,14 @@ const genericFetch = <T>(url: string): Promise<T> => {
                 }
             })
 
-        }).on('error', (error: any) => {
+        }).on('error', (error) => {
             console.error('Error downloading data')
             return reject(error)
         })
     })
 }
 
-const downloadPokemon = async (id: number): Promise<Pokemon> => {
-    const response = await genericFetch<Pokemon>(
-        `${ BASE_URL }/${ FetchType.pokemon }/${ id }`
-    )
-
-    return response
-}
-
-const downloadItem = async (id: number): Promise<Item> => {
-    const response = await genericFetch<Item>(
-        `${ BASE_URL }/${ FetchType.item }/${ id }`
-    )
-
-    return response
-}
-
-downloadPokemon(1).then((response) => console.log(`Pokemon: ${ response.name }`))
-downloadItem(1).then((response) => console.log(`Item: ${ response.name }`))
+genericFetchTyped<Pokemon>(
+    `${ BASE_URL }/${ FetchType.pokemon }/3`
+)
+.then((response) => console.log(`Pokemon: ${ response.name }`))

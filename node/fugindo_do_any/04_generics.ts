@@ -1,22 +1,6 @@
+import { Pokemon, BASE_URL, FetchType, Item } from "./commons";
+
 const https = require('node:https');
-
-const BASE_URL = "https://pokeapi.co/api/v2";
-
-enum FetchType {
-    item = "item",
-    pokemon = "pokemon",
-}
-
-interface Pokemon {
-    id: number;
-    name: string;
-}
-
-interface Item {
-    name: string;
-    cost: number;
-    fling_power: number;
-}
 
 const genericFetch = <T>(url: string): Promise<T> => {
     return new Promise((resolve, reject) => {
