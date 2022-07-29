@@ -6,3 +6,5 @@ run_04:
 	npx ts-node 04_generics.ts
 run_05:
 	npx ts-node 05_typing_legacy_functions.ts
+run_06:
+	npx ts-node 06_last_tips.ts
