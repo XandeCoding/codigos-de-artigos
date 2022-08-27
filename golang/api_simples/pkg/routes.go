@@ -3,6 +3,7 @@ package main
 import (
 	"main/pkg/database"
 	"main/pkg/entities"
+	"strings"
 
 	"github.com/gofiber/fiber/v2"
 )
@@ -10,8 +11,13 @@ import (
 func AddRoutes(app *fiber.App) *fiber.App {
 	redisDatabase := database.CreateClient()
 
-	app.Get("/book", func(c *fiber.Ctx) error {
-		book := database.GetBook(redisDatabase, "book:teste")
+	app.Get("/book/:name", func(c *fiber.Ctx) error {
+		book_name := "book:" + c.Params("name")
+		book := database.GetBook(redisDatabase, book_name)
+
+		if book == "" {
+			return c.SendStatus(404)
+		}
 		return c.SendString(book)
 	})
 
@@ -23,7 +29,10 @@ func AddRoutes(app *fiber.App) *fiber.App {
 			return err
 		}
 
-		key := "book:" + book.Name
+		book_name_normalized := strings.ReplaceAll(
+			strings.ToLower(book.Name), " ", "_",
+		)
+		key := "book:" + book_name_normalized
 		database.AddBook(redisDatabase, key, book)
 		return c.Send(c.Body())
 	})

@@ -20,19 +20,19 @@ func CreateClient() *redis.Client {
 
 func GetBook(client *redis.Client, name string) string {
 	var ctx = context.Background()
-	book, err := client.Get(ctx, name).Result()
-
-	if err != nil {
-		panic(err)
-	}
+	book, _ := client.Get(ctx, name).Result()
 
 	return book
 }
 
 func AddBook(client *redis.Client, key string, value *entities.Book) {
 	var ctx = context.Background()
-	bookToSave, _ := json.Marshal(value)
-	err := client.Set(ctx, key, bookToSave, 0).Err()
+	bookToSave, err := json.Marshal(value)
+
+	if err != nil {
+		panic(err)
+	}
+	err = client.Set(ctx, key, bookToSave, 0).Err()
 
 	if err != nil {
 		panic(err)
