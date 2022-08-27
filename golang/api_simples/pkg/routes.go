@@ -16,25 +16,34 @@ func AddRoutes(app *fiber.App) *fiber.App {
 		book := database.GetBook(redisDatabase, book_name)
 
 		if book == "" {
-			return c.SendStatus(404)
+			message := map[string]string{"message": "This book don't exists"}
+			return c.Status(404).JSON(message)
 		}
 		return c.SendString(book)
 	})
 
-	app.Post("/book", func(c *fiber.Ctx) error {
+	app.Put("/book", func(c *fiber.Ctx) error {
 		book := new(entities.Book)
 		err := c.BodyParser(book)
 
 		if err != nil {
-			return err
+			message := map[string]string{"message": "Invalid entry data"}
+			return c.Status(400).JSON(message)
 		}
 
 		book_name_normalized := strings.ReplaceAll(
 			strings.ToLower(book.Name), " ", "_",
 		)
 		key := "book:" + book_name_normalized
-		database.AddBook(redisDatabase, key, book)
+		database.SetBook(redisDatabase, key, book)
 		return c.Send(c.Body())
+	})
+
+	app.Delete("/book/:name", func(c *fiber.Ctx) error {
+		book_name := "book:" + c.Params("name")
+		database.DeleteBook(redisDatabase, book_name)
+
+		return c.SendStatus(200)
 	})
 
 	return app
