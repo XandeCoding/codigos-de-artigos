@@ -1,28 +1,29 @@
-package main
+package handlers
 
 import (
-	"main/pkg/database"
-	"main/pkg/entities"
 	"strings"
+
+	"github.com/XandeCoding/codigos-de-artigos/golang/api_simples/pkg/entities"
+	"github.com/XandeCoding/codigos-de-artigos/golang/api_simples/pkg/repositories"
 
 	"github.com/gofiber/fiber/v2"
 )
 
-func AddRoutes(app *fiber.App) *fiber.App {
-	redisDatabase := database.CreateClient()
-
-	app.Get("/book/:name", func(c *fiber.Ctx) error {
+func GetBookHandler(bookRepository *repositories.Repository) fiber.Handler {
+	return func(c *fiber.Ctx) error {
 		book_name := "book:" + c.Params("name")
-		book := database.GetBook(redisDatabase, book_name)
+		book := bookRepository.GetBook(book_name)
 
 		if book == "" {
 			message := map[string]string{"message": "This book don't exists"}
 			return c.Status(404).JSON(message)
 		}
 		return c.SendString(book)
-	})
+	}
+}
 
-	app.Put("/book", func(c *fiber.Ctx) error {
+func SetBookHandler(bookRepository *repositories.Repository) fiber.Handler {
+	return func(c *fiber.Ctx) error {
 		book := new(entities.Book)
 		err := c.BodyParser(book)
 
@@ -35,16 +36,16 @@ func AddRoutes(app *fiber.App) *fiber.App {
 			strings.ToLower(book.Name), " ", "_",
 		)
 		key := "book:" + book_name_normalized
-		database.SetBook(redisDatabase, key, book)
+		bookRepository.SetBook(key, book)
 		return c.Send(c.Body())
-	})
+	}
+}
 
-	app.Delete("/book/:name", func(c *fiber.Ctx) error {
+func DeleteBookHandler(bookRepository *repositories.Repository) fiber.Handler {
+	return func(c *fiber.Ctx) error {
 		book_name := "book:" + c.Params("name")
-		database.DeleteBook(redisDatabase, book_name)
+		bookRepository.DeleteBook(book_name)
 
 		return c.SendStatus(200)
-	})
-
-	return app
+	}
 }
