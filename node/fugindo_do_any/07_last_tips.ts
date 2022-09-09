@@ -1,5 +1,5 @@
 const return_unknown = (): unknown => {
-    return 'Unknow aceita qualquer tipo exceto pelo `any`'
+    return 'Unknown aceita qualquer tipo exceto pelo `any`'
 }
 
 const return_never = (): never => {

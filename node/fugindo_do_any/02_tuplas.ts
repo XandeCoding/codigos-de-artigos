@@ -14,7 +14,7 @@ printPokemonStrength(pikachuStrength);
 
 // Forma literal
 type pokemonScore = [string, ...boolean[]];
-// type pokemonScore = [ string, ...Array<number> ]
+// type pokemonScore = [ string, ...Array<boolean> ]
 
 const printPokemonScore = (pokemon: pokemonScore) => {
   console.log("\nPokemon: ", pokemon.shift());

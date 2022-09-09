@@ -3,6 +3,11 @@ interface PokemonInfo {
   weigth: number;
 }
 
+// enum PokemonName {
+//   pikachu = 'pikachu',
+//   caterpie = 'caterpie',
+//   mankey = 'mankey'
+// }
 type PokemonName = "pikachu" | "caterpie" | "mankey"
 
 const pokemon: Record<PokemonName, PokemonInfo> = {

@@ -2,12 +2,12 @@ import https from 'https'
 import { BASE_URL, FetchType, Pokemon } from './commons'
 
 type EventsHTTP = 'response' | 'data' | 'end' | 'error'
-type ResponseHTTP = {
-    on: (key: EventsHTTP, callback: (error: Error) => void) => void
+
+type ResponseWrapper <Events, CallbackArg> = {
+    on: (key: Events, callback: (arg: CallbackArg) => void) => void
 }
-type ResponseEvent = {
-    on: (key: EventsHTTP, callback: (buffer?: Buffer) => void) => void
-}
+type ResponseHTTP = ResponseWrapper<EventsHTTP, Error>
+type ResponseEvent = ResponseWrapper<EventsHTTP, Buffer | undefined>
 
 
 const genericFetchTyped = <T>(url: string): Promise<T> => {
