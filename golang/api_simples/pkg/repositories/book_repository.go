@@ -1,9 +1,7 @@
 package repositories
 
 import (
-	"context"
 	"encoding/json"
-	"time"
 
 	"github.com/XandeCoding/codigos-de-artigos/golang/api_simples/pkg/configurations"
 	"github.com/XandeCoding/codigos-de-artigos/golang/api_simples/pkg/entities"
@@ -22,7 +20,7 @@ func NewRepository() *Repository {
 }
 
 func (rdb Repository) GetBook(name string) string {
-	ctx, cancel := context.WithTimeout(context.Background(), 1500*time.Millisecond)
+	ctx, cancel := getContext()
 	defer cancel()
 	book, _ := rdb.database.Get(ctx, name).Result()
 
@@ -30,7 +28,7 @@ func (rdb Repository) GetBook(name string) string {
 }
 
 func (rdb Repository) SetBook(key string, value *entities.Book) {
-	ctx, cancel := context.WithTimeout(context.Background(), 1500*time.Millisecond)
+	ctx, cancel := getContext()
 	defer cancel()
 	bookToSave, err := json.Marshal(value)
 
@@ -45,7 +43,7 @@ func (rdb Repository) SetBook(key string, value *entities.Book) {
 }
 
 func (rdb Repository) DeleteBook(key string) {
-	ctx, cancel := context.WithTimeout(context.Background(), 1500*time.Millisecond)
+	ctx, cancel := getContext()
 	defer cancel()
 
 	err := rdb.database.Del(ctx, key).Err()
