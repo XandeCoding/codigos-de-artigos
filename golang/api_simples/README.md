@@ -1,3 +1,5 @@
+# Construindo uma API organizadinha em Golang usando Fiber
+
 Nos últimos tempo brincando com go e apanhando bastante com o sistema de packages dele (aqui cabe um mea-culpa porque é um esquema bem legal se bem utilizado) me peguei pensando bastante em qual seria a melhor forma de organizar a API que estava fazendo de estudo.
 
 Acabei pegando bastantes exemplos inclusive do repositório do [Fiber](https://github.com/gofiber/recipes) e cheguei em um formato que acredito que seja bem legível e fácil de adicionar novas funcionalidades.
