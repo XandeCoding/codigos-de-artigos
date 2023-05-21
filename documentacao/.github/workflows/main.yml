@@ -1,9 +1,4 @@
 name: build
-on:
-  push:
-    branches:
-      - feature/documentacao
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
