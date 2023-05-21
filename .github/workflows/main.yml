@@ -17,5 +17,5 @@ jobs:
           cache: 'poetry'
       - run: poetry install
         working-directory: ./documentacao
-      - run: poetry run mkdocs gh-deploy
+      - run: poetry run mkdocs gh-deploy --force --clean --verbose
         working-directory: ./documentacao
