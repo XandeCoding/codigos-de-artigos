@@ -15,6 +15,7 @@ jobs:
         with:
           python-version: 3.11
           cache: 'poetry'
-      - run: cd /documentacao
       - run: poetry install
+        working-directory: ./documentacao
       - run: poetry run mkdocs gh-deploy
+        working-directory: ./documentacao
