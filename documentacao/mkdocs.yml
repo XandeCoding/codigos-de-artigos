@@ -1,0 +1,6 @@
+site_name: Meus textinhos
+theme:
+  name: material
+
+hooks:
+  - 'hooks/load_files.py'
