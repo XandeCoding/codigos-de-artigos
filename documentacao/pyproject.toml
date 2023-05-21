@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "documentacao"
+version = "0.1.0"
+description = ""
+authors = ["XandeCoding <af.santos1998@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+mkdocs = "^1.4.3"
+mkdocs-material = "^9.1.14"
+mkdocs-macros-plugin = "^0.7.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

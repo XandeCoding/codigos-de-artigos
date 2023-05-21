@@ -1,0 +1,18 @@
+site_name: Meus Textos
+theme:
+  name: material
+
+plugins:
+  - search
+  - macros:
+      module_name: 'code/macros'
+
+markdown_extensions:
+  - attr_list
+  - md_in_html
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+
+hooks:
+  - 'code/hook_load_files.py'
