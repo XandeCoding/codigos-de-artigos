@@ -8,7 +8,7 @@ Acabei pegando bastantes exemplos inclusive do repositório do [Fiber](https://g
 
 ## O que essa API faz?
 
-**[Link do repositório](https://github.com/XandeCoding/codigos-de-artigos/tree/api/go-simple-api/golang/api_simples)
+[**Link do repositório**](https://github.com/XandeCoding/codigos-de-artigos/tree/api/go-simple-api/golang/api_simples)
 
 Bem essa API foi feita para salvar informações sobre livros e tem somente 3 endpoints:
 

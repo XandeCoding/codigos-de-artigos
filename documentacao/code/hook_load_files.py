@@ -38,10 +38,8 @@ def _get_md_files_path(path) -> list[str]:
 
     for (dir_path, _dir_names, file_names) in walk(path):
         if _ignore_dir(dir_path):
-            print("uai ", dir_path)
             continue
         for file in file_names:
-            # TODO: MELHORAR CHECAGEM - ADICIONAR IGNORE_LIST
             if 'README.md' == file:
                 markdown_documents.append(f'{dir_path}/{file}')
 

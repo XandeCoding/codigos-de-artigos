@@ -21,7 +21,7 @@ E começar a botar a mão na massa foi algo bem simples, por assim dizer, não �
 
 Olha aqui eu vou aos pouquinhos e vou explicar alguns detalhes de TypeScript para quem não está muito familiarizado não se perder.
 
-![Imagem com o import e uma interface sendo declarada](doc_images/import-type-http.png)
+![Imagem com o import e uma interface sendo declarada]({{ get_img_url('deno/site_server_side/doc_images/import-type-http.png') }})
 
 
 Bem aqui já começam as diferenças Deno usa um esquema de import de libs externas via url, isso traz uma coisa ótima que é a possibilidade de usar arquivos independentes da onde estejam da internet se é possível fazer o download ele funciona.
@@ -36,7 +36,7 @@ Basicamente esse _**k**_ se refere a chave do objeto e que deve ser string, e es
 
 Agora vamos fazer o core da nossa aplicação que é o que vai receber as chamadas e encaminhar para as rotas certas.
 
-![Classe http server](doc_images/http-server.png)
+![Classe http server]({{ get_img_url('deno/site_server_side/doc_images/http-server.png') }})
 
 Bem vou me aprofundar mais na função _initServerHandler_ nela eu filtro os métodos como vou somente servir páginas estáticas quero receber somente chamadas do tipo 'GET', depois eu crio uma url isso é legal para poder pegar o pathname que o caminho, por exemplo, se eu colocar no meu navegador o endereço _https://localhost:7000/teste_ o pathname é _/teste_ isso é uma abordagem bem simplista, mas para nosso caso serve muito bem.
 
@@ -66,7 +66,7 @@ Algo que não sabia era que Typescript estava dando suporte nativo para JSX isso
 
 Para isso precisamos fazer uma pequena configuração no nosso arquivo `tsconfig.json` o meu ficou dessa forma.
 
-![Arquivo tsconfig.json](doc_images/ts-config.png)
+![Arquivo tsconfig.json]({{ get_img_url('deno/site_server_side/doc_images/ts-config.png') }})
 
 - O [`jsx`](https://www.typescriptlang.org/tsconfig#jsx) se refere a como o arquivo JSX vai ser construído ao ser importado, essa config `react-jsx` permite que usemos outra runtime, nesse caso estamos usando o Preact como vamos ver abaixo
 
@@ -74,7 +74,7 @@ Para isso precisamos fazer uma pequena configuração no nosso arquivo `tsconfig
 
 Agora temos a função que importa o arquivo JSX de forma genérica (não queremos ter que criar uma função para cada JSX que criemos não é?)
 
-![Função que faz a renderização do componente JSX](doc_images/renderJSXTemplate.png)
+![Função que faz a renderização do componente JSX]({{ get_img_url('deno/site_server_side/doc_images/renderJSXTemplate.png') }})
 
 Não vou me apegar muito os detalhes de import ou da tipagem dos tipos, pois isso não é a mágica (e já conversamos sobre esse _Record_ mais acima também). O que ela faz é basicamente importar o arquivo e usar uma função de render do Preact e aqui está a mágica.
 
@@ -82,17 +82,17 @@ Não vou me apegar muito os detalhes de import ou da tipagem dos tipos, pois iss
 
 - Mas na função nós importamos o componente de forma assíncrona (legal né? JavaScript às vezes nos proporciona essas boas surpresas :the_horns:), quando esse arquivo é importado a função já passa por uma transformação usando o _Preact_ que configuramos mais cedo e se torna um arquivo utilizável dentro do nosso código, não se esqueça que TypeScript transforma tudo em JavaScript antes de ser executado o JSX só passa por um processo um pouco diferente.
 
-![Componente JSX](doc_images/jsx.png)
+![Componente JSX]({{ get_img_url('deno/site_server_side/doc_images/jsx.png') }})
 
 - Este arquivo acima é um componente que criei bem simples somente para demonstrar, veja que estou exportando ele como default isso ajuda na hora de importar na função acima, pois já sei bem onde acessar o componente no módulo.
 
-![JSX Template Handler](doc_images/JSXTemplateHandler.png)
+![JSX Template Handler]({{ get_img_url('deno/site_server_side/doc_images/JSXTemplateHandler.png') }})
 
 - Com essa função de renderização podemos já usá-la no nosso handler e nele o arquivo é renderizado e adicionado um headers e uma response válida é retornada (sim algumas coisas são bem chatas quando não se usa um framework :cry:)
 
 - E para utilizarmos este handler basta configurarmos a nossa rota, lembra do nosso HTTPServer vamos brincar com ele agora, mas não tem muita emoção (felizmente).
 
-![Inicialização das rotas](doc_images/main.png)
+![Inicialização das rotas]({{ get_img_url('deno/site_server_side/doc_images/main.png') }})
 
 Se você tem uma memória boa (ou somente rolou a página para cima 🤷) vai lembrar da interface que o nosso `HTTPServer` recebe, basta mandar a rota e o _handler_ que é a função que executa a ação ao acessamos aquele endpoint e depois usarmos a função _serve_.
 
