@@ -1,5 +1,5 @@
 import logging
-from typing import TypedDict, Union
+from typing import TypedDict
 from pathlib import Path, PurePath
 from os import walk, getcwd
 from shutil import copyfile
@@ -72,7 +72,7 @@ def _save_file(origin, destination):
     log.debug(f'Arquivo `{destination}` salvo com sucesso!')
 
 
-def _ignore_dir(dir_path):
+def _ignore_dir(dir_path) -> bool:
     return bool(IGNORE_LIST.intersection(PurePath(dir_path).parts))
 
 

@@ -26,5 +26,5 @@ def _filter_informations(pokemon_info: dict) -> dict:
         'height': pokemon_info.get('height', 0),
         'name': pokemon_info.get('name', ''),
         'species': pokemon_info.get('species', {}),
-        'weight': pokemon_info.get('weight', 0)
+        'weight': pokemon_info.get('weight', 0),
     }
