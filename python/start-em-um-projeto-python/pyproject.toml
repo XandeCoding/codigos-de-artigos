@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "start-em-um-projeto-python"
+version = "0.1.0"
+description = ""
+authors = ["XandeCoding <af.santos1998@gmail.com>"]
+readme = "README.md"
+packages = [{include = "start_em_um_projeto_python"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+tinydb = "^4.8.0"
+quart = {extras = ["dotenv"], version = "^0.18.4"}
+
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.0.287"
+prospector = {extras = ["with-bandit", "with-mypy"], version = "^1.10.2"}
+black = "^23.7.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

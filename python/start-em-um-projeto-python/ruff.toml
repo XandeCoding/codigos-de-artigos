@@ -1,0 +1,15 @@
+select = [
+  "E", "W", "F", "C90", "I", "N", "D", "UP", "ASYNC", "S", "B", "DTZ", "TRY"
+]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+
+line-length = 95
+target-version = "py311"
+
+[mccabe]
+max-complexity = 6
+
+[pydocstyle]
+convention = "pep257"
