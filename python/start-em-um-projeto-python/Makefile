@@ -4,8 +4,7 @@ run-dev:
 
 lint:
 	@echo "Executando lint no projeto"
-	prospector --zero-exit --messages-only
-	ruff check --fix
+	ruff check --fix .
 
 format:
 	@echo "Executando formatador de código"

@@ -7,5 +7,5 @@ app = Quart(__name__)
 async def read_root():
     return {"hello": "world"}
 
-app.run()
 
+app.run()

@@ -14,9 +14,33 @@ quart = {extras = ["dotenv"], version = "^0.18.4"}
 
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.0.287"
-prospector = {extras = ["with-bandit", "with-mypy"], version = "^1.10.2"}
 black = "^23.7.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+
+[tool.ruff]
+select = [
+  "E", "W", "F", "C90", "I", "N", "D", "UP", "ASYNC", "S", "B", "DTZ", "TRY"
+]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+
+line-length = 95
+target-version = "py311"
+
+[tool.ruff.mccabe]
+max-complexity = 6
+
+[tool.ruff.pydocstyle]
+convention = "pep257"
+
+[tool.black]
+line-length = 95
+target-version = ["py311"]
+workers = 2
+preview = true
+verbose = false
