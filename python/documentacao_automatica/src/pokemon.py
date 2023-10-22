@@ -14,6 +14,7 @@ def get_pokemon(name: str) -> dict:
             return { 'message': f'Não foi possível achar o pokemon \"{ name }\"'}
         return _filter_informations(response.json())
 
+
 def _filter_informations(pokemon_info: dict) -> dict:
     """
     Filtra os campos de interesse das informações
