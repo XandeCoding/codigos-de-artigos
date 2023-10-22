@@ -2,7 +2,7 @@ from os import getenv, getcwd
 from enum import StrEnum
 from pathlib import Path
 
-class IMG_PROVIDERS(StrEnum):
+class IMG_PROVIDER(StrEnum):
     LOCAL = 'LOCAL'
     GITHUB = 'GITHUB'
 
@@ -13,7 +13,7 @@ def define_env(env):
     ### Functions
     @env.macro
     def get_img_url(image_path):
-        provider = IMG_PROVIDERS(getenv('PROVIDER', IMG_PROVIDERS.LOCAL.value))
+        provider = IMG_PROVIDER(getenv('IMG_PROVIDER', IMG_PROVIDER.LOCAL.value))
 
         if provider.is_local():
             base_path = Path(getcwd()).resolve().parent
