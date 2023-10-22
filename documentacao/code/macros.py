@@ -1,6 +1,7 @@
 from os import getenv, getcwd
 from enum import StrEnum
 from pathlib import Path
+import logging
 
 class IMG_PROVIDER(StrEnum):
     LOCAL = 'LOCAL'
@@ -14,6 +15,7 @@ def define_env(env):
     @env.macro
     def get_img_url(image_path):
         provider = IMG_PROVIDER(getenv('IMG_PROVIDER', IMG_PROVIDER.LOCAL.value))
+        logging.warning(f'IMG_PROVIDER - {provider}')
 
         if provider.is_local():
             base_path = Path(getcwd()).resolve().parent
