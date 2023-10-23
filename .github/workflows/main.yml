@@ -20,4 +20,4 @@ jobs:
       - run: poetry run mkdocs gh-deploy --force --clean --verbose
         working-directory: ./documentacao
         env:
-          IMG_PROVIDER: ${{ vars.IMG_PROVIDER }}
+          IMG_PROVIDER: "GITHUB"
