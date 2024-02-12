@@ -9,7 +9,7 @@ packages = [{include = "start_em_um_projeto_python"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 tinydb = "^4.8.0"
-quart = {extras = ["dotenv"], version = "^0.18.4"}
+quart = {extras = ["dotenv"], version = "^0.19.4"}
 
 
 [tool.poetry.group.dev.dependencies]
