@@ -10,6 +10,9 @@ packages = [{include = "start_em_um_projeto_python"}]
 python = "^3.11"
 tinydb = "^4.8.0"
 quart = {extras = ["dotenv"], version = "^0.19.4"}
+quart-schema = {extras = ["pydantic"], version = "^0.19.1"}
+quart-injector = "^0.0.0b1"
+pydantic-settings = "^2.2.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -25,7 +28,7 @@ build-backend = "poetry.core.masonry.api"
 select = [
   "E", "W", "F", "C90", "I", "N", "D", "UP", "ASYNC", "S", "B", "DTZ", "TRY"
 ]
-ignore = []
+ignore = ["D100"]
 fixable = ["ALL"]
 unfixable = []
 
