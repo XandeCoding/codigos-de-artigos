@@ -18,7 +18,6 @@ Falando um pouco mais do projeto usei o poetry para gerenciar o ambiente virtual
 
 Bem as libs que instalei estão no `pyproject.toml` e no `requirements.txt` então é só instalar (um _pip install -r requirements.txt_ deve funcionar) e começar a brincar.
 
-https://github.com/XandeCoding/codigos-de-artigos/blob/main/python/documentacao_automatica/docs/assets/pokemon_code.png?raw=true
 ## Como documentar :writing_hand:
 
 
@@ -66,7 +65,7 @@ _Obs.: Sim, adicionei o código meio feio, mas assim você pode só copiar e col
 
 3 - Execute **`mkdocs build`** e depois **`mkdocs serve`** e ele vai deixar a sua doc accessível pelo navegador pela url `http://127.0.0.1:8000/`. Você deve ter algo parecido com isso abaixo.
 
-![Index da página de documentação]({{ get_img_url('python/documentacao_automatica/docs/assets/index.png') }})
+![Index da página de documentação]({{ get_img_url('python/documentacao_automatica/docs/assets/mkdocs-index.png') }})
 
 4 - Ao acessar você vai ter uma pequena introdução de como adicionar páginas, mas é muito simples basta criar um arquivo _.md_ dentro da pasta **docs** que está na raiz do seu projeto e a mesma já é adicionada na estrutura da documentação. Se está tudo indo certo você vai ter uma estrutura parecida com essa abaixo, foco na pasta **docs**.
 
