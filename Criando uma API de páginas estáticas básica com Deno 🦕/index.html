@@ -1,0 +1,286 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <title>Criando uma API de páginas estáticas básica com Deno 🦕 - Meus Textos</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        
+        
+        
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="../assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="../assets/css/mkdocs.min.css">
+            <link href="../css/style.css" rel="stylesheet">
+
+        
+            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
+
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">Meus Textos</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href=".."
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Códigos de Artigos
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Construindo%20uma%20API%20organizadinha%20em%20Golang%20usando%20Fiber/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Construindo uma API organizadinha em Golang usando Fiber
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="./"
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Criando uma API de páginas estáticas básica com Deno 🦕
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Docker%20Compose%20-%20MariaDB/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Docker Compose - MariaDB
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Documentação Automática usando MkDocs e Python
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Usando%20DDD%20com%20FastAPI%20e%20subaplica%C3%A7%C3%B5es/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Usando DDD com FastAPI e subaplicações
+                </a>
+            </li>
+        </ul>
+        <!-- endblock -->
+    </div>
+</nav>
+        <!-- endblock -->
+
+        <nav class="divider drac-bg-purple-cyan"></nav>
+
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
+
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a href="../Construindo%20uma%20API%20organizadinha%20em%20Golang%20usando%20Fiber/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="../Docker%20Compose%20-%20MariaDB/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h1 id="criando-uma-api-de-paginas-estaticas-basica-com-deno">Criando uma API de páginas estáticas básica com Deno 🦕</h1>
+<p>Bom dia! meus caros compatriotas mineradores das profundezas do StackOverflow, esses últimos dias me veio uma vontade de como bom goiano dar uma sofrida e ao invés de botar Marilía Mendonça preferi mexer com o famoso (ainda é?) Deno que para minha grata supresa não foi sofrimento nenhum! :laughing:</p>
+<p>Porque minha surpresa? Primeiro o ecossistema é bem simplista e receptivo para novos usuários a toolkit que vem instalada trazem ferramentas como <code>deno fmt</code> que formata o código de forma automática e um <code>deno lint</code> que achei sensacional fora que consegui configurar o debug no vscode tranquilamente, outro ponto que gostei bastante foi a standard library ser bem completa e vir com uma tipagem bem rica (sim sou um type junky).</p>
+<p>Claro que há outros pontos que são os principais diferencias para o seu irmão mais velho Node, mas não vamos focar nas rusgas de família se quiser dar uma olhada a página inicial <a href="https://deno.land/">deno.land</a> cita alguns outros pontos legais.</p>
+<h2 id="ideia-inicial">Ideia inicial</h2>
+<p>Bem como objeto de estudo fiz uma API bem simples para testar algumas coisas como a integração do TypeScript com arquivos JSX que é algo que eu li na documentação do Deno e curti bastante, então tive a ideia de fazer algo só para servir páginas estáticas e ponto:thumbsup:, único diferencial aqui é que usei o máximo possível da standard library.</p>
+<p><em><strong>Disclaimer:</strong></em> Olha a ideia não é ser perfeito inclusive se tiverem erros por favor me avise :rolling_on_the_floor_laughing: mas tentei deixar o escopo bem fechado porque se não nunca iria terminar o que tinha proposto para mim mesmo e fiquei feliz com o resultado, tinha como fazer mais algumas coisas legais mas é aquilo quem não faz deploy de bug em produção não se diverte!. (Sim é só uma piada, caso esteja se perguntando)</p>
+<h3 id="e-a-aventura-se-inicia">E a aventura se inicia</h3>
+<p>De início foi bem simples de instalar inclusive foi só um comando que baixava já um script de instalação e já o executava e pronto já estava com o deno instalado fiz alguns testes e depois configurei para usar o <a href="https://asdf-vm.com/">asdf</a> o que não é necessário mas eu gosto da ferramenta pela possibilidade de versionar a runtime e pronto com tudo configurado comecei a programar.</p>
+<p>E começar a botar a mão na massa foi algo bem simples, por assim dizer, não é necessário dar um init para rodar basta dar um <code>deno run</code> e se tiver algo que ele precise instalar ele baixa na hora da execução e adiciona as informações da versão em um <em>package-lock.json</em> algo bem semelhante ao que acontece no Node.js, mas de forma mais minimalista, por assim dizer já que não é necessário ter um <em>package.json</em> para interagirmos e configurarmos, algo que achei ruim disso é que para o meu caso tive que criar um <em>makefile</em> para agilizar um pouco a execução vamos falar disso mais à frente.</p>
+<p>Olha aqui eu vou aos pouquinhos e vou explicar alguns detalhes de TypeScript para quem não está muito familiarizado não se perder.</p>
+<p><img alt="Imagem com o import e uma interface sendo declarada" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/deno/site_server_side/doc_images/import-type-http.png?raw=true" /></p>
+<p>Bem aqui já começam as diferenças Deno usa um esquema de import de libs externas via url, isso traz uma coisa ótima que é a possibilidade de usar arquivos independentes da onde estejam da internet se é possível fazer o download ele funciona.</p>
+<p>Neste caso estou importando e já retirando somente a função de serve que vamos usar para iniciar o servidor.</p>
+<p>Abaixo temos um tipo que explicita qual vai ser o "formato" de um objeto de rota, se pararmos para pensar o mínimo que precisamos para criar uma rota (endpoint para os mais íntimos) é ter uma ação e ter o "caminho" para essa ação ser executada, por exemplo o caminho pode ser um '/index' e a ação é entregar um simples HTML.</p>
+<p>Criei isso para facilitar para quem for criar uma rota no futuro não ter que adivinhar ou ter que dar uma de detetive para descobrir os dados necessários para uma rota funcional ser criada.</p>
+<p>Basicamente esse <em><strong>k</strong></em> se refere a chave do objeto e que deve ser string, e essa mesma chave vai receber como valor uma Promise que retorna uma instância de response. Tabom ficou meio confuso mas basicamente eu vou ter um objeto JSON que só recebe chaves em texto como letras e frases e elas vão ter como valor uma função assíncrona que retorna a resposta para o cliente, isso vai ficar mais claro mais a frente.</p>
+<p>Agora vamos fazer o core da nossa aplicação que é o que vai receber as chamadas e encaminhar para as rotas certas.</p>
+<p><img alt="Classe http server" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/deno/site_server_side/doc_images/http-server.png?raw=true" /></p>
+<p>Bem vou me aprofundar mais na função <em>initServerHandler</em> nela eu filtro os métodos como vou somente servir páginas estáticas quero receber somente chamadas do tipo 'GET', depois eu crio uma url isso é legal para poder pegar o pathname que o caminho, por exemplo, se eu colocar no meu navegador o endereço <em>https://localhost:7000/teste</em> o pathname é <em>/teste</em> isso é uma abordagem bem simplista, mas para nosso caso serve muito bem.</p>
+<p>Lembra da nossa declaração <em>IRoute</em> aqui que começa a brincadeira vamos acessar de forma direta a rota e já vamos executar a função que está salva nela, por exemplo, em um objeto como o abaixo:</p>
+<pre><code class="language-js">
+{
+
+'/': async () =&gt;  new  Response('Hello World')
+
+}
+
+</code></pre>
+<p>Ao entrar na chave '/' ele me traz a função que mostra um <em>Hello World</em> bem bonito para o usuário.</p>
+<p>Agora mais abaixo temos a função <strong>serve</strong> nela que a brincadeira já começa a rolar, ela inicia a função <em>initServerHandler</em> e faz um <em>bind</em>? O que seria esse tal de bind?</p>
+<p>Bem para entendermos isso precisamos pensar em como essa função vai ser executada, pois, essa função ela vai ser entregue para o server, mas não irá ser executada ali, mas quando ele receber uma requisição e isso ocorre dentro de outro escopo e não na função <strong><em>serve</em></strong>, e nessa altura como a função vai achar a instância de HTTPServer com as rotas se ele é somente uma função que foi passada para outro escopo? Para isso usamos o bind ele insere a propriedade <strong>routes</strong> que foi colocada na classe no momento da criação da instanciação do <em><strong>HTTPServer</strong></em> que criamos e a deixa acessível dentro dela quase como se ela fosse um "parâmetro", mas é acessada como uma propriedade da função, por isso quando damos um <em>this.routes</em> conseguimos acessar as rotas, ele acessa a propriedade routes da função e não da classe <strong>HTTPServer</strong>.</p>
+<h3 id="e-a-aventura-estava-ficando-sem-fim">E a aventura estava ficando sem fim</h3>
+<p>Essa brincadeira estava até bem divertida, mas eu já tinha tido ido o suficiente adentro da toca do coelho e estava satisfeito (Mundo de Alice vibes :leaves:). Então fiz uma função para renderizar HTML puro e arquivos JSX, bem arquivos HTML não tem muito segredo então vamos dar uma olhada em como fazer isso usando JSX.</p>
+<p>Algo que não sabia era que Typescript estava dando suporte nativo para JSX isso significa que podemos com algumas configurações importar estes arquivos e usá-los para renderizar páginas para nossos clientes.</p>
+<p>Para isso precisamos fazer uma pequena configuração no nosso arquivo <code>tsconfig.json</code> o meu ficou dessa forma.</p>
+<p><img alt="Arquivo tsconfig.json" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/deno/site_server_side/doc_images/ts-config.png?raw=true" /></p>
+<ul>
+<li>
+<p>O <a href="https://www.typescriptlang.org/tsconfig#jsx"><code>jsx</code></a> se refere a como o arquivo JSX vai ser construído ao ser importado, essa config <code>react-jsx</code> permite que usemos outra runtime, nesse caso estamos usando o Preact como vamos ver abaixo</p>
+</li>
+<li>
+<p><a href="https://www.typescriptlang.org/tsconfig#jsxImportSource"><code>jsxImportSource</code></a> Essa propriedade em conjunto com a opção acima define qual vai ser o módulo que vai ser usado para importar o JSX e construir o componente ao ser exportado.</p>
+</li>
+</ul>
+<p>Agora temos a função que importa o arquivo JSX de forma genérica (não queremos ter que criar uma função para cada JSX que criemos não é?)</p>
+<p><img alt="Função que faz a renderização do componente JSX" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/deno/site_server_side/doc_images/renderJSXTemplate.png?raw=true" /></p>
+<p>Não vou me apegar muito os detalhes de import ou da tipagem dos tipos, pois isso não é a mágica (e já conversamos sobre esse <em>Record</em> mais acima também). O que ela faz é basicamente importar o arquivo e usar uma função de render do Preact e aqui está a mágica.</p>
+<ul>
+<li>
+<p>Primeiro importamos a lib <code>preact-render-to-string</code> do cdn skypack ele tem bastante libs já configuradas para rodar no Deno, muita coisa que roda no Node funciona no Deno, mas algumas precisam de alteração principalmente as que fazem operações no disco, então já ter algo configurado facilita bastante.</p>
+</li>
+<li>
+<p>Mas na função nós importamos o componente de forma assíncrona (legal né? JavaScript às vezes nos proporciona essas boas surpresas :the_horns:), quando esse arquivo é importado a função já passa por uma transformação usando o <em>Preact</em> que configuramos mais cedo e se torna um arquivo utilizável dentro do nosso código, não se esqueça que TypeScript transforma tudo em JavaScript antes de ser executado o JSX só passa por um processo um pouco diferente.</p>
+</li>
+</ul>
+<p><img alt="Componente JSX" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/deno/site_server_side/doc_images/jsx.png?raw=true" /></p>
+<ul>
+<li>Este arquivo acima é um componente que criei bem simples somente para demonstrar, veja que estou exportando ele como default isso ajuda na hora de importar na função acima, pois já sei bem onde acessar o componente no módulo.</li>
+</ul>
+<p><img alt="JSX Template Handler" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/deno/site_server_side/doc_images/JSXTemplateHandler.png?raw=true" /></p>
+<ul>
+<li>
+<p>Com essa função de renderização podemos já usá-la no nosso handler e nele o arquivo é renderizado e adicionado um headers e uma response válida é retornada (sim algumas coisas são bem chatas quando não se usa um framework :cry:)</p>
+</li>
+<li>
+<p>E para utilizarmos este handler basta configurarmos a nossa rota, lembra do nosso HTTPServer vamos brincar com ele agora, mas não tem muita emoção (felizmente).</p>
+</li>
+</ul>
+<p><img alt="Inicialização das rotas" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/deno/site_server_side/doc_images/main.png?raw=true" /></p>
+<p>Se você tem uma memória boa (ou somente rolou a página para cima 🤷) vai lembrar da interface que o nosso <code>HTTPServer</code> recebe, basta mandar a rota e o <em>handler</em> que é a função que executa a ação ao acessamos aquele endpoint e depois usarmos a função <em>serve</em>.</p>
+<h4 id="executando">Executando</h4>
+<p>Para executar há um diferencial, Deno pede (insiste melhor dizendo) que você especifique as permissões que a aplicação deverá ter no nosso caso, é necessário a de <em>net</em>, pois é uma API web acho que está explicito o porque (ela precisa acessar a rede) e de <em>read</em> pois vamos ler alguns arquivos.</p>
+<p>Um ponto interessante é que se fossemos usar somente o import comum não precisaríamos, pois o mesmo já estaria incluso na hora que rodássemos a aplicação, mas como os arquivos que contém os componentes JSX são importados de forma assíncrona sendo lidos em tempo de execução, ele precisa que demos permissão, pois não é adicionado na hora que compilamos mas depois ou nunca depende se vamos acessar a rota que usa o componente.</p>
+<p>Segue abaixo o código para executar o brinquedo.</p>
+<p><code>deno run --config tsconfig.json --allow-net --allow-read ./src/main.ts</code></p>
+<h4 id="depois-de-20-mil-leguas-submarinas">Depois de 20 mil léguas submarinas</h4>
+<p>Chegamos ao final espero que não tenha sido uma viagem para o mundo da Chatolândia a leitura desse texto, mas sim uma olhada pelo retrovisor após o hype do Deno passar de seu ecossistema e de algumas diferenças do seu irmão mais velho Node.js. 👋👋👋</p></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
+</footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '..';</script>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/mkdocs.js"></script>
+			<script src="../search/main.js" defer></script>
+
+</body>
+
+</html>

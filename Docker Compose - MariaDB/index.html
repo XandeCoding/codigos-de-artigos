@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <title>Docker Compose - MariaDB - Meus Textos</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        
+        
+        
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="../assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="../assets/css/mkdocs.min.css">
+            <link href="../css/style.css" rel="stylesheet">
+
+        
+            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
+
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">Meus Textos</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href=".."
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Códigos de Artigos
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Construindo%20uma%20API%20organizadinha%20em%20Golang%20usando%20Fiber/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Construindo uma API organizadinha em Golang usando Fiber
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Criando uma API de páginas estáticas básica com Deno 🦕
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="./"
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Docker Compose - MariaDB
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Documentação Automática usando MkDocs e Python
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Usando%20DDD%20com%20FastAPI%20e%20subaplica%C3%A7%C3%B5es/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Usando DDD com FastAPI e subaplicações
+                </a>
+            </li>
+        </ul>
+        <!-- endblock -->
+    </div>
+</nav>
+        <!-- endblock -->
+
+        <nav class="divider drac-bg-purple-cyan"></nav>
+
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
+
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a href="../Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="../Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h1 id="docker-compose-mariadb">Docker Compose - MariaDB</h1>
+<p>Sabe quando você tem que subir um banco de dados pra fazer uma api ou só rodar um projeto na sua máquina e não quer perder todo aquele tempo instalando e configurando na sua máquina?</p>
+<p>Outro dia tive que fazer isso e tive um trabalhinho então quis compartilhar aqui para caso alguém precise não demore quase uma hora com um erro porque colocou as variáveis de ambiente errado :sweat:</p>
+<p>Esse é um script que fiz para usar com o docker-compose, então caso não tenha ele instalado é só ir no site do docker e instalar eles tem um guia bem legal de como instalar.</p>
+<p>Então depois de instalado é só colocar esse script dentro de um arquivo '<em>docker-compose.yml</em>' e rodar o comando '_docker-compose up' na pasta onde está o arquivo que ele já vai estar rodando na porta 3306 que inclusive pode ser alterada assim como as variáveis de ambiente ali em baixo.</p>
+<p>Espero que tenha te ajudado e xau :v:</p>
+<pre><code class="language-elixir">version: &quot;3&quot;
+services:
+    bancoMariaDb:
+        image: mariadb
+        restart: always
+        container_name: bancoMariaDb
+        ports:
+            - &quot;3306:3306&quot;
+        volumes:
+            - .:/code
+        environment:
+            - MYSQL_USER=friends
+            - MYSQL_ROOT_PASSWORD=friends
+            - MYSQL_DATABASE=friends
+</code></pre></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
+</footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '..';</script>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/mkdocs.js"></script>
+			<script src="../search/main.js" defer></script>
+
+</body>
+
+</html>

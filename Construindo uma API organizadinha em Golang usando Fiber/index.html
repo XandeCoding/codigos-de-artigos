@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <title>Construindo uma API organizadinha em Golang usando Fiber - Meus Textos</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        
+        
+        
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="../assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="../assets/css/mkdocs.min.css">
+            <link href="../css/style.css" rel="stylesheet">
+
+        
+            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
+
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">Meus Textos</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href=".."
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Códigos de Artigos
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="./"
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Construindo uma API organizadinha em Golang usando Fiber
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Criando uma API de páginas estáticas básica com Deno 🦕
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Docker%20Compose%20-%20MariaDB/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Docker Compose - MariaDB
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Documentação Automática usando MkDocs e Python
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Usando%20DDD%20com%20FastAPI%20e%20subaplica%C3%A7%C3%B5es/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Usando DDD com FastAPI e subaplicações
+                </a>
+            </li>
+        </ul>
+        <!-- endblock -->
+    </div>
+</nav>
+        <!-- endblock -->
+
+        <nav class="divider drac-bg-purple-cyan"></nav>
+
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
+
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a href=".."
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a href="../Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h1 id="construindo-uma-api-organizadinha-em-golang-usando-fiber">Construindo uma API organizadinha em Golang usando Fiber</h1>
+<p>Nos últimos tempo brincando com go e apanhando bastante com o sistema de packages dele (aqui cabe um mea-culpa porque é um esquema bem legal se bem utilizado) me peguei pensando bastante em qual seria a melhor forma de organizar a API que estava fazendo de estudo.</p>
+<p>Acabei pegando bastantes exemplos inclusive do repositório do <a href="https://github.com/gofiber/recipes">Fiber</a> e cheguei em um formato que acredito que seja bem legível e fácil de adicionar novas funcionalidades.</p>
+<p><code>**Disclaimer.:** Não estou dizendo que esta é a melhor forma de se organizar uma API em GoLang mas foi uma que me atendeu e acho que também pode atender em muitos casos onde uma API genérica é necessária.</code></p>
+<h2 id="o-que-essa-api-faz">O que essa API faz?</h2>
+<p><a href="https://github.com/XandeCoding/codigos-de-artigos/tree/api/go-simple-api/golang/api_simples"><strong>Link do repositório</strong></a></p>
+<p>Bem essa API foi feita para salvar informações sobre livros e tem somente 3 endpoints:</p>
+<p><strong>GET:</strong> Retorna informações sobre um livro</p>
+<p><strong>PUT:</strong> Adiciona ou altera informações sobre um livro</p>
+<p><strong>DELETE:</strong> Deleta as informações de um livro</p>
+<p>Implementei somente o básico mesmo, e para isso usei como framework o Fiber que mencionei logo acima que tem uma pegada bem parecida com Express.js que eu curti bastante, mas com as vantagens de Golang como menor alocação de memória e uma velocidade tremenda, e os dados estão sendo salvos em um Redis o qual é possível inicializar usando um <a href="https://github.com/XandeCoding/codigos-de-artigos/blob/api/go-simple-api/golang/api_simples/docker-compose.yml">docker-compose</a>.</p>
+<h2 id="estrutura">Estrutura</h2>
+<pre><code class="language-shell">| api_simples
+├── docker-compose.yml
+├── docs
+│   └── estrutura.png
+├── go.mod
+├── go.sum
+├── main.go
+├── pkg
+│   ├── configurations
+│   │   └── database.go
+│   ├── entities
+│   │   └── book.go
+│   ├── handlers
+│   │   └── book_handler.go
+│   ├── repositories
+│   │   ├── book_repository.go
+│   │   └── commons.go
+│   └── routes
+│       ├── book_router.go
+│       └── routes.go
+└── README.md
+</code></pre>
+<p>Acredito que não faça muito sentido falar somente o que existe em cada pasta, mas sim dizer o porquê e o contexto do porque foi feito desta forma, não vou seguir a ordem ali de cima, pois acho que é mais fácil explicar não seguindo esta ordem, então vamos lá:</p>
+<p><strong>go.mod</strong></p>
+<pre><code class="language-go">module github.com/XandeCoding/codigos-de-artigos/golang/api_simples
+
+go 1.19
+
+require (
+    github.com/go-redis/redis/v9 v9.0.0-beta.2
+    github.com/gofiber/fiber/v2 v2.36.0
+)
+</code></pre>
+<p>Este arquivo me ajuda a resolver várias questões do workspace de go, pois posso criar um repositório de Go onde eu quiser e isso não me traz um problema, por exemplo, de acessar packages tanto externos quanto locais principalmente locais.</p>
+<p>Para criar ele somente realizei o comando <code>go mod init</code> com o caminho do projeto no github como argumento que no caso é <em>github.com/XandeCoding/codigos-de-artigos/golang/api_simples</em>, não necessariamente é necessário por o caminho do github pode ser utilizado somente o nome do projeto que aqui é <em>api_simples</em> por exemplo.</p>
+<p>Como é algo público que quero fazer, acho que é interessante colocar o caminho inteiro do repositório, pois caso eu ou outro alguém queira usar um arquivo em específico do projeto ele pode somente referenciar o caminho e tudo deve funcionar perfeitamente, pois o caminho inteiro dos outros arquivos módulos estão sendo referenciados.</p>
+<p><strong>pkg e main.go</strong></p>
+<p>A pasta <em>pkg</em> é a pasta onde vou deixar o código da minha API, então todas as features estão implementadas dentro desta pasta e o <em>main.go</em> é somente um arquivo para inicializar a aplicação e não implementa nada, por isso ela fica de fora, e usada somente para realizar o <em>start</em> na API.</p>
+<p><code>_main.go:_</code></p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/XandeCoding/codigos-de-artigos/golang/api_simples/pkg/routes&quot;
+    &quot;github.com/gofiber/fiber/v2&quot;
+)
+
+func main() {
+    app := fiber.New()
+    routes.AddRoutes(app)
+
+    app.Listen(&quot;:3000&quot;)
+}
+</code></pre>
+<p><strong>pkg/configurations</strong></p>
+<p>Aqui ficam os arquivos de configuração, neste caso temos o arquivo_database.go_ que configura o acesso ao banco, mas caso tivéssemos outras configurações de aplicações ou de ferramentas que seriam utilizadas por uma ou mais partes da aplicação isso ficaria aqui como, por exemplo, uma configuração customizada do fiber ou mesmo capturar as variáveis de ambiente que é um caso de uso bem comum.</p>
+<p><strong>pkg/entities</strong></p>
+<p>Entidades em geral podem ser usadas em vários lugares, principalmente neste caso onde uso tanto para receber o dado no endpoint e fazer o parse quanto nas funções de adicionar o dado no banco. Então colocar em um lugar comum se torna bastante interessante, é claro que há estruturas onde os packages são separados por features e temos escopos mais fechados, aí talvez não fosse interessante esta abordagem que estou usando aqui.</p>
+<p><code>Exemplo da configuração de conexão com o Redis em _database.go:_</code></p>
+<pre><code class="language-go">package configurations
+
+import &quot;github.com/go-redis/redis/v9&quot;
+
+func CreateClient() *redis.Client {
+    redisDatabase := redis.NewClient(&amp;redis.Options{
+        Addr: &quot;localhost:6379&quot;,
+        Password: &quot;&quot;,
+        DB: 0,
+    })
+
+    return redisDatabase
+}
+</code></pre>
+<p><strong>pkg/repositores</strong></p>
+<p>Neste pacote ficam as funções que trabalham diretamente com o banco Redis então nelas eu recebo o dado de um livro no caso a entidade <em>book</em> e tenho funções que tanto a inserem, atualizam e a deletam do banco. Caso tivesse outra entidade a ser tratada no banco como por exemplo, library_ onde trataria de dados sobre livrarias, ela seria um arquivo separado onde ficariam somente funções relacionadas a estas informações.</p>
+<p><code>Fragmento de *book_repository.go:*</code></p>
+<pre><code class="language-go">type Repository struct {
+    database *redis.Client
+}
+
+...
+
+func (rdb Repository) GetBook(name string) string {
+    ctx, cancel := getContext()
+    defer cancel()
+    book, _ := rdb.database.Get(ctx, name).Result()
+
+    return book
+}
+</code></pre>
+<p><strong>pkg/routes</strong></p>
+<p>Seguindo o exemplo de outras partes da aplicação separei as rotas por arquivos, mesmo que tenhamos um arquivo <em>routes.go</em> que inicializa estas rotas é interessante deixarmos as rotas de determinado recurso separados, pois facilita a leitura e o entendimento de outras pessoas que possam vir a dar manutenção no código.</p>
+<p><code>Parte em que inicializo as rotas em _routes.go:_</code></p>
+<pre><code class="language-go">func AddRoutes(app *fiber.App) *fiber.App {
+    bookRouter(app)
+
+    return app
+}
+</code></pre>
+<p>Algo que curti muito é que em <em>book_router.go</em> somente explicitei as rotas, métodos e as funções que são os chamados <em>handlers</em> que estão em outra parte da aplicação. Outra coisa importante é que esta estrutura possibilita que criemos instâncias que podem ser reutilizadas em todos os endpoints deste determinado recurso que no caso foi uma instância de conexão com o banco Redis.</p>
+<p><code>Fragmento onde explicito os recursos de _book_router:_</code></p>
+<pre><code class="language-go">func bookRouter(app *fiber.App) *fiber.App {
+    bookRepository := repositories.NewRepository()
+
+    app.Get(&quot;/book/:name&quot;, handlers.GetBookHandler(bookRepository))
+    app.Put(&quot;/book&quot;, handlers.SetBookHandler(bookRepository))
+    app.Delete(&quot;/book/:name&quot;, handlers.DeleteBookHandler(bookRepository))
+
+    return app
+}
+</code></pre>
+<p><strong>pkg/handlers</strong></p>
+<p>Em handlers deixo as funções que vão ser chamadas pelos endpoints, por exemplo, o endpoint <code>_PUT: /book_</code> chama a função <em>SetBookHandler</em> que está no arquivo <em>book_handler.go</em> que retorna a função que vai ser chamada quando este recurso for acessado.</p>
+<p><code>Código da função _SetBookHandler:_</code></p>
+<pre><code class="language-go">func SetBookHandler(bookRepository *repositories.Repository) fiber.Handler {
+    return func(c *fiber.Ctx) error {
+        book := new(entities.Book)
+        err := c.BodyParser(book)
+
+        if err != nil {
+            message := map[string]string{&quot;message&quot;: &quot;Invalid entry data&quot;}
+            return c.Status(400).JSON(message)
+        }
+
+        book_name_normalized := strings.ReplaceAll(
+            strings.ToLower(book.Name), &quot; &quot;, &quot;_&quot;,
+        )
+        key := &quot;book:&quot; + book_name_normalized
+        bookRepository.SetBook(key, book)
+        return c.Send(c.Body())
+    }
+}
+</code></pre>
+<h3 id="pronto">Pronto</h3>
+<p>Espero ter ajudado com alguns pontos de dificuldade que quando começamos uma API principalmente em uma linguagem que não temos tanta intimidade que foi o meu caso pode nos deixar um pouco confusos, mas este foi uma estrutura inicial que curti bastante, mas qualquer comentário ou feedback pode comentar que é sempre bom melhorarmos não é?, até a próxima :wave:</p></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
+</footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '..';</script>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/mkdocs.js"></script>
+			<script src="../search/main.js" defer></script>
+
+</body>
+
+</html>

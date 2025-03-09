@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+        <title>Usando DDD com FastAPI e subaplicações - Meus Textos</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        
+        
+        
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+            <link rel="stylesheet" href="../assets/css/darcula-highlight.min.css">
+
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../assets/css/dracula-ui.min.css">
+        <link rel="stylesheet" href="../assets/css/mkdocs.min.css">
+            <link href="../css/style.css" rel="stylesheet">
+
+        
+            <link  rel="icon" type="image/x-icon" href="../assets/img/favicon.ico">
+        
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.5.0/highlight.min.js"></script>
+                <script>hljs.initHighlightingOnLoad();</script>
+
+</head>
+
+<body class="drac-bg-black-secondary drac-text-grey-ternary drac-text drac-scrollbar-purple">
+
+    <main class="d-flex">
+
+        <!-- block sidebar -->
+            <nav id="sidebar" class="sidebar drac-bg-black">
+    <div class="custom-menu">
+        <button type="button" id="sidebarCollapse" class="btn btn-primary">
+            <i class="fa fa-bars"></i>
+            <span class="sr-only">Menu</span>
+        </button>
+    </div>
+
+    <div class="p-4">
+        
+
+        <div class="drac-text-center">
+            
+                <span class="drac-text drac-line-height drac-text-white">Meus Textos</span>
+            
+        </div>
+
+        <div class="drac-box flex-column">
+            <ul class="dot-ul">
+                <li><div class="dot-li drac-bg-cyan"></div></li>
+                <li><div class="dot-li drac-bg-green"></div></li>
+                <li><div class="dot-li drac-bg-orange"></div></li>
+                <li><div class="dot-li drac-bg-pink"></div></li>
+                <li><div class="dot-li drac-bg-purple"></div></li>
+                <li><div class="dot-li drac-bg-red"></div></li>
+                <li><div class="dot-li drac-bg-yellow"></div></li>
+            </ul>
+        </div>
+
+        <hr class="drac-divider" />
+
+        <!-- block menu -->
+        <ul class="mb-5 drac-list drac-list-none">
+            
+            <li class="drac-box">
+                <a href=".."
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Códigos de Artigos
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Construindo%20uma%20API%20organizadinha%20em%20Golang%20usando%20Fiber/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Construindo uma API organizadinha em Golang usando Fiber
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Criando uma API de páginas estáticas básica com Deno 🦕
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Docker%20Compose%20-%20MariaDB/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Docker Compose - MariaDB
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="../Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/"
+                    class="
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Documentação Automática usando MkDocs e Python
+                </a>
+            </li>
+            <li class="drac-box">
+                <a href="./"
+                    class=" active 
+                    drac-anchor d-inline-flex align-items-center border-0 drac-text-purple--hover">
+                    Usando DDD com FastAPI e subaplicações
+                </a>
+            </li>
+        </ul>
+        <!-- endblock -->
+    </div>
+</nav>
+        <!-- endblock -->
+
+        <nav class="divider drac-bg-purple-cyan"></nav>
+
+        <div class="content">
+            <!-- block header -->
+                <header>
+    <nav class="navbar navbar-expand-xl drac-bg-purple">
+        <div class="container-fluid">
+            
+            <button class="navbar-toggler w-100 text-center" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsMenu"
+                aria-controls="navbarsMenu" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse flex-column ml-auto" id="navbarsMenu">
+                <ul class="navbar-nav text-md-center">
+
+                    <!-- block preview -->
+                    <li class="nav-item">
+                            
+        <div class="container">
+            <div class="row row-preview">
+                <div class="col">
+                    <a href="../Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/"
+                        class="btn-preview drac-btn drac-btn-outline drac-text-white drac-text-cyan-green--hover">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </div>
+                <div class="col">
+                    <a 
+                        class="btn-preview drac-btn drac-text-white--hover disabled" style="padding-left: 3%;">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block search -->
+                    <li class="nav-item"><div role="search" class="search-box">
+	<form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+		<input type="text" name="q" class="drac-input drac-input-search drac-input-white drac-text-white drac-bg-black-secondary"
+		placeholder="Search docs" title="Type search term here" />
+	</form>
+</div>
+                    </li>
+                    <!--  endblock -->
+
+                    <!-- block source -->
+                    <li class="nav-item">
+                        
+                    </li>
+                    <!--  endblock -->
+
+                </ul>
+            </div>
+
+        </div>
+    </nav>
+</header>
+            <!-- endblock -->
+
+            <!-- block content -->
+                <section class="p-md-5 section-content">
+    <article>
+        <p><h1 id="usando-ddd-com-fastapi-e-subaplicacoes">Usando DDD com FastAPI e subaplicações</h1>
+<p>Estive estudando Domain Driven Design por alguns dias e quero compartilhar alguns conceitos que me ajudaram a pensar e estruturar melhor um projeto e espero que ajudem vocês também.</p>
+<h2 id="alias-o-que-e-ddd">Aliás, o que é DDD?</h2>
+<p>Domain driven design é uma filosofia que ajuda a criar um projeto com foco no domínio do mesmo, isso quer dizer que ao entrarmos em um projeto utilizaremos conhecimentos de especialistas da área.</p>
+<p>Isso ajuda a sabermos para o que exatamente vai ser utilizado, a melhor forma de resolver algum problema e para evitar erros comuns que pessoas que não estão familiarizadas com a área possam cometer.</p>
+<p>Isso ajuda muito, pois se não conhecermos ou não tivermos auxílio de alguém que conhece o domínio ou área em que o software atua podemos fazer um projeto que não resolve de forma adequada os problemas ou pior que resolve tudo menos o porque dele ter sido criado.</p>
+<h2 id="beleza-e-o-que-tem-demais">Beleza e o que tem demais?</h2>
+<p>Alguns de vocês devem estar pensando "mas poxa isso é óbvio, entender das regras de negócio e programar depois não há nada de mais nisso" e bem ele não é só isso ele vem com uma bagagem de conceitos que ajudam a fazer um design de projeto mais fácil de ser entendido, diminuir o acoplamento, e a criar camadas do projeto que ajudam muito na organização e na manutenção do software.</p>
+<h3 id="e-falando-nessas-camadas-elas-sao">E falando nessas camadas elas são:</h3>
+<p><strong>Domínio:</strong> Isso é onde as regras de negócios da aplicação ficam.</p>
+<p><strong>Infraestrutura:</strong> Aqui consiste tudo que seu software precisa independentemente de outros partes como módulos, bibliotecas externas, configurações do banco de dados e etc.</p>
+<p><strong>Aplicação:</strong> Esta camada serve para fazer o meio de campo entre a camada de interface e a de domínio.</p>
+<p><strong>Interface:</strong> Fornece a interação com os outros sistemas como serviços web, front-end por exemplo.</p>
+<h2 id="e-agora-e-mao-na-massa">E agora é mão na massa</h2>
+<p>E chega de teoria e vamos ver código 😄, fiz um projeto usando o que aprendi de DDD e vou mostrar um pouco dele para vocês, espero que gostem qualquer dúvida ou feedback é só comentar que estarei feliz em responder. Só relembrando é só um estudo que fiz esse projeto não demonstra todos os conceitos de DDD até porque é um projeto pequeno não iria caber todos como factories, agregates e por aí vai.</p>
+<p>Este projeto é só um software que armazena e devolve Todos que no caso são simplesmente notas o qual eu guardo com um id que uso como chave primaria, text para deixar o texto, e completed para saber se ela foi realizada ou não. Nele usei FastAPI que e um framework de Python que tem algumas features bem legais segue link abaixo para quem quiser saber mais assim como o link do meu projeto no GitHub .Então vamos lá pasta por pasta. 🙌</p>
+<p>Projeto: <a href="https://github.com/XandeCoding/ddd_fastAPI">DDD_FastAPI</a></p>
+<p><a href="https://fastapi.tiangolo.com/">FastAPI documentação</a></p>
+<p><img alt="Alt Text" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/python/usando-ddd-com-fastapi-e-subaplicacoes/docs/assets/estrutura.png?raw=true" /></p>
+<h3 id="raiz-do-projeto">Raiz do projeto</h3>
+<p><strong>environment:</strong> nele deixei as variáveis de ambiente como a chave de segurança e a url do banco de dados, que pegam do sistema caso não tenha pegam as que uso em desenvolvimento.</p>
+<p><strong>wsgi:</strong> chama o uvicorn(ASGI) que é a ferramenta que uso para rodar o sistema.</p>
+<h3 id="modulestodos">modules/todos</h3>
+<p><img alt="Alt Text" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/python/usando-ddd-com-fastapi-e-subaplicacoes/docs/assets/app-todos.png?raw=true" /></p>
+<p><strong>todos:</strong> Aqui eu uso uma feature muito interessante do FastAPI que é criar um subaplicativo o qual chamo de todoApp o que faz que ele seja mais desacoplado de outras partes do sistema, e depois eu só o monto no arquivo framework dentro de infrastructure que vamos falar mais tarde.</p>
+<p><strong>todosModel:</strong> Deixo as funções que fazem as queries no banco neste arquivo.</p>
+<p><strong>todosSchema:</strong> Aqui fica os schemas que uso para tipar e validar os dados que mando para o banco e que recebo via endpoint.</p>
+<p>Assim eu organizo os módulos se eu tiver que implementar algo que não seja ligado ao domínio de todos como, por exemplo, lidar com alguma planilha ou enviar e-mails eles teriam que ser em módulos diferentes, assim eu evitaria modificações em algo que já está funcionando (provavelmente 😅).</p>
+<h3 id="infrastructure">infrastructure</h3>
+<p><img alt="Alt Text" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/python/usando-ddd-com-fastapi-e-subaplicacoes/docs/assets/mount.png?raw=true" /></p>
+<p><strong>framework:</strong> Deixo as configurações ligados a estrutura do framework no caso ele abrir a conexão com o banco de dados assim como fechar, e acoplo a subaplicação (no caso podemos falar módulo também) na aplicação principal.</p>
+<p><strong>repository:</strong> Aqui usando o Encode como ORM que é baseado no SQLAlchemy mas com suporte ao asyncio e crio as tabelas (devido ao tamanho do projeto não deixei separado a instanciação da tabela de todos) e configuro o banco de dados no caso SQLite.</p>
+<h2 id="conclusao">Conclusão</h2>
+<p>Espero que tenham gostado do artigo e do projeto teste aplicando DDD gostei bastante do resultado inicial, mas caso tenham visto algum espaço para melhoria no projeto estou sempre aberto a sugestões. ✌️</p></p>
+    </article>
+</section>
+            <!-- endblock -->
+
+            <!-- block footer -->
+                <footer>
+    <div class="d-flex flex-sm-row justify-content-between py-2 border-top drac-text-black drac-bg-cyan-green">
+        <a href="https://github.com/dracula/mkdocs" target="_blank" style="padding-left: 1%;"
+            class="footer-text drac-anchor drac-text-black drac-text-purple--hover">
+            Made with Dracula Theme for MkDocs
+        </a>
+    </div>
+</footer>
+            <!-- endblock -->
+        </div>
+
+    </main>
+
+        <script>var base_url = '..';</script>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js"></script>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/mkdocs.js"></script>
+			<script src="../search/main.js" defer></script>
+
+</body>
+
+</html>
