@@ -19,7 +19,7 @@ jobs:
         working-directory: ./documentacao
       - run: poetry install
         working-directory: ./documentacao
-      - run: poetry run build
+      - run: poetry run mkdocs build
         working-directory: ./documentacao
       - run: poetry run mkdocs gh-deploy --force --clean --verbose
         working-directory: ./documentacao
