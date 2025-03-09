@@ -1,7 +1,8 @@
-from os import getenv, getcwd
+from os import getenv, getcwd, path
 from enum import StrEnum
 from pathlib import Path
 import logging
+import base64
 
 class IMG_PROVIDER(StrEnum):
     LOCAL = 'LOCAL'
@@ -19,12 +20,14 @@ def define_env(env):
 
         if provider.is_local():
             base_path = Path(getcwd()).resolve().parent
-            return f'file://{str(base_path)}/{image_path}'
+            abs_img_path = Path(f'{str(base_path)}/{image_path}')
+            image_file = open(abs_img_path, 'rb')
+            image_blob = image_file.read()
+            image_file.close()
+
+            image_base64 = base64.b64encode(image_blob)
+            return f'data:image/png;base64, {image_base64.decode("utf-8")}'
         else:
             base_path = 'https://github.com/XandeCoding/codigos-de-artigos/blob/main'
             return f'{base_path}/{image_path}?raw=true'
     
-
-    # Set functions
-    env.macro(get_img_url, 'transform_to_github_img_url')
-
