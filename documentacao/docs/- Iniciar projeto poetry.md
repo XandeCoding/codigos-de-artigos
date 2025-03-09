@@ -1,7 +1,0 @@
-- Iniciar projeto poetry
-- Adicionar gitignore `https://www.toptal.com/developers/gitignore/`
- - curl https://www.toptal.com/developers/gitignore/api/python,vim
-- instalar dependencias de desenvolvimento `poetry add --group dev ruff black`
-- instalar prospector `poetry add --group dev "prospector[with_mypy]"`
-- instalar
-    - `poetry add quart[dotenv]`
