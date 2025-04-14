@@ -1,12 +1,8 @@
-# Howto install Snap packages
-
-If you already tried to install some app in Ubuntu, you know that sometimes can be very easy. And other times can be a lot harder 
-
+# Como instalar pacotes Snap 
 Se você já tentou instalar algum aplicativo no Ubuntu, sabe que às vezes pode ser bem fácil. Outras vezes, pode ser mais difícil do que ouvir Henrique e Juliano e não lembrar daquele rolo que nunca deu em nada 😑.  
-É para isso que existe o Snap. Uma vez que você instala essa ferramenta, basta entrar no seu terminal, pesquisar o aplicativ:wo que deseja e baixar em seguida. Sei que falei aquela palavra (terminal 👻), mas é mais fácil do que posso ter feito parecer 😂.
+É para isso que existe o Snap. Uma vez que você instala essa ferramenta, basta entrar no seu terminal, pesquisar o aplicativo que deseja e baixar em seguida. Sei que falei aquela palavra (terminal 👻), mas é mais fácil do que posso ter feito parecer 😂.
 
 **1**. Então, abra seu terminalzinho em qualquer distribuição derivada do Ubuntu e digite os seguintes comandos:
-
 
 ```
 sudo apt update
@@ -27,5 +23,6 @@ sudo snap install spotify
 
 Ele será instalado rapidinho — é só esperar um pouquinho e logo você poderá ouvir seus hits da Taylor Swift.
 
-### Por hoje é só, meus hitzeiros!  
+### Por hoje é só, meus hitzeiros!
+
 Espero que tenham gostado e que isso tenha ajudado de alguma forma 😁
