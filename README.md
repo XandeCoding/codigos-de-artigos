@@ -1,7 +1,6 @@
 # Códigos de Artigos
 
-Este é um repositório onde mantenho meus testes e meus artigos
-de forma versionada, Seja muito bem vindo(a)!
+Este repositório contém os códigos e testes relacionados aos meus artigos, organizados de forma versionada.
+Seja muito bem-vindo(a)!
 
-**Caso queira ter acesso ao blog o link é: [https://xandecoding.github.io/codigos-de-artigos/](https://xandecoding.github.io/codigos-de-artigos/)**
-
+**Acesse o blog em:** https://xandecoding.github.io/codigos-de-artigos/
