@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: 3.11
           cache: 'poetry'
-      - run: mkdir docs
+      - run: mkdir -p docs/português && mkdir -p docs/english
         working-directory: ./documentacao
       - run: poetry install
         working-directory: ./documentacao
