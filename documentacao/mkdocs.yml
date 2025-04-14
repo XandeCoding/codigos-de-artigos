@@ -1,15 +1,30 @@
 site_name: Meus Textos
+
 theme:
-  name: dracula 
+  name: material
+  language: pt-BR
+  locale: pt_BR 
 
 plugins:
   - search
+  - redirects:
+      redirect_maps:
+        'index.md': 'english/index.md'
   - macros:
       module_name: 'code/macros'
 
 markdown_extensions:
   - attr_list
   - md_in_html
+
+extra:
+  alternate:
+    - name: Portuguese
+      lang: pt-BR
+      link: /português
+    - name: English
+      link: /english
+      lang: en
   
 extra_css:
   - 'css/style.css'
