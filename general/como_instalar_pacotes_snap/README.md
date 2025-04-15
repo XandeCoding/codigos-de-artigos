@@ -1,4 +1,5 @@
 # Como instalar pacotes Snap 
+
 Se você já tentou instalar algum aplicativo no Ubuntu, sabe que às vezes pode ser bem fácil. Outras vezes, pode ser mais difícil do que ouvir Henrique e Juliano e não lembrar daquele rolo que nunca deu em nada 😑.  
 É para isso que existe o Snap. Uma vez que você instala essa ferramenta, basta entrar no seu terminal, pesquisar o aplicativo que deseja e baixar em seguida. Sei que falei aquela palavra (terminal 👻), mas é mais fácil do que posso ter feito parecer 😂.
 
