@@ -1,29 +1,26 @@
 # Docker Compose - MariaDB
 
-Sabe quando você tem que subir um banco de dados pra fazer uma api ou só rodar um projeto na sua máquina e não quer perder todo aquele tempo instalando e configurando na sua máquina?
+Sabe quando você precisa subir um banco de dados pra rodar uma API ou algum projeto localmente, mas não quer perder tempo instalando e configurando tudo na sua máquina?
 
-Outro dia tive que fazer isso e tive um trabalhinho então quis compartilhar aqui para caso alguém precise não demore quase uma hora com um erro porque colocou as variáveis de ambiente errado :sweat:
+Outro dia, passei exatamente por isso. Tive um certo trabalho até fazer funcionar, então resolvi compartilhar aqui pra, quem sabe, te poupar quase uma hora tentando descobrir um erro por causa de variáveis de ambiente colocadas erradas 😅
 
-Esse é um script que fiz para usar com o docker-compose, então caso não tenha ele instalado é só ir no site do docker e instalar eles tem um guia bem legal de como instalar.
+Esse é um script que fiz pra usar com o Docker Compose. Caso ainda não tenha o Docker instalado, é só acessar o [site oficial](https://docs.docker.com/compose/install/linux/) — eles têm um guia bem legal de instalação. 
 
-Então depois de instalado é só colocar esse script dentro de um arquivo '_docker-compose.yml_' e rodar o comando '_docker-compose up' na pasta onde está o arquivo que ele já vai estar rodando na porta 3306 que inclusive pode ser alterada assim como as variáveis de ambiente ali em baixo.
+Depois de instalar, é só salvar o conteúdo abaixo em um arquivo chamado *`docker-compose.yml`*, rodar o comando `docker-compose up` na pasta onde está o arquivo, e pronto! O banco vai subir na porta 3306 (que você pode alterar, assim como as variáveis de ambiente).
 
-Espero que tenha te ajudado e xau :v:
+Espero que te ajude. Valeu e xau! ✌️
 
-``` elixir
-version: "3"
+```yaml
 services:
-    bancoMariaDb:
-        image: mariadb
-        restart: always
-        container_name: bancoMariaDb
-        ports:
-            - "3306:3306"
-        volumes:
-            - .:/code
-        environment:
-            - MYSQL_USER=friends
-            - MYSQL_ROOT_PASSWORD=friends
-            - MYSQL_DATABASE=friends
+  bancoMariaDb:
+    image: mariadb
+    restart: always
+    container_name: bancoMariaDb
+    ports:
+      - "3306:3306"
+    volumes:
+      - .:/code
+    environment:
+      - MYSQL_ROOT_PASSWORD=web
+      - MYSQL_DATABASE=web
 ```
-
