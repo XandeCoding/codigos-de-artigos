@@ -17,7 +17,7 @@ const server = http.createServer(async (req, res) => {
     case '/films':
       const file = await readFile('../films.json')
       res.writeHead(200, {'Content-Type': 'application/json'})
-      res.end(JSON.stringify(JSON.parse(file)))
+      res.end(file)
       break
   }
 })
