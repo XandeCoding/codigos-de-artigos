@@ -12,7 +12,7 @@ Como já brinquei um pouco com o famoso Deno [neste artigo sobre páginas estát
 
 O Node.js foi lançado em 2009 e possibilitou utilizar JavaScript no backend. Desde então, tem crescido em popularidade. Acredito que isso se deve ao fato de ser uma linguagem de fácil adaptação, até mesmo para quem não tem muita intimidade com programação. Também pesa a sua forte presença no frontend e a acessibilidade direta pelo navegador — para muitos, foi a primeira linguagem com a qual tiveram contato.
 
-E tudo isso com uma performance admirável, graças à V8, a *engine* do Chrome ⚙️. Sempre foi um navegador rápido, e usá-lo para rodar código no servidor foi um golaço. O cerco estava armado. Estamos há mais de uma década criando bugs e *queries* mal otimizadas em JavaScript. 🫠
+E tudo isso com uma performance admirável, graças à V8, a *engine* do Chrome ⚙️. Que sempre foi um navegador perfomático, e usá-lo para rodar código no servidor foi um golaço. Estamos há mais de uma década criando bugs e *queries* mal otimizadas em JavaScript. 🫠
 
 Mas nada é perfeito. Mesmo sendo mantido por engenheiros e engenheiras muito talentosos, o Node.js começou a enfrentar alternativas — e uma delas é o **Bun**, que é o foco deste texto.
 
@@ -33,6 +33,8 @@ Agora que já contei muita lorota 😄, queria mostrar um humilde benchmark que 
 ![]({{ get_img_url('multi_language/bun e node/benchmark.png') }})
 
 > **📊 Obs.:**
+>
+> *Benchmark realizado em um i7-1255U com 8GB de memória*
 >
 > - **Low Load**: 125 conexões e 100.000 requisições  
 > - **Medium Load**: 1.000 conexões e 100.000 requisições  
