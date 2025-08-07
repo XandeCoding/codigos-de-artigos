@@ -1,0 +1,37 @@
+Teste de carga com 125 conexões e 100.000 requisições
+Bombarding http://localhost:3000/films with 100000 request(s) using 125 connection(s)
+
+Statistics        Avg      Stdev        Max
+  Reqs/sec     11338.18    2037.56   16390.85
+  Latency       11.03ms     5.30ms   291.47ms
+  HTTP codes:
+    1xx - 0, 2xx - 100000, 3xx - 0, 4xx - 0, 5xx - 0
+    others - 0
+  Throughput:   352.71MB/s
+
+Teste de carga com 1.000 conexões e 100.000 requisições
+Bombarding http://localhost:3000/films with 100000 request(s) using 1000 connection(s)
+
+Statistics        Avg      Stdev        Max
+  Reqs/sec      8177.25    3225.35   15917.93
+  Latency      115.62ms   683.25ms     12.16s
+  HTTP codes:
+    1xx - 0, 2xx - 99137, 3xx - 0, 4xx - 0, 5xx - 0
+    others - 863
+  Errors:
+    dial tcp [::1]:3000: connect: connection refused - 861
+       timeout - 2
+  Throughput:   251.62MB/s
+
+Teste de carga com 10.000 conexões e 1.000.000 requisições
+Bombarding http://localhost:3000/films with 1000000 request(s) using 10000 connection(s)
+
+Statistics        Avg      Stdev        Max
+  Reqs/sec      9552.55   18399.21  417885.50
+  Latency         1.42s   795.51ms     13.20s
+  HTTP codes:
+    1xx - 0, 2xx - 378921, 3xx - 0, 4xx - 0, 5xx - 0
+    others - 621079
+  Errors:
+    dial tcp [::1]:3000: connect: connection refused - 621079
+  Throughput:    81.77MB/s
