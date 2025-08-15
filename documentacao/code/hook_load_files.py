@@ -10,7 +10,7 @@ class DocumentData(TypedDict):
     origin: Path 
     name: str
 
-IGNORE_LIST = frozenset({'documentacao', '.cache', '.git', '.github', '__pycache__'})
+IGNORE_LIST = frozenset({'documentacao', '.cache', '.git', '.github', '__pycache__', 'node_modules'})
 INDEX_DOC_TITLE = frozenset({'Códigos de Artigos', 'Article Code'})
 
 def load_files():

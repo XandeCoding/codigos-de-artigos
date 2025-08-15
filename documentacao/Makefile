@@ -1,2 +1,3 @@
 run-dev:
-	mkdocs serve
+	@ mkdir -p docs/português && mkdir -p docs/english
+	poetry run mkdocs serve
