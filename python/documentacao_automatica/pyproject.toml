@@ -1,19 +1,25 @@
-[tool.poetry]
-name = "documentacao_automatica"
+[project]
+name = "documentacao-automatica"
 version = "0.1.0"
 description = ""
-authors = ["XandeCoding <af.santos1998@gmail.com>"]
+authors = [
+    {name = "XandeCoding",email = "af.santos1998@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+package-mode = false
+dependencies = [
+    "httpx (>=0.28.1,<0.29.0)",
+]
 
-[tool.poetry.dependencies]
-python = "^3.8"
-httpx = "^0.22.0"
+[tool.poetry]
 
-[tool.poetry.dev-dependencies]
-pytest = "^5.2"
-mkdocs = "^1.3.0"
-mkdocs-material = "^8.2.7"
-mkdocstrings = {extras = ["python"], version = "^0.18.1"}
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.2"
+mkdocs = "^1.6.1"
+mkdocs-material = "^9.6.22"
+mkdocstrings = {extras = ["python"], version = "^0.30.1"}
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"

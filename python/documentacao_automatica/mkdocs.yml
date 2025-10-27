@@ -1,13 +1,10 @@
 site_name: Documentação Automática
+
 theme:
   name: material
+
 plugins:
 - search
 - mkdocstrings:
-    handlers:
-      python:
-        setup_commands:
-          - import sys
-          - sys.path.append("src")
-    watch:
-      - src
+    default_handler: python
+
