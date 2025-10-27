@@ -1,24 +1,22 @@
-# Construindo uma API organizadinha em Golang usando Fiber
+# Construindo uma API organizada em Golang usando Fiber
 
-Nos últimos tempo brincando com go e apanhando bastante com o sistema de packages dele (aqui cabe um mea-culpa porque é um esquema bem legal se bem utilizado) me peguei pensando bastante em qual seria a melhor forma de organizar a API que estava fazendo de estudo.
+Depois de passar um tempo explorando Go e enfrentando alguns desafios com seu sistema de pacotes (aqui faço um *mea culpa*, pois é um sistema muito interessante quando bem utilizado), comecei a refletir sobre a melhor forma de organizar a API que estava desenvolvendo como estudo.
 
-Acabei pegando bastantes exemplos inclusive do repositório do [Fiber](https://github.com/gofiber/recipes) e cheguei em um formato que acredito que seja bem legível e fácil de adicionar novas funcionalidades.
+Consultei vários exemplos, inclusive do repositório do [Fiber](https://github.com/gofiber/recipes), e cheguei a uma estrutura que considero legível e fácil de expandir com novas funcionalidades.
 
-`**Disclaimer.:** Não estou dizendo que esta é a melhor forma de se organizar uma API em GoLang mas foi uma que me atendeu e acho que também pode atender em muitos casos onde uma API genérica é necessária.`
+> **Observação:** Não afirmo que esta seja a melhor forma de organizar uma API em Go, mas foi a que atendeu às minhas necessidades e acredito que possa ser útil em muitos casos onde uma API genérica é necessária.
 
 ## O que essa API faz?
 
-[**Link do repositório**](https://github.com/XandeCoding/codigos-de-artigos/tree/api/go-simple-api/golang/api_simples)
+[**Link do repositório**](https://github.com/XandeCoding/codigos-de-artigos/tree/main/golang/api_simples)
 
-Bem essa API foi feita para salvar informações sobre livros e tem somente 3 endpoints:
+Esta API foi desenvolvida para armazenar informações sobre livros e possui apenas três endpoints:
 
-**GET:** Retorna informações sobre um livro
+- **GET:** Retorna informações sobre um livro.
+- **PUT:** Adiciona ou altera informações sobre um livro.
+- **DELETE:** Exclui as informações de um livro.
 
-**PUT:** Adiciona ou altera informações sobre um livro
-
-**DELETE:** Deleta as informações de um livro
-
-Implementei somente o básico mesmo, e para isso usei como framework o Fiber que mencionei logo acima que tem uma pegada bem parecida com Express.js que eu curti bastante, mas com as vantagens de Golang como menor alocação de memória e uma velocidade tremenda, e os dados estão sendo salvos em um Redis o qual é possível inicializar usando um [docker-compose](https://github.com/XandeCoding/codigos-de-artigos/blob/api/go-simple-api/golang/api_simples/docker-compose.yml).
+Implementei apenas o essencial, utilizando o framework Fiber, que tem uma abordagem semelhante ao Express.js, algo que gostei bastante, combinado com as vantagens do Go, como menor consumo de memória e alta velocidade. Os dados são armazenados em um Redis, que pode ser inicializado usando um [docker-compose](https://github.com/XandeCoding/codigos-de-artigos/blob/api/go-simple-api/golang/api_simples/docker-compose.yml).
 
 ## Estrutura
 
@@ -46,9 +44,9 @@ Implementei somente o básico mesmo, e para isso usei como framework o Fiber que
 └── README.md
 ```
 
-Acredito que não faça muito sentido falar somente o que existe em cada pasta, mas sim dizer o porquê e o contexto do porque foi feito desta forma, não vou seguir a ordem ali de cima, pois acho que é mais fácil explicar não seguindo esta ordem, então vamos lá:
+Acredito que não seja suficiente apenas listar o conteúdo de cada pasta, mas sim explicar o contexto e a razão por trás dessa organização. Não seguirei a ordem acima, pois acho mais claro explicar de forma não linear. Vamos lá:
 
-**go.mod**
+### **go.mod**
 
 ```go
 module github.com/XandeCoding/codigos-de-artigos/golang/api_simples
@@ -58,20 +56,17 @@ go 1.19
 require (
 	github.com/go-redis/redis/v9 v9.0.0-beta.2
 	github.com/gofiber/fiber/v2 v2.36.0
-)
 ```
 
-Este arquivo me ajuda a resolver várias questões do workspace de go, pois posso criar um repositório de Go onde eu quiser e isso não me traz um problema, por exemplo, de acessar packages tanto externos quanto locais principalmente locais.
+Esse arquivo resolve várias questões relacionadas ao workspace do Go, permitindo criar um repositório em qualquer local sem problemas de acesso a pacotes externos ou locais.
 
-Para criar ele somente realizei o comando `go mod init` com o caminho do projeto no github como argumento que no caso é *github.com/XandeCoding/codigos-de-artigos/golang/api_simples*, não necessariamente é necessário por o caminho do github pode ser utilizado somente o nome do projeto que aqui é *api_simples* por exemplo.
+Para criá-lo, executei o comando `go mod init` com o caminho do projeto no GitHub como argumento (`github.com/XandeCoding/codigos-de-artigos/golang/api_simples`). Embora não seja estritamente necessário usar o caminho completo do GitHub — poderia ser apenas o nome do projeto, como `api_simples` —, optei por incluí-lo por se tratar de um projeto público. Isso facilita a referência a arquivos específicos por mim ou por outras pessoas.
 
-Como é algo público que quero fazer, acho que é interessante colocar o caminho inteiro do repositório, pois caso eu ou outro alguém queira usar um arquivo em específico do projeto ele pode somente referenciar o caminho e tudo deve funcionar perfeitamente, pois o caminho inteiro dos outros arquivos módulos estão sendo referenciados.
+### **pkg e main.go**
 
-**pkg e main.go**
+A pasta `pkg` contém o código principal da API, onde todas as funcionalidades são implementadas. O arquivo `main.go`, por sua vez, é responsável apenas pela inicialização da aplicação, sem implementar lógica alguma.
 
-A pasta _pkg_ é a pasta onde vou deixar o código da minha API, então todas as features estão implementadas dentro desta pasta e o _main.go_ é somente um arquivo para inicializar a aplicação e não implementa nada, por isso ela fica de fora, e usada somente para realizar o _start_ na API.
-
-`_main.go:_`
+**main.go**:
 
 ```go
 package main
@@ -89,15 +84,11 @@ func main() {
 }
 ```
 
-**pkg/configurations**
+### **pkg/configurations**
 
-Aqui ficam os arquivos de configuração, neste caso temos o arquivo_database.go_ que configura o acesso ao banco, mas caso tivéssemos outras configurações de aplicações ou de ferramentas que seriam utilizadas por uma ou mais partes da aplicação isso ficaria aqui como, por exemplo, uma configuração customizada do fiber ou mesmo capturar as variáveis de ambiente que é um caso de uso bem comum.
+Aqui estão os arquivos de configuração. No caso, `database.go` configura o acesso ao banco de dados. Se houvesse outras configurações, como configurações personalizadas do Fiber ou variáveis de ambiente, elas também ficariam aqui.
 
-**pkg/entities**
-
-Entidades em geral podem ser usadas em vários lugares, principalmente neste caso onde uso tanto para receber o dado no endpoint e fazer o parse quanto nas funções de adicionar o dado no banco. Então colocar em um lugar comum se torna bastante interessante, é claro que há estruturas onde os packages são separados por features e temos escopos mais fechados, aí talvez não fosse interessante esta abordagem que estou usando aqui.
-
-`Exemplo da configuração de conexão com o Redis em _database.go:_`
+Exemplo de configuração de conexão com o Redis em **database.go**:
 
 ```go
 package configurations
@@ -115,11 +106,15 @@ func CreateClient() *redis.Client {
 }
 ```
 
-**pkg/repositores**
+### **pkg/entities**
 
-Neste pacote ficam as funções que trabalham diretamente com o banco Redis então nelas eu recebo o dado de um livro no caso a entidade _book_ e tenho funções que tanto a inserem, atualizam e a deletam do banco. Caso tivesse outra entidade a ser tratada no banco como por exemplo, library_ onde trataria de dados sobre livrarias, ela seria um arquivo separado onde ficariam somente funções relacionadas a estas informações.
+As entidades são estruturas que podem ser utilizadas em várias partes da aplicação, como na análise de dados recebidos nos endpoints e nas operações de banco de dados. Centralizá-las em um local comum é vantajoso, embora em estruturas baseadas em funcionalidades específicas possa fazer mais sentido separá-las por escopos.
 
-`Fragmento de *book_repository.go:*`
+### **pkg/repositories**
+
+Este pacote contém as funções que interagem diretamente com o banco de dados Redis. Por exemplo, recebem a entidade `book` e realizam operações de inserção, atualização e exclusão. Se houvesse outra entidade, como `library`, suas funções relacionadas ficariam em um arquivo separado.
+
+Trecho de **book_repository.go**:
 
 ```go
 type Repository struct {
@@ -137,11 +132,11 @@ func (rdb Repository) GetBook(name string) string {
 }
 ```
 
-**pkg/routes**
+### **pkg/routes**
 
-Seguindo o exemplo de outras partes da aplicação separei as rotas por arquivos, mesmo que tenhamos um arquivo _routes.go_ que inicializa estas rotas é interessante deixarmos as rotas de determinado recurso separados, pois facilita a leitura e o entendimento de outras pessoas que possam vir a dar manutenção no código.
+As rotas foram organizadas em arquivos separados para melhor legibilidade e manutenção. O arquivo `routes.go` inicializa todas as rotas, enquanto `book_router.go` define as rotas específicas para o recurso `book`.
 
-`Parte em que inicializo as rotas em _routes.go:_`
+Trecho de **routes.go**:
 
 ```go
 func AddRoutes(app *fiber.App) *fiber.App {
@@ -151,9 +146,10 @@ func AddRoutes(app *fiber.App) *fiber.App {
 }
 ```
 
-Algo que curti muito é que em *book_router.go* somente explicitei as rotas, métodos e as funções que são os chamados _handlers_ que estão em outra parte da aplicação. Outra coisa importante é que esta estrutura possibilita que criemos instâncias que podem ser reutilizadas em todos os endpoints deste determinado recurso que no caso foi uma instância de conexão com o banco Redis.
+Em `book_router.go`, as rotas, métodos e handlers são definidos. Uma vantagem dessa estrutura é a possibilidade de criar instâncias reutilizáveis, como a conexão com o Redis, que pode ser compartilhada entre os endpoints.
 
-`Fragmento onde explicito os recursos de _book_router:_`
+Trecho de `book_router.go`:
+
 ```go
 func bookRouter(app *fiber.App) *fiber.App {
 	bookRepository := repositories.NewRepository()
@@ -166,11 +162,11 @@ func bookRouter(app *fiber.App) *fiber.App {
 }
 ```
 
-**pkg/handlers**
+### **pkg/handlers**
 
-Em handlers deixo as funções que vão ser chamadas pelos endpoints, por exemplo, o endpoint `_PUT: /book_` chama a função _SetBookHandler_ que está no arquivo *book_handler.go* que retorna a função que vai ser chamada quando este recurso for acessado.
+Os handlers são as funções chamadas pelos endpoints. Por exemplo, o endpoint `PUT /book` chama a função `SetBookHandler`, localizada em `book_handler.go`, que retorna a função a ser executada quando o recurso é acessado.
 
-`Código da função _SetBookHandler:_`
+Código da função **SetBookHandler**:
 
 ```go
 func SetBookHandler(bookRepository *repositories.Repository) fiber.Handler {
@@ -193,6 +189,6 @@ func SetBookHandler(bookRepository *repositories.Repository) fiber.Handler {
 }
 ```
 
-### Pronto
+## Conclusão
 
-Espero ter ajudado com alguns pontos de dificuldade que quando começamos uma API principalmente em uma linguagem que não temos tanta intimidade que foi o meu caso pode nos deixar um pouco confusos, mas este foi uma estrutura inicial que curti bastante, mas qualquer comentário ou feedback pode comentar que é sempre bom melhorarmos não é?, até a próxima :wave:
+Espero ter ajudado a esclarecer alguns dos desafios iniciais ao desenvolver uma API, especialmente em uma linguagem com a qual não temos muita familiaridade. Essa estrutura foi eficaz para mim, mas comentários e feedbacks são sempre bem-vindos para continuarmos melhorando. Até a próxima! :wave:
