@@ -1,0 +1,23 @@
+meta {
+  name: WebSocket Message copy
+  type: ws
+  seq: 4
+}
+
+ws {
+  url: {{BaseUrl}}
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "username": "ale",
+      "roomId": "1",
+      "text": "uai"
+    }
+  '''
+}

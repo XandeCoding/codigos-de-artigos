@@ -1,0 +1,21 @@
+{
+  "name": "bun_websocket",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "format": "biome format --write",
+    "watch": "bun run ./app/index.ts --watch",
+    "start": "bun run ./app/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.3.3",
+    "biome": "^0.3.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@logtape/logtape": "^1.2.2"
+  }
+}
