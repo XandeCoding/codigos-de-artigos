@@ -1,6 +1,6 @@
 type User = {
-  ticket: string
-  username: string
-}
+  ticket: string;
+  username: string;
+};
 
-export type { User }
+export type { User };

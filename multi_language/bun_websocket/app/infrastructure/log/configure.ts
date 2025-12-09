@@ -1,4 +1,4 @@
-import { configure, getConsoleSink } from "@logtape/logtape"
+import { configure, getConsoleSink } from "@logtape/logtape";
 
 await configure({
   sinks: { console: getConsoleSink() },
@@ -6,7 +6,7 @@ await configure({
     {
       category: "web_chat_bun",
       lowestLevel: "debug",
-      sinks: ["console"]
-    }
-  ]
-})
+      sinks: ["console"],
+    },
+  ],
+});

@@ -1,21 +1,21 @@
 type Room = {
-  id: string
-  name: string
-}
+  id: string;
+  name: string;
+};
 
 type Message = {
-  username: string
-  text: string
-  roomId: string
-}
+  username: string;
+  text: string;
+  roomId: string;
+};
 
 type WebSocketData = {
-  createdAt: number
-  instance: string
-  origin: string
-  ticket?: string
-  username?: string
-  roomId?: string}
+  createdAt: number;
+  instance: string;
+  origin: string;
+  ticket?: string;
+  username?: string;
+  roomId?: string;
+};
 
-
-export type { Room, Message, WebSocketData }
+export type { Room, Message, WebSocketData };

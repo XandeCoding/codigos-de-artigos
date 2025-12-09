@@ -1,15 +1,15 @@
-import type ValueKeyDatabase from "../infrastructure/database/valueKeyDatabase"
+import type ValueKeyDatabase from "../infrastructure/database/valueKeyDatabase";
 
 class Publisher {
-  private database: ValueKeyDatabase
+  private database: ValueKeyDatabase;
 
   constructor(database: ValueKeyDatabase) {
-    this.database = database
+    this.database = database;
   }
 
   public async publish(topic: string, message: string): Promise<number> {
-    return this.database.client.publish(topic, message)
+    return this.database.client.publish(topic, message);
   }
 }
 
-export default Publisher
+export default Publisher;
