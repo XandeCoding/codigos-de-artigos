@@ -1,39 +1,28 @@
-import ValueKeyDatabase from './infrastructure/database/valueKeyDatabase'
 import Logger from './infrastructure/log/logger'
 import Publisher from './operators/publisher'
 import Subscriber from './operators/subscriber'
-import RoomRepository from './repository/roomRepository'
+import UserRepository from './repository/userRepository'
+import { getWebSocketData, setConnectedData, validateTicket } from './utils/websocket'
+import type { Room, Message, WebSocketData } from './types/websocketCommons'
+import ValueKeyDatabase from './infrastructure/database/valueKeyDatabase'
 
-type Room = {
-  id: string
-  name: string
-  usernames: string[]
-}
 
-type Message = {
-  username: string
-  text: string
-  roomId: string
-}
-
-// TODO: CRIAR MANAGER DE ROOMS E STORAGE (REDIS)
 const rooms: Room[] = [
   {
     id: "1",
     name: "test",
-    usernames: []
   }
 ]
 
-// TODO: REFINAR UTILIZACAO DE INJECAO DE DEPENDENCIA
 const database = new ValueKeyDatabase()
-const roomRepository = new RoomRepository(database)
+const userRepository = new UserRepository(database)
 const publisher = new Publisher(database)
 const subscriber = new Subscriber(database)
 
-await subscriber.initialize()
 
-const server = Bun.serve({
+await subscriber.initialize(rooms)
+
+Bun.serve({
   port: 3000,
   fetch(req, server) {
     const url = new URL(req.url)
@@ -42,40 +31,43 @@ const server = Bun.serve({
         data: rooms
       })
     }
-    
-    else if (server.upgrade(req)) {
-      return; 
+
+    else if (server.upgrade(req, getWebSocketData(server, req))) {
+      Logger.debug `Connection upgraded`
+      return 
     }
     
     return new Response("Upgrade failed", { status: 500 })
   },
   websocket: {
+    data: {} as WebSocketData,
     open(ws) {
-      Logger.debug `Hello new user ${ws}`
+      Logger.debug `Hello new user ${ws.data}`
     },
     async message(ws, message: string) {
       Logger.debug `Message ${message}`
-      const { username, roomId }: Message = JSON.parse(message)
+      const { roomId, username }: Message = JSON.parse(message)
+      const user = await userRepository.read(roomId, username)
 
-      const room = rooms.find(({id}) => id === roomId)
+      Logger.debug `User, ${user}`
 
-      Logger.debug `Room, ${room}`
-
-      if (!room) return
-
-      const userExist = !!room.usernames.includes(username)
-
-      Logger.debug `User Exist, ${userExist}`
-
-      if (!userExist) {
-        room.usernames.push(username)
-        await subscriber.subscribe(room.id, (message, channel) => {
-          Logger.debug `Subscribe data - channel: ${channel} message ${message}`
-          ws.send(message)
-        })
+      if (!user) {
+        const ticket = setConnectedData(ws, roomId, username).ticket as string
+        subscriber.addConnection(ticket, ws)
+        await userRepository.save(roomId, username, { ticket, username })
+      } else if (validateTicket(ws, user)) {
+        ws.close(-1, `User it's fake`)
       }
-        
-      await publisher.publish(room.id, message)
+
+      await publisher.publish(roomId, message)
     },
+    async close(ws, code, reason) {
+      Logger.warn `Disconnected, code: ${code}, reason: ${reason}, ws: ${ws.data}`      
+      const { roomId, username, ticket } = ws.data
+
+      if (!roomId || !username || !ticket) return
+      subscriber.removeConnection(ticket)
+      await userRepository.remove(roomId, username)
+    }
   }
 })

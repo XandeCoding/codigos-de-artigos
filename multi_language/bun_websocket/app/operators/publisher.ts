@@ -7,7 +7,7 @@ class Publisher {
     this.database = database
   }
 
-  public async publish(topic: string, message: string) {
+  public async publish(topic: string, message: string): Promise<number> {
     return this.database.client.publish(topic, message)
   }
 }

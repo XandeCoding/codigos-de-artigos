@@ -3,5 +3,12 @@
     "enabled": true,
     "indentStyle": "tab",
     "indentWidth": 4
+  },
+  "javascript": {
+    "formatter": {
+      "semicolons": "asNeeded",
+      "trailingCommas": "all",
+      "quoteStyle": "single"
+    }
   }
 }
