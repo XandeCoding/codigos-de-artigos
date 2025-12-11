@@ -1,6 +1,7 @@
 import type { Server, ServerWebSocket } from "bun";
-import type { WebSocketData } from "../types/websocketCommons";
+import type { Message, WebSocketData } from "../types/websocketCommons";
 import type { User } from "../types/user";
+import Logger from "../infrastructure/log/logger";
 
 const NOT_FOUND = "NOT-FOUND";
 
@@ -49,4 +50,14 @@ function getOrigin(server: Server<WebSocketData>, req: Request): string {
   return `${requestIP.address}:${requestIP.port}`;
 }
 
-export { getWebSocketData, setConnectedData, validateTicket };
+function parseMessage(messageRaw: string): Message | undefined {
+  try {
+    const { roomId, username, text } = JSON.parse(messageRaw);
+
+    return { roomId, username, text }
+  } catch (error) {
+    Logger.error `Error trying to parse message ${error}`
+  }
+}
+
+export { getWebSocketData, setConnectedData, validateTicket, parseMessage };

@@ -5,14 +5,12 @@
   "private": true,
   "scripts": {
     "check": "biome check --write .",
-    "format": "prettier --write .",
     "watch": "bun run ./app/index.ts --watch",
     "start": "bun run ./app/index.ts"
   },
   "devDependencies": {
     "@types/bun": "^1.3.3",
-    "biome": "^0.3.3",
-    "prettier": "^3.7.4"
+    "biome": "^0.3.3"
   },
   "peerDependencies": {
     "typescript": "^5"

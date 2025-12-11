@@ -1,7 +1,4 @@
-type Room = {
-  id: string;
-  name: string;
-};
+
 
 type Message = {
   username: string;
@@ -18,4 +15,6 @@ type WebSocketData = {
   roomId?: string;
 };
 
-export type { Room, Message, WebSocketData };
+type SubscribeCallback = (message: string, channel: string) => void;
+
+export type { Message, WebSocketData, SubscribeCallback };

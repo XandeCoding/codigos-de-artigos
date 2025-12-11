@@ -4,11 +4,17 @@
     "indentStyle": "tab",
     "indentWidth": 4
   },
+  "linter": {
+    "enabled": false
+  },
   "javascript": {
     "formatter": {
+      "enabled": true,
       "semicolons": "asNeeded",
       "trailingCommas": "all",
-      "quoteStyle": "single"
+      "quoteStyle": "single",
+      "indentStyle": "tab",
+      "indentWidth": 4
     }
   }
 }
