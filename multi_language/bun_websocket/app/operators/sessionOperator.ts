@@ -53,10 +53,10 @@ class SessionOperator {
 	}
 
 	public async removeAllSessions() {
-    for (const room of this.rooms) {
-		  for (const username in room.connections) {
-          await this.removeSession(room.id, username)
-      }
+		for (const room of this.rooms) {
+			for (const username in room.connections) {
+				await this.removeSession(room.id, username)
+			}
 		}
 	}
 
