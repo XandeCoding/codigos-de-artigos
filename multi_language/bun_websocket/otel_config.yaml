@@ -1,0 +1,35 @@
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: ":4318"
+        cors:
+          allowed_origins:
+
+exporters:
+
+  otlp:
+    endpoint: jaeger:4317
+    tls:
+      insecure: true
+
+  otlphttp:
+    logs_endpoint: http://victoria_logs:9428/insert/opentelemetry/v1/logs
+    metrics_endpoint: http://victoria_metrics:8428/opentelemetry/v1/metrics
+    tls:
+      insecure: true
+
+service:
+  pipelines:
+    logs:
+      receivers: [otlp]
+      exporters: [otlphttp]
+
+    metrics:
+      receivers: [otlp]
+      exporters: [otlphttp]
+
+    traces:
+      receivers: [otlp]
+      exporters: [otlp]
+

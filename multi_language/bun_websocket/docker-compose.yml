@@ -1,12 +1,44 @@
 services:
+  otlp_collector:
+    image: "otel/opentelemetry-collector-contrib:0.141.0"
+    volumes:
+      - ./otel_config.yaml:/etc/otelcol/config.yaml
+    command: ["--config=/etc/otelcol/config.yaml"]
+    ports:
+      - "4318:4318"
+
+  victoria_metrics:
+    image: "victoriametrics/victoria-metrics:v1.131.0"
+    volumes:
+      - ./victoriametrics:/victoria-metrics-data
+    environment:
+      storageDataPath: "victoria-metrics-data"
+      retentionPeriod: "1d"
+    ports:
+      - 8428:8428
+
+  victoria_logs:
+    image: "victoriametrics/victoria-logs:v1.40.0"
+    volumes:
+      - ./victoriametrics:/victoria-metrics-data
+    environment:
+      storageDataPath: "victoria-metrics-data"
+      retentionPeriod: "1d"
+    ports:
+      - 9428:9428
+
+  jaeger:
+      image: "jaegertracing/all-in-one:1.76.0"
+      ports:
+        - "16686:16686"
+        - "14250:14250"
+        - "4317:4317"
+
   dragonfly:
     image: "docker.dragonflydb.io/dragonflydb/dragonfly"
     ulimits:
       memlock: -1
     ports:
       - "6379:6379"
-    volumes:
-      - dragonflydata:/data
     command: ["--maxmemory", "256mb", "--proactor_threads", "1"]
-volumes:
-  dragonflydata:
+

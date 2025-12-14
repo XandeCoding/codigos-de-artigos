@@ -16,6 +16,12 @@
     "typescript": "^5"
   },
   "dependencies": {
-    "@logtape/logtape": "^1.2.2"
+    "@logtape/logtape": "^1.2.2",
+    "@logtape/otel": "^1.2.2",
+    "@opentelemetry/api": "^1.9.0",
+    "@opentelemetry/auto-instrumentations-node": "^0.67.2",
+    "@opentelemetry/sdk-metrics": "^2.2.0",
+    "@opentelemetry/sdk-node": "^0.208.0",
+    "@opentelemetry/sdk-trace-node": "^2.2.0"
   }
 }
