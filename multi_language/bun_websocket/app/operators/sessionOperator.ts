@@ -1,46 +1,68 @@
-import type { ServerWebSocket } from "bun"
-import type UserRepository from "../repository/userRepository"
-import type { User } from "../types/user"
-import type { WebSocketData } from "../types/websocketCommons"
-import { setConnectedData } from "../utils/websocket"
-import RoomOperator from "./roomOperator"
-import type Subscriber from "./subscriber"
-import type { Room } from "../types/room"
+import type { ServerWebSocket } from 'bun'
+import type Subscriber from '../infrastructure/pubsub/subscriber'
+import type SessionRepository from '../repository/sessionRepository'
+import type { Room } from '../types/room'
+import type { Session } from '../types/session'
+import type { WebSocketData } from '../types/websocketCommons'
+import { setConnectedData } from '../utils/websocket'
+import RoomOperator from './roomOperator'
 
 class SessionOperator {
-  private rooms: RoomOperator[]
-  private userRepository: UserRepository
+	private rooms: RoomOperator[]
+	private sessionRepository: SessionRepository
 
-  constructor(rooms: Room[], userRepository: UserRepository) {
-    this.rooms = rooms.map(room => new RoomOperator(room))
-    this.userRepository = userRepository
-  }
+	constructor(rooms: Room[], sessionRepository: SessionRepository) {
+		this.rooms = rooms.map((room) => new RoomOperator(room))
+		this.sessionRepository = sessionRepository
+	}
 
-  public initialize(subscriber: Subscriber) {
-    this.rooms.forEach(room => { subscriber.subscribe(room.id, room.subscriptionCallback()) })
-  }
-  
-  public async getUserSession(roomId: string, username: string): Promise<null | User> {
-    return await this.userRepository.read(roomId, username)
-  }
+	public initialize(subscriber: Subscriber) {
+		this.rooms.forEach((room) => {
+			subscriber.subscribe(room.id, room.subscriptionCallback())
+		})
+	}
 
-  public async createUserSession(connection: ServerWebSocket<WebSocketData>, roomId: string, username: string) {
-    const ticket = setConnectedData(connection, roomId, username).ticket as string;
-    const room = this.getRoomById(roomId) as RoomOperator
+	public async getSession(
+		roomId: string,
+		username: string,
+	): Promise<null | Session> {
+		return await this.sessionRepository.read(roomId, username)
+	}
 
-    room.addConnection(connection, username)
-    await this.userRepository.save(roomId, username, { ticket, username });
-  }
+	public async createSession(
+		connection: ServerWebSocket<WebSocketData>,
+		roomId: string,
+		username: string,
+	): Promise<Session> {
+		const ticket = setConnectedData(connection, roomId, username)
+			.ticket as string
 
-  public async removeUserSession(roomId: string, username: string) {
-    const room = this.getRoomById(roomId) as RoomOperator
-    room.removeConnection(username)
-  }
+		const room = this.getRoomById(roomId) as RoomOperator
+		room.addConnection(connection, username)
 
-  private getRoomById(roomId: string): undefined | RoomOperator {
-    return this.rooms.find(({ id }) => roomId === id)
-  }
+		const data = { ticket, username }
+		await this.sessionRepository.save(roomId, username, data)
 
+		return data
+	}
+
+	public async removeSession(roomId: string, username: string) {
+		const room = this.getRoomById(roomId) as RoomOperator
+		room.removeConnection(username)
+		await this.sessionRepository.remove(roomId, username)
+	}
+
+	public async removeAllSessions() {
+    for (const room of this.rooms) {
+		  for (const username in room.connections) {
+          await this.removeSession(room.id, username)
+      }
+		}
+	}
+
+	private getRoomById(roomId: string): undefined | RoomOperator {
+		return this.rooms.find(({ id }) => roomId === id)
+	}
 }
 
 export default SessionOperator

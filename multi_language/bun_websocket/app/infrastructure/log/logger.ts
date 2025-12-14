@@ -1,6 +1,6 @@
-import "./configure";
-import { getLogger } from "@logtape/logtape";
+import './configure'
+import { getLogger } from '@logtape/logtape'
 
-const Logger = getLogger(["web_chat_bun", "logger"]);
+const Logger = getLogger(['web_chat_bun', 'logger'])
 
-export default Logger;
+export default Logger
