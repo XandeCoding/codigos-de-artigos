@@ -1,0 +1,15 @@
+FROM node:lts-alpine AS build
+WORKDIR /usr/src/app
+COPY --chown=node:node package*.json tsconfig.json ./
+COPY --chown=node:node /src ./src
+RUN npm ci -s
+RUN npm run build
+RUN npm ci --omit=dev -s
+
+FROM node:lts-alpine AS runner
+WORKDIR /usr/src/app
+COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/src/app/dist ./dist
+USER node
+EXPOSE 3000
+ENTRYPOINT ["node", "./dist/index.js"]
