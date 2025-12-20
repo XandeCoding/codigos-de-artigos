@@ -1,6 +1,6 @@
 import type { RedisClient } from 'bun'
-import type ValueKeyDatabase from '../infrastructure/database/valueKeyDatabase'
-import type { SubscribeCallback } from '../types/websocketCommons'
+import type ValueKeyDatabase from '../../infrastructure/database/valueKeyDatabase'
+import type { SubscribeCallback } from '../../types/websocketCommons'
 
 class Subscriber {
 	private database: ValueKeyDatabase

@@ -1,4 +1,3 @@
-import { sleep } from 'bun'
 import ValueKeyDatabase from './infrastructure/database/valueKeyDatabase'
 import Logger from './infrastructure/log/logger'
 import { requestCounter } from './infrastructure/metrics/metrics'

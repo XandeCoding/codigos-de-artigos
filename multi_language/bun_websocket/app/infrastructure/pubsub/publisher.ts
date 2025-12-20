@@ -1,4 +1,4 @@
-import type ValueKeyDatabase from '../infrastructure/database/valueKeyDatabase'
+import type ValueKeyDatabase from '../../infrastructure/database/valueKeyDatabase'
 
 class Publisher {
 	private database: ValueKeyDatabase
