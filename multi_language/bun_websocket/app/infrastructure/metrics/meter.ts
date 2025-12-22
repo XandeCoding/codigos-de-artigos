@@ -5,9 +5,10 @@ import {
 	PeriodicExportingMetricReader,
 } from '@opentelemetry/sdk-metrics'
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions'
+import { getConfig } from '../config/config'
 
 const exporter = new OTLPMetricExporter({
-	url: 'http://localhost:4318/v1/metrics',
+	url: `${getConfig().otlpHttpUrl}/v1/metrics`,
 })
 
 const metricReader = new PeriodicExportingMetricReader({

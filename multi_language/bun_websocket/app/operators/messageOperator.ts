@@ -57,13 +57,11 @@ class MessageOperator {
 		reason: string,
 	) {
 		Logger.warn`Disconnected, code: ${code}, reason: ${reason}, ws: ${ws.data}`
-		const { roomId, username, ticket } = ws.data
+		const { roomId, username } = ws.data
 
-		if (!roomId || !username || !ticket) return
+		if (!roomId || !username) return
 
-		if (code === 1000) {
-			await this.sessionOperator.removeSession(roomId, username)
-		}
+		await this.sessionOperator.removeSession(roomId, username)
 
 		this.eventCloseSpan(ws, code, reason)
 	}

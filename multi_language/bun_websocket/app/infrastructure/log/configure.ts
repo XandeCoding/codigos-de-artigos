@@ -1,5 +1,6 @@
 import { configure, getConsoleSink } from '@logtape/logtape'
 import { getOpenTelemetrySink } from '@logtape/otel'
+import { getConfig } from '../config/config'
 
 await configure({
 	sinks: {
@@ -7,7 +8,7 @@ await configure({
 		otel: getOpenTelemetrySink({
 			serviceName: 'oltp_service',
 			otlpExporterConfig: {
-				url: 'http://localhost:4318/v1/logs', // TODO: PUT ENV
+				url: `${getConfig().otlpHttpUrl}/v1/logs`,
 			},
 			diagnostics: false, // TODO: PUT ENV
 		}),

@@ -2,5 +2,11 @@
 	"version": "1",
 	"name": "Bun WebSocket",
 	"type": "collection",
-	"ignore": ["node_modules", ".git"]
+	"ignore": ["node_modules", ".git"],
+	"size": 0.0011396408081054688,
+	"filesCount": 8,
+	"clientCertificates": {
+		"enabled": true,
+		"certs": []
+	}
 }

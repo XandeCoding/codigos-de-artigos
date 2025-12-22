@@ -8,7 +8,7 @@ type WebSocketData = {
 	createdAt: number
 	instance: string
 	origin: string
-	ticket?: string
+	ticket: string
 	username?: string
 	roomId?: string
 }

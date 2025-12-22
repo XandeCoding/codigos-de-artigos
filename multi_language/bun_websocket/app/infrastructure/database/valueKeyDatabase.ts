@@ -1,15 +1,29 @@
 import { RedisClient } from 'bun'
+import { getConfig } from '../config/config'
+import Logger from '../log/logger'
 
 class ValueKeyDatabase {
 	private _client: RedisClient
 
 	constructor() {
-		// TODO: COLOCAR PARA LER DE ENV
-		this._client = new RedisClient()
+		this._client = new RedisClient(getConfig().redisUrl, {
+			connectionTimeout: 1000,
+			maxRetries: 1,
+		})
 	}
 
 	get client(): RedisClient {
 		return this._client as RedisClient
+	}
+
+	public async initialize() {
+		this._client.onconnect = () => {
+			Logger.info`Connection with Value Key Database estabilished`
+		}
+		this._client.onclose = () => {
+			Logger.info`Connection with Value Key Database closed`
+		}
+		await this._client.connect()
 	}
 }
 

@@ -1,4 +1,5 @@
 import type { Server, ServerWebSocket } from 'bun'
+import { getConfig } from '../infrastructure/config/config'
 import Logger from '../infrastructure/log/logger'
 import type { Session } from '../types/session'
 import type { Message, WebSocketData } from '../types/websocketCommons'
@@ -12,8 +13,9 @@ function getWebSocketData(
 	return {
 		data: {
 			createdAt: Date.now(),
-			instance: process.env?.HOSTNAME ?? NOT_FOUND,
+			instance: getConfig().hostname,
 			origin: getOrigin(server, req),
+			ticket: crypto.randomUUID(),
 		},
 	}
 }
@@ -25,7 +27,6 @@ function setConnectedData(
 ): WebSocketData {
 	ws.data = {
 		...ws.data,
-		ticket: crypto.randomUUID(),
 		roomId,
 		username,
 	}

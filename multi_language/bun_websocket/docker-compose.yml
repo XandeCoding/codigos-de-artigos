@@ -1,9 +1,85 @@
 services:
+  dragonfly:
+    image: "docker.dragonflydb.io/dragonflydb/dragonfly"
+    networks:
+      - chat 
+    ulimits:
+      memlock: -1
+    ports:
+      - "6379:6379"
+    command: ["--maxmemory", "256mb", "--proactor_threads", "1"]
+
+  traefik:
+    image: traefik:v3.6
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - chat 
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./letsencrypt:/letsencrypt
+    command:
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
+      - "--entrypoints.websecure.address=:443"
+      - "--entrypoints.websecure.http.tls=true"
+
+      - "--certificatesresolvers.le.acme.email=af.santos1998@gmail.com"
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.le.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.le.acme.tlschallenge=true"
+      - "--entrypoints.websecure.http.tls.certresolver=le"
+
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--providers.docker.network=chat"
+
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+
+      - "--log.level=INFO"
+      - "--accesslog=true"
+      - "--metrics.prometheus=true"
+    labels:
+      - "traefik.enable=true"
+
+      - "traefik.http.routers.dashboard.rule=Host(`dashboard.docker.localhost`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.tls=true"
+
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=admin:$$apr1$$nEfPjPMM$$Al7rcCL201y.9/jvJK4Fu."
+      - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
+
+  chat:
+    build: .
+    environment:
+      ENVIRONMENT: "PRODUCTION"
+      REDIS_URL: "redis://dragonfly:6379"
+      OTLP_HTTP_URL: "http://otlp_collector:4318" 
+    networks:
+      - chat 
+    ports:
+      - "3000:3000"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.chat.rule=Host(`chat.docker.localhost`)"
+      - "traefik.http.routers.chat.entrypoints=websecure"
+      - "traefik.http.routers.chat.tls=true"
+ 
   otlp_collector:
     image: "otel/opentelemetry-collector-contrib:0.141.0"
     volumes:
       - ./otel_config.yaml:/etc/otelcol/config.yaml
     command: ["--config=/etc/otelcol/config.yaml"]
+    networks:
+      - chat 
     ports:
       - "4318:4318"
 
@@ -14,6 +90,8 @@ services:
     environment:
       storageDataPath: "victoria-metrics-data"
       retentionPeriod: "1d"
+    networks:
+      - chat 
     ports:
       - 8428:8428
 
@@ -24,21 +102,20 @@ services:
     environment:
       storageDataPath: "victoria-metrics-data"
       retentionPeriod: "1d"
+    networks:
+      - chat 
     ports:
       - 9428:9428
 
   jaeger:
       image: "jaegertracing/all-in-one:1.76.0"
+      networks:
+      - chat 
       ports:
         - "16686:16686"
         - "14250:14250"
         - "4317:4317"
 
-  dragonfly:
-    image: "docker.dragonflydb.io/dragonflydb/dragonfly"
-    ulimits:
-      memlock: -1
-    ports:
-      - "6379:6379"
-    command: ["--maxmemory", "256mb", "--proactor_threads", "1"]
-
+networks:
+  chat:
+    name: chat

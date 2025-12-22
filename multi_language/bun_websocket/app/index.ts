@@ -10,6 +10,7 @@ import type { Room } from './types/room'
 import type { WebSocketData } from './types/websocketCommons'
 import { getWebSocketData } from './utils/websocket'
 
+Logger.info`App has started`
 const rooms: Room[] = [
 	{
 		id: '1',
@@ -24,6 +25,7 @@ const subscriber = new Subscriber(database)
 const sessionOperator = new SessionOperator(rooms, sessionRepository)
 const messageOperator = new MessageOperator(sessionOperator, publisher)
 
+await database.initialize()
 await subscriber.initialize()
 sessionOperator.initialize(subscriber)
 

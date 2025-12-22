@@ -6,9 +6,10 @@ import {
 	SimpleSpanProcessor,
 } from '@opentelemetry/sdk-trace-node'
 import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions'
+import { getConfig } from '../config/config'
 
 const exporter = new OTLPTraceExporter({
-	url: 'http://localhost:4318/v1/traces',
+	url: `${getConfig().otlpHttpUrl}/v1/traces`,
 })
 
 const provider = new NodeTracerProvider({

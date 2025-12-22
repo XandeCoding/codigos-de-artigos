@@ -1,0 +1,23 @@
+meta {
+  name: Message - Traefik
+  type: ws
+  seq: 6
+}
+
+ws {
+  url: wss://chat.docker.localhost
+  body: ws
+  auth: inherit
+}
+
+body:ws {
+  name: message 1
+  type: json
+  content: '''
+    {
+      "username": "user 2",
+      "roomId": "1",
+      "text": "bão?"
+    }
+  '''
+}
