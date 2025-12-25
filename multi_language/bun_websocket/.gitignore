@@ -1,5 +1,6 @@
 # dependencies (bun install)
 node_modules
+bun_websocket
 
 # output
 out
@@ -34,9 +35,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .DS_Store
 
 # Docker compose volumes
-victoriametrics
-bun_websocket
-letsencrypt
+docker_volumes
 
 # Certificates
 *.pem
