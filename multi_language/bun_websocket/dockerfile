@@ -1,15 +1,13 @@
-FROM oven/bun:1.3.5-alpine AS base
+FROM oven/bun:1.3.5-alpine AS builder 
 WORKDIR /usr/src/app
-
-FROM base AS builder
 COPY --chown=node:node package.json bun.lock .
 COPY --chown=node:node ./app ./app
 RUN bun install --frozen-lockfile
 RUN bun compile
 
-FROM base AS runner
+FROM alpine:3.23.2 AS runner
+WORKDIR /usr/src/app
 COPY --from=builder /usr/src/app/bun_websocket .
 USER bun
 EXPOSE 3000/tcp
 ENTRYPOINT [ "./bun_websocket" ]
-
