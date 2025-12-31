@@ -1,6 +1,3 @@
-type Session = {
-	ticket: string
-	username: string
-}
+type Session = { username: string }
 
 export type { Session }

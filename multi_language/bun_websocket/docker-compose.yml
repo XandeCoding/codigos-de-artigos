@@ -71,7 +71,10 @@ services:
       - "traefik.http.services.chat_service.loadbalancer.sticky.cookie=true"
       - "traefik.http.services.chat_service.loadbalancer.sticky.cookie.name=chat_sticky_cookie"
       - "traefik.http.services.chat_service.loadbalancer.sticky.cookie.secure=true"
- 
+    deploy:
+      mode: replicated
+      replicas: 3
+
   otlp_collector:
     image: "otel/opentelemetry-collector-contrib:0.141.0"
     volumes:
@@ -125,6 +128,19 @@ services:
       - "traefik.http.routers.jaeger.tls=true"
       - "traefik.http.routers.jaeger.service=jaeger_service"
       - "traefik.http.services.jaeger_service.loadbalancer.server.port=16686"
+
+  stats:
+    image: "drakonis96/dockerstats:latest"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.stats.rule=Host(`stats.docker.localhost`)"
+      - "traefik.http.routers.stats.entrypoints=websecure"
+      - "traefik.http.routers.stats.tls=true"
+      - "traefik.http.routers.stats.service=stats_service"
+      - "traefik.http.services.stats_service.loadbalancer.server.port=5001"
+
 
 networks:
   chat:

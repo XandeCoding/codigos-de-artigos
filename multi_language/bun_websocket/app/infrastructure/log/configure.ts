@@ -10,7 +10,7 @@ await configure({
 			otlpExporterConfig: {
 				url: `${getConfig().otlpHttpUrl}/v1/logs`,
 			},
-			diagnostics: false, // TODO: PUT ENV
+			diagnostics: false,
 		}),
 	},
 	loggers: [

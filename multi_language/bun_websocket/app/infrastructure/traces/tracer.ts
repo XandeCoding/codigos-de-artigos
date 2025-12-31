@@ -11,7 +11,7 @@ import { getConfig } from '../config/config'
 const exporter = new OTLPTraceExporter({
 	url: `${getConfig().otlpHttpUrl}/v1/traces`,
 })
-
+// TODO: COLOCAR BATCH EXPORTER
 const provider = new NodeTracerProvider({
 	resource: resourceFromAttributes({
 		[ATTR_SERVICE_NAME]: 'web_chat_bun_service',

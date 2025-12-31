@@ -1,10 +1,8 @@
 import type { Server, ServerWebSocket } from 'bun'
 import { getConfig } from '../infrastructure/config/config'
 import Logger from '../infrastructure/log/logger'
-import type { Session } from '../types/session'
 import type { Message, WebSocketData } from '../types/websocketCommons'
-
-const NOT_FOUND = 'NOT-FOUND'
+import { NOT_FOUND_LABEL } from './constants'
 
 function getWebSocketData(
 	server: Server<WebSocketData>,
@@ -15,37 +13,27 @@ function getWebSocketData(
 			createdAt: Date.now(),
 			instance: getConfig().hostname,
 			origin: getOrigin(server, req),
-			ticket: crypto.randomUUID(),
 		},
 	}
 }
 
 function setConnectedData(
 	ws: ServerWebSocket<WebSocketData>,
-	roomId: string,
 	username: string,
 ): WebSocketData {
 	ws.data = {
 		...ws.data,
-		roomId,
 		username,
 	}
 
 	return ws.data
 }
 
-function ticketIsValid(
-	ws: ServerWebSocket<WebSocketData>,
-	session: Session,
-): boolean {
-	return !!session && ws.data.ticket === session.ticket
-}
-
 function getOrigin(server: Server<WebSocketData>, req: Request): string {
 	const requestIP = server.requestIP(req)
 
 	if (!requestIP) {
-		return NOT_FOUND
+		return NOT_FOUND_LABEL
 	}
 
 	return `${requestIP.address}:${requestIP.port}`
@@ -53,13 +41,13 @@ function getOrigin(server: Server<WebSocketData>, req: Request): string {
 
 function parseMessage(messageRaw: string): Message {
 	try {
-		const { roomId, username, text } = JSON.parse(messageRaw)
+		const { username, text } = JSON.parse(messageRaw)
 
-		return { roomId, username, text }
+		return { username, text }
 	} catch (error) {
 		Logger.error`Error trying to parse message ${error}`
 		throw error
 	}
 }
 
-export { getWebSocketData, setConnectedData, ticketIsValid, parseMessage }
+export { getWebSocketData, setConnectedData, parseMessage }

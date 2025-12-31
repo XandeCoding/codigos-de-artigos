@@ -1,19 +1,15 @@
 import type { ServerWebSocket } from 'bun'
 import Logger from '../infrastructure/log/logger'
-import type { Room, RoomConnections } from '../types/room'
+import type { Conections } from '../types/connection'
 import type {
 	SubscribeCallback,
 	WebSocketData,
 } from '../types/websocketCommons'
 
-class RoomOperator {
-	public readonly id: string
-	public readonly name: string
-	public connections: RoomConnections
+class ConnectionsOperator {
+	public connections: Conections
 
-	constructor({ id, name }: Room) {
-		this.id = id
-		this.name = name
+	constructor() {
 		this.connections = {}
 	}
 
@@ -39,4 +35,4 @@ class RoomOperator {
 	}
 }
 
-export default RoomOperator
+export default ConnectionsOperator

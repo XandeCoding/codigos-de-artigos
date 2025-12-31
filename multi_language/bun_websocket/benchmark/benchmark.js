@@ -1,22 +1,21 @@
-import ws from "k6/ws";
-import { check } from "k6";
-
+import { check } from 'k6'
+import ws from 'k6/ws'
 
 const iterations = 100
-const message = `{"username":"${__VU}","roomId":"1","text":"bão?"}`
+const message = `{"username":"${__VU}","text":"bão?"}`
 
 export const options = {
-  insecureSkipTLSVerify: true,
+	insecureSkipTLSVerify: true,
 }
 
 export default function () {
-  const url = 'wss://chat.docker.localhost'
-  // const url = 'ws://localhost:3000' 
+	const url = 'wss://chat.docker.localhost'
+	// const url = 'ws://localhost:3000'
 	const params = {}
 
 	const res = ws.connect(url, params, (socket) => {
 		socket.on('open', function open() {
-			console.log(`VU ${__VU}: connected`)
+			//console.log(`VU ${__VU}: connected`)
 
 			// send multiple messages
 			for (let i = 0; i < iterations; i++) {
@@ -33,12 +32,12 @@ export default function () {
 		})
 
 		socket.on('close', () => {
-			console.log(`VU ${__VU}: disconnected`)
+			//console.log(`VU ${__VU}: disconnected`)
 		})
 
 		socket.on('error', (e) => {
 			if (e.error() !== 'websocket: close sent') {
-				console.error('An unexpected error occurred: ', e.error())
+				//console.error('An unexpected error occurred: ', e.error())
 			}
 		})
 	})
