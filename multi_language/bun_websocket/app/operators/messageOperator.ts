@@ -11,7 +11,7 @@ import {
 } from '../telemetry/messageEvents'
 import type { WebSocketData } from '../types/websocketCommons'
 import { TOPIC_NAME } from '../utils/constants'
-import { parseMessage } from '../utils/websocket'
+import { parseMessage, setConnectedData } from '../utils/websocket'
 import type SessionOperator from './sessionOperator'
 
 class MessageOperator {
@@ -27,7 +27,7 @@ class MessageOperator {
 		ws: ServerWebSocket<WebSocketData>,
 		rawMessage: string,
 	) {
-		const span = eventMessageReceivedSpan(rawMessage)
+		const span = eventMessageReceivedSpan(rawMessage, ws.remoteAddress)
 
 		try {
 			const { username } = parseMessage(rawMessage)
@@ -37,11 +37,14 @@ class MessageOperator {
 
 			if (!session) {
 				const session = await this.sessionOperator.createSession(ws, username)
+				setConnectedData(ws, username)
 				eventCreatedSessionSpan(span, session)
 			}
 
 			await this.publisher.publish(TOPIC_NAME, rawMessage)
-			eventPublishSpan(span)
+			eventPublishSpan(span, rawMessage, {
+				username: ws.data.username as string,
+			})
 		} catch (error) {
 			if (error instanceof Error) eventGenericErrorSpan(span, error)
 		}
@@ -55,11 +58,12 @@ class MessageOperator {
 		Logger.warn`Disconnected, code: ${code}, reason: ${reason}, ws: ${ws.data}`
 		const { username } = ws.data
 
+		// TODO: TEM QUE TER UM ERRO
 		if (!username) return
 
 		await this.sessionOperator.removeSession(username)
 
-		eventCloseSpan(ws, code, reason)
+		eventCloseSpan(ws, code, reason, { username })
 	}
 }
 

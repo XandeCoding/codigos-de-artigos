@@ -73,7 +73,7 @@ services:
       - "traefik.http.services.chat_service.loadbalancer.sticky.cookie.secure=true"
     deploy:
       mode: replicated
-      replicas: 3
+      replicas: 1
 
   otlp_collector:
     image: "otel/opentelemetry-collector-contrib:0.141.0"

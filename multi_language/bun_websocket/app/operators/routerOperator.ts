@@ -1,9 +1,11 @@
 import type { Server } from 'bun'
 import Logger from '../infrastructure/log/logger'
+import { requestsMetric } from '../infrastructure/metrics/metrics'
 import { getWebSocketData } from '../utils/websocket'
 
 function routerOperatorHandler(req: Request, server: Server<object>) {
 	const { pathname } = new URL(req.url)
+	requestsMetric.add(1, { pathname })
 
 	switch (pathname) {
 		case '/chat':
