@@ -6,6 +6,11 @@ receivers:
         cors:
           allowed_origins:
 
+  docker_stats:
+    endpoint: unix:///var/run/docker.sock
+    collection_interval: 5s
+
+
 exporters:
 
   otlp:
@@ -26,7 +31,7 @@ service:
       exporters: [otlphttp]
 
     metrics:
-      receivers: [otlp]
+      receivers: [otlp, docker_stats]
       exporters: [otlphttp]
 
     traces:

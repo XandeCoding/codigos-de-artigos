@@ -1,8 +1,8 @@
 import { check } from 'k6'
 import ws from 'k6/ws'
 
-const iterations = 100
-const message = `{"username":"${__VU}","text":"bão?"}`
+const iterations = 1000
+const message = `{"username":"usuario_${__VU}","text":"Que a Força esteja com você?"}`
 
 export const options = {
 	insecureSkipTLSVerify: true,

@@ -78,10 +78,30 @@ services:
   otlp_collector:
     image: "otel/opentelemetry-collector-contrib:0.141.0"
     volumes:
-      - ./otel_config.yaml:/etc/otelcol/config.yaml
+      - ./otel_config.yaml:/etc/otelcol/config.yaml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
     command: ["--config=/etc/otelcol/config.yaml"]
     networks:
       - chat 
+
+  grafana:
+    image: "grafana/grafana:12.4.0-19350470871"
+    volumes:
+      - ./docker_volumes/grafana:/var/lib/grafana
+      - ./datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml
+    networks:
+      - chat
+    environment:
+      GF_PLUGINS_PREINSTALL: victoriametrics-metrics-datasource,victoriametrics-logs-datasource
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.rule=Host(`grafana.docker.localhost`)"
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls=true"
+      - "traefik.http.routers.grafana.service=grafana_service"
+      - "traefik.http.services.grafana_service.loadbalancer.server.port=3000"
 
   victoria_metrics:
     image: "victoriametrics/victoria-metrics:v1.131.0"
@@ -91,14 +111,7 @@ services:
       storageDataPath: "victoria-metrics-data"
       retentionPeriod: "1d"
     networks:
-      - chat 
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.victoria_metrics.rule=Host(`victoria_metrics.docker.localhost`)"
-      - "traefik.http.routers.victoria_metrics.entrypoints=websecure"
-      - "traefik.http.routers.victoria_metrics.tls=true"
-      - "traefik.http.routers.victoria_metrics.service=victoria_metrics_service"
-      - "traefik.http.services.victoria_metrics_service.loadbalancer.server.port=8428"
+      - chat
 
   victoria_logs:
     image: "victoriametrics/victoria-logs:v1.40.0"
@@ -108,14 +121,7 @@ services:
       storageDataPath: "victoria-metrics-data"
       retentionPeriod: "1d"
     networks:
-      - chat 
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.victoria_logs.rule=Host(`victoria_logs.docker.localhost`)"
-      - "traefik.http.routers.victoria_logs.entrypoints=websecure"
-      - "traefik.http.routers.victoria_logs.tls=true"
-      - "traefik.http.routers.victoria_logs.service=victoria_logs_service"
-      - "traefik.http.services.victoria_logs_service.loadbalancer.server.port=9428"
+      - chat
 
   jaeger:
     image: "cr.jaegertracing.io/jaegertracing/jaeger:2.13.0" 
@@ -128,19 +134,6 @@ services:
       - "traefik.http.routers.jaeger.tls=true"
       - "traefik.http.routers.jaeger.service=jaeger_service"
       - "traefik.http.services.jaeger_service.loadbalancer.server.port=16686"
-
-  stats:
-    image: "drakonis96/dockerstats:latest"
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.stats.rule=Host(`stats.docker.localhost`)"
-      - "traefik.http.routers.stats.entrypoints=websecure"
-      - "traefik.http.routers.stats.tls=true"
-      - "traefik.http.routers.stats.service=stats_service"
-      - "traefik.http.services.stats_service.loadbalancer.server.port=5001"
-
 
 networks:
   chat:
