@@ -1,4 +1,4 @@
-import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http'
+import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-grpc'
 import { resourceFromAttributes } from '@opentelemetry/resources'
 import {
 	MeterProvider,
@@ -8,12 +8,12 @@ import { ATTR_SERVICE_NAME } from '@opentelemetry/semantic-conventions'
 import { getConfig } from '../config/config'
 
 const exporter = new OTLPMetricExporter({
-	url: `${getConfig().otlpHttpUrl}/v1/metrics`,
+	url: `${getConfig().otlpHttpUrl}`,
 })
 
 const metricReader = new PeriodicExportingMetricReader({
 	exporter,
-	exportIntervalMillis: 1000,
+	exportIntervalMillis: 5000,
 })
 
 const meterProvider = new MeterProvider({

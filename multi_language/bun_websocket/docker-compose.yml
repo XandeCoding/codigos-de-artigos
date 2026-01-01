@@ -59,7 +59,7 @@ services:
     environment:
       ENVIRONMENT: "PRODUCTION"
       REDIS_URL: "redis://dragonfly:6379"
-      OTLP_HTTP_URL: "http://otlp_collector:4318" 
+      OTLP_HTTP_URL: "http://otlp_collector:4317" 
     networks:
       - chat 
     labels:
@@ -82,7 +82,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     command: ["--config=/etc/otelcol/config.yaml"]
     networks:
-      - chat 
+      - chat
 
   grafana:
     image: "grafana/grafana:12.4.0-19350470871"
