@@ -1,0 +1,89 @@
+services:
+  
+  traefik:
+    image: traefik:v3.5
+    container_name: traefik
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    environment:
+      CF_API_EMAIL: ${CF_API_EMAIL}
+      CF_DNS_API_TOKEN: ${CF_DNS_API_TOKEN}
+      #TRAEFIK_DASHBOARD_CREDENTIALS: ${TRAEFIK_DASHBOARD_CREDENTIALS}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./traefik.yml:/traefik.yml:ro
+      - ./data/acme.json:/acme.json
+    labels:
+       - "traefik.enable=true"
+       - "traefik.http.routers.traefik.rule=Host(`traefik.local.aleserver.com.br`)"
+       - "traefik.http.routers.traefik.entrypoints=websecure"
+       - "traefik.http.routers.traefik.service=api@internal"
+       - "traefik.http.middlewares.traefik-auth.basicauth.users=${TRAEFIK_DASHBOARD_CREDENTIALS}"
+       - "traefik.http.routers.traefik.middlewares=traefik-auth@docker"
+       - "traefik.http.routers.traefik.tls=true"
+       - "traefik.http.services.api@internal.loadbalancer.server.port=8080"
+       - "traefik.http.routers.traefik.tls.certresolver=letencrypt"
+       - "traefik.http.routers.traefik.tls.domains[0].main=local.aleserver.com.br"
+       - "traefik.http.routers.traefik.tls.domains[0].sans=*.local.aleserver.com.br"
+
+  whoami:
+    image: traefik/whoami
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whoami.rule=Host(`whoami.local.aleserver.com.br`)"
+      - "traefik.http.routers.whoami.entrypoints=websecure"
+      - "traefik.http.routers.whoami.tls=true"
+      - "traefik.http.routers.whoami.tls.certresolver=letencrypt"
+      - "traefik.http.routers.whoami.service=whoami_service"
+      - "traefik.http.services.whoami_service.loadbalancer.server.port=80"
+
+#  jellyfin:
+#    image: jellyfin/jellyfin:10.11.5
+#    volumes:
+#      - ./config:/config
+#      - ./cache:/cache
+#      - ./media/filmes:/media/filmes:ro
+#      - ./media/novelas:/media/novelas:ro
+#      - ./media/series:/media/series:ro
+#      - ./media/animes:/media/animes:ro
+#    restart: 'unless-stopped'
+#    extra_hosts:
+#      - 'host.docker.internal:host-gateway'
+#    networks:
+#      - proxy
+#    labels:
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.aleserver.com.br`)"
+#      - "traefik.http.routers.jellyfin.entrypoints=websecure"
+#      - "traefik.http.routers.jellyfin.tls=true"
+#      - "traefik.http.routers.jellyfin.tls.certresolver=letencrypt"
+#      - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
+#  
+#  sftp:
+#    image: atmoz/sftp
+#    volumes:
+#      - ./media:/home/alexandre/upload
+#    ports:
+#      - 2222:22
+#    environment:
+#      FTP_USERNAME: ${FTP_USERNAME}
+#      FTP_PASSWORD: ${FTP_PASSWORD}
+#    restart: 'unless-stopped' 
+#    command: "${FTP_USERNAME}:${FTP_PASSWORD}:1000:1000"
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  media_files:

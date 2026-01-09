@@ -1,0 +1,7 @@
+/cache
+/config
+/media
+/data
+.tool-versions
+.env
+
