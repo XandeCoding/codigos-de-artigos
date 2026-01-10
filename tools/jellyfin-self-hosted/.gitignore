@@ -1,7 +1,7 @@
-/cache
-/config
+/filebrowser
+/jellyfin
 /media
-/data
+/traefik
 .tool-versions
 .env
 
