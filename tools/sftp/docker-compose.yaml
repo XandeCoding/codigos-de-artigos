@@ -1,0 +1,10 @@
+services:
+  sftp:
+    image: atmoz/sftp
+    restart: 'unless-stopped' 
+    volumes:
+      - ./files:/home/alexandre/upload
+      - ./creds/key.pub:/home/alexandre/.ssh/keys/key.pub:ro
+      - ./users.conf:/etc/sftp/users.conf:ro
+    ports:
+      - 2222:22
