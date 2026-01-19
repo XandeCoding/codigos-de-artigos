@@ -1,16 +1,15 @@
-FROM oven/bun:1.3.5-alpine AS base 
+FROM oven/bun:1.3.6-alpine AS compiler 
 WORKDIR /usr/src/app
-
-FROM base AS install
 COPY package.json bun.lock .
-RUN bun install --frozen-lockfile --production
-
-FROM base AS code 
 COPY ./app ./app
+RUN bun install --frozen-lockfile --production
+RUN bun build --production --compile --minify --sourcemap=inline --outfile=bun_websocket --target=bun-linux-x64-musl ./app/index.ts 
+RUN apk --no-cache add upx
+RUN upx bun_websocket 
 
-FROM base AS runner
-COPY --from=install /usr/src/app/node_modules .
-COPY --from=code /usr/src/app .
-USER bun
+FROM alpine:3.23.2 AS runner
+RUN apk add --no-cache libstdc++
+WORKDIR /usr/src/app
+COPY --from=compiler /usr/src/app/bun_websocket .
 EXPOSE 3000/tcp
-ENTRYPOINT [ "bun", "run", "./app/index.ts" ]
+ENTRYPOINT [ "./bun_websocket" ]
