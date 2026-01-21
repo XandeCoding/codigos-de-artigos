@@ -3,7 +3,8 @@
 Bom dia a todos! Espero que tenha os encontrado bem. Hoje gostaria de compartilhar com vocês quase uma versão 2.0 do meu antigo texto
 de [Docker Compose - Servidor FTP](), comigo querendo trazer algumas melhorias de segurança e dicas
 de boas práticas esse texto surgiu.
-Não me entenda mal o texto anterior ele tem seu charme se você quer subir um FTP básico
+
+Não me entenda mal, o texto anterior ele tem seu charme, se você quer subir um FTP básico
 e rápido ele é sua pedida.
 
 Bem caso não conheça o protocolo **SFTP** (_Secure File Transfer Protocol ou SSH File Transfer Protocol_)
@@ -21,9 +22,11 @@ sftp
 |- creds
 ```
 
-E para não termos problemas de permissionamento é bom já garantirmos os acessos a quem deve, para isso
-aconselho descobrir o usuário que vai ser utilizado e adicionar as pastas no mesmo grupo deste usuário,
-além de setar as permissões via chmod.
+E para não termos problemas de permissionamento é bom já garantirmos os acessos a quem deve, para
+evitarmos problemas ao apagar ou editar arquivos criados pelo container Docker.
+
+Para evitar isso aconselho descobrir o usuário que vai ser utilizado e adicionar as
+pastas no mesmo grupo deste usuário, além de setar as permissões via chmod.
 
 ```
 Obs.: Caso o usuário que criou as pastas seja o mesmo que vai executar o container docker, **provável
@@ -33,10 +36,10 @@ que esse passo não seja necessário embora seja recomendado**
 Por facilidade vou pressupor que o usuário que está sendo utilizado na shell é o mesmo que vai subir o docker,
 então vamos lá!
 
-1 - Utilizar o comando `who` para descobrir o usuário atual
+1 - Utilizar o comando `whoami` para descobrir o usuário atual
 ```
-➜ who
-alexandre              2026-01-20 18:40
+➜ whoami
+alexandre
 ```
 
 2 - No meu caso o usuário se chama _alexandre_ agora vamos checar qual o id do usuário
@@ -47,8 +50,8 @@ uid=1000(alexandre) gid=1000(alexandre) grupos=1000(alexandre),4(adm),24(cdrom),
 
 ```
 
-3 - Está vendo aquele `uid` é que precede o nosso usuário? O valor dentro dele que queremos,
-no caso _1000_, vamos precisar disso quando formos criar os usuários com acesso ao SFTP
+3 - Está vendo o valor de `uid` que precede o nome do nosso usuário em parenteses? O valor dentro dele
+que queremos, no meu caso é _1000_, vamos precisar disso quando formos criar os usuários com acesso ao SFTP
 
 4 - Adicione as pastas necessárias no grupo, com o comando _chown_ na pasta que estamos trabalhando,
 com o usuário e grupo no seguinte formato _usuario:grupo_
@@ -66,12 +69,16 @@ chmod 774 -R ./sftp
 
 ## Criar o arquivo de usuários
 
-Essa aplicação que vamos estar utilizando hoje ela permite que os usuários sejam passados
+Essa aplicação que utilizar hoje ela permite que os usuários sejam passados
 via arquivo, eu acho essa forma mais fácil de gerenciar que via comando ou env então bora criar
 esse arquivo.
 
-Basta criar um arquivo _users.conf_ e adicionar o usuário (pode ser qualquer um) e o seu id este sendo
-o que pegamos no ponto passado _(caso seja um apressadinho tente 1000 ou 1001)_.
+Basta criar um arquivo _users.conf_ e adicionar cada informação do usuário no seguinte
+formato `usuario:senha:uid` vou explicar cada campo:
+
+- **usuario:** Pode ser qualquer nome de usuario, inclusive o do seu usuário atual (meu caso)
+- **senha:** Vou deixar vazio esse campo pois vamos utilizar uma chave _SSH_ para autenticação
+- **uid:** O uid que pegamos no ponto passado _(caso seja um apressadinho tente 1000 ou 1001)_.
 
 O conteúdo do meu **users.conf** ficará desse jeito:
 
@@ -86,7 +93,7 @@ Para gerar as chaves eu vou utilizar o ssh-keygen que já vem instalado no ubunt
 1 - Entre na pasta _creds_ dentro de __/sftp__
 
 2 - Utilize o comando **ssh-keygen -t rsa** e digite o nome do arquivo, pode ser qualquer um
-eu coloquei _creds_ 
+eu coloquei _key_ 
 
 3 - Após isso ele pergunta se você quer adicionar uma senha, é opcional, eu não costumo adicionar
 lembrando que se adicionada ela será pedida em cada acesso
