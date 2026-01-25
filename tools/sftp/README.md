@@ -1,5 +1,7 @@
 # Docker Compose - SFTP gerenciando arquivos com segurança
 
+![Capa]({{ get_img_url('tools/sftp/media/capa.png') }})
+
 Bom dia a todos! Espero que tenha os encontrado bem. Hoje gostaria de compartilhar com vocês quase uma versão 2.0 do meu antigo texto
 de [Docker Compose - Servidor FTP](), comigo querendo trazer algumas melhorias de segurança e dicas
 de boas práticas esse texto surgiu.
