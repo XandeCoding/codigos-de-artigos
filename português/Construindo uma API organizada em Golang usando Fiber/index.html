@@ -1,0 +1,1364 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Como%20instalar%20pacotes%20Snap/">
+      
+      
+        <link rel="next" href="../Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+    
+    
+      
+        <title>Construindo uma API organizada em Golang usando Fiber - Meus Textos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#construindo-uma-api-organizada-em-golang-usando-fiber" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Meus Textos" class="md-header__button md-logo" aria-label="Meus Textos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Meus Textos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Construindo uma API organizada em Golang usando Fiber
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Selecione o idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/português" hreflang="pt-BR" class="md-select__link">
+              Portuguese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/english" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Meus Textos" class="md-nav__button md-logo" aria-label="Meus Textos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Meus Textos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    English
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            English
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Article Code
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Building%20an%20Organized%20API%20in%20Golang%20Using%20Fiber/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building an Organized API in Golang Using Fiber
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Docker%20Compose%20-%20FTP%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - FTP Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Docker%20Compose%20-%20MariaDB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - MariaDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Docker%20Compose%20-%20Observability%20made%20easy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Observability made easy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Docker%20Compose%20-%20SFTP%3A%20Managing%20files%20securely/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose   SFTP: Managing files securely
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Docker%20Compose%20-%20Simple%20Kafka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Simple Kafka
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Dockerfile%20-%20Node%20with%20TypeScript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dockerfile - Node with TypeScript
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/How%20to%20Install%20Applications%20Using%20Snap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Install Applications Using Snap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/Spinning%20Up%20PostgreSQL%20with%20Docker%20Compose%20%2B%20Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Spinning Up PostgreSQL with Docker Compose + Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../english/%F0%9F%A7%A9%20Automated%20Documentation%20using%20MkDocs%20and%20Python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧩 Automated Documentation using MkDocs and Python
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Português
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Português
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Códigos de Artigos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Como%20instalar%20pacotes%20Snap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Como instalar pacotes Snap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Construindo uma API organizada em Golang usando Fiber
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Construindo uma API organizada em Golang usando Fiber
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#o-que-essa-api-faz" class="md-nav__link">
+    <span class="md-ellipsis">
+      O que essa API faz?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estrutura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estrutura
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estrutura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gomod" class="md-nav__link">
+    <span class="md-ellipsis">
+      go.mod
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkg-e-maingo" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg e main.go
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgconfigurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/configurations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgentities" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/entities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgrepositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/repositories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgroutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/routes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkghandlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/handlers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusão
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Criando uma API de páginas estáticas básica com Deno 🦕
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20Kafka%20simples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Kafka simples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20MariaDB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - MariaDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20SFTP%20gerenciando%20arquivos%20com%20seguran%C3%A7a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - SFTP gerenciando arquivos com segurança
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20Servidor%20FTP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Servidor FTP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20Stack%20de%20Observabilidade%20sem%20complica%C3%A7%C3%A3o/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Stack de Observabilidade sem complicação
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dockerfile%20-%20Node%20com%20Typescript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dockerfile - Node com Typescript
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Rodando%20PostgreSQL%20com%20Docker%20Compose%20%2B%20Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rodando PostgreSQL com Docker Compose + Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Usando%20DDD%20com%20FastAPI%20e%20subaplica%C3%A7%C3%B5es/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usando DDD com FastAPI e subaplicações
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%F0%9F%A5%96%20Bun%20e%20Node%20%E2%80%93%20Ser%C3%A1%20que%20o%20p%C3%A3ozinho%20tem%20chance%3F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🥖 Bun e Node – Será que o pãozinho tem chance?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%F0%9F%A7%A9%20Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧩 Documentação Automática usando MkDocs e Python
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#o-que-essa-api-faz" class="md-nav__link">
+    <span class="md-ellipsis">
+      O que essa API faz?
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#estrutura" class="md-nav__link">
+    <span class="md-ellipsis">
+      Estrutura
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Estrutura">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#gomod" class="md-nav__link">
+    <span class="md-ellipsis">
+      go.mod
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkg-e-maingo" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg e main.go
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgconfigurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/configurations
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgentities" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/entities
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgrepositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/repositories
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkgroutes" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/routes
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#pkghandlers" class="md-nav__link">
+    <span class="md-ellipsis">
+      pkg/handlers
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conclusao" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conclusão
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="construindo-uma-api-organizada-em-golang-usando-fiber">Construindo uma API organizada em Golang usando Fiber</h1>
+<p>Depois de passar um tempo explorando Go e enfrentando alguns desafios com seu sistema de pacotes (aqui faço um <em>mea culpa</em>, pois é um sistema muito interessante quando bem utilizado), comecei a refletir sobre a melhor forma de organizar a API que estava desenvolvendo como estudo.</p>
+<p>Consultei vários exemplos, inclusive do repositório do <a href="https://github.com/gofiber/recipes">Fiber</a>, e cheguei a uma estrutura que considero legível e fácil de expandir com novas funcionalidades.</p>
+<blockquote>
+<p><strong>Observação:</strong> Não afirmo que esta seja a melhor forma de organizar uma API em Go, mas foi a que atendeu às minhas necessidades e acredito que possa ser útil em muitos casos onde uma API genérica é necessária.</p>
+</blockquote>
+<h2 id="o-que-essa-api-faz">O que essa API faz?</h2>
+<p><a href="https://github.com/XandeCoding/codigos-de-artigos/tree/main/golang/api_simples"><strong>Link do repositório</strong></a></p>
+<p>Esta API foi desenvolvida para armazenar informações sobre livros e possui apenas três endpoints:</p>
+<ul>
+<li><strong>GET:</strong> Retorna informações sobre um livro.</li>
+<li><strong>PUT:</strong> Adiciona ou altera informações sobre um livro.</li>
+<li><strong>DELETE:</strong> Exclui as informações de um livro.</li>
+</ul>
+<p>Implementei apenas o essencial, utilizando o framework Fiber, que tem uma abordagem semelhante ao Express.js, algo que gostei bastante, combinado com as vantagens do Go, como menor consumo de memória e alta velocidade. Os dados são armazenados em um Redis, que pode ser inicializado usando um <a href="https://github.com/XandeCoding/codigos-de-artigos/blob/api/go-simple-api/golang/api_simples/docker-compose.yml">docker-compose</a>.</p>
+<h2 id="estrutura">Estrutura</h2>
+<pre><code class="language-shell">| api_simples
+├── docker-compose.yml
+├── docs
+│   └── estrutura.png
+├── go.mod
+├── go.sum
+├── main.go
+├── pkg
+│   ├── configurations
+│   │   └── database.go
+│   ├── entities
+│   │   └── book.go
+│   ├── handlers
+│   │   └── book_handler.go
+│   ├── repositories
+│   │   ├── book_repository.go
+│   │   └── commons.go
+│   └── routes
+│       ├── book_router.go
+│       └── routes.go
+└── README.md
+</code></pre>
+<p>Acredito que não seja suficiente apenas listar o conteúdo de cada pasta, mas sim explicar o contexto e a razão por trás dessa organização. Não seguirei a ordem acima, pois acho mais claro explicar de forma não linear. Vamos lá:</p>
+<h3 id="gomod"><strong>go.mod</strong></h3>
+<pre><code class="language-go">module github.com/XandeCoding/codigos-de-artigos/golang/api_simples
+
+go 1.19
+
+require (
+    github.com/go-redis/redis/v9 v9.0.0-beta.2
+    github.com/gofiber/fiber/v2 v2.36.0
+</code></pre>
+<p>Esse arquivo resolve várias questões relacionadas ao workspace do Go, permitindo criar um repositório em qualquer local sem problemas de acesso a pacotes externos ou locais.</p>
+<p>Para criá-lo, executei o comando <code>go mod init</code> com o caminho do projeto no GitHub como argumento (<code>github.com/XandeCoding/codigos-de-artigos/golang/api_simples</code>). Embora não seja estritamente necessário usar o caminho completo do GitHub — poderia ser apenas o nome do projeto, como <code>api_simples</code> —, optei por incluí-lo por se tratar de um projeto público. Isso facilita a referência a arquivos específicos por mim ou por outras pessoas.</p>
+<h3 id="pkg-e-maingo"><strong>pkg e main.go</strong></h3>
+<p>A pasta <code>pkg</code> contém o código principal da API, onde todas as funcionalidades são implementadas. O arquivo <code>main.go</code>, por sua vez, é responsável apenas pela inicialização da aplicação, sem implementar lógica alguma.</p>
+<p><strong>main.go</strong>:</p>
+<pre><code class="language-go">package main
+
+import (
+    &quot;github.com/XandeCoding/codigos-de-artigos/golang/api_simples/pkg/routes&quot;
+    &quot;github.com/gofiber/fiber/v2&quot;
+)
+
+func main() {
+    app := fiber.New()
+    routes.AddRoutes(app)
+
+    app.Listen(&quot;:3000&quot;)
+}
+</code></pre>
+<h3 id="pkgconfigurations"><strong>pkg/configurations</strong></h3>
+<p>Aqui estão os arquivos de configuração. No caso, <code>database.go</code> configura o acesso ao banco de dados. Se houvesse outras configurações, como configurações personalizadas do Fiber ou variáveis de ambiente, elas também ficariam aqui.</p>
+<p>Exemplo de configuração de conexão com o Redis em <strong>database.go</strong>:</p>
+<pre><code class="language-go">package configurations
+
+import &quot;github.com/go-redis/redis/v9&quot;
+
+func CreateClient() *redis.Client {
+    redisDatabase := redis.NewClient(&amp;redis.Options{
+        Addr: &quot;localhost:6379&quot;,
+        Password: &quot;&quot;,
+        DB: 0,
+    })
+
+    return redisDatabase
+}
+</code></pre>
+<h3 id="pkgentities"><strong>pkg/entities</strong></h3>
+<p>As entidades são estruturas que podem ser utilizadas em várias partes da aplicação, como na análise de dados recebidos nos endpoints e nas operações de banco de dados. Centralizá-las em um local comum é vantajoso, embora em estruturas baseadas em funcionalidades específicas possa fazer mais sentido separá-las por escopos.</p>
+<h3 id="pkgrepositories"><strong>pkg/repositories</strong></h3>
+<p>Este pacote contém as funções que interagem diretamente com o banco de dados Redis. Por exemplo, recebem a entidade <code>book</code> e realizam operações de inserção, atualização e exclusão. Se houvesse outra entidade, como <code>library</code>, suas funções relacionadas ficariam em um arquivo separado.</p>
+<p>Trecho de <strong>book_repository.go</strong>:</p>
+<pre><code class="language-go">type Repository struct {
+    database *redis.Client
+}
+
+...
+
+func (rdb Repository) GetBook(name string) string {
+    ctx, cancel := getContext()
+    defer cancel()
+    book, _ := rdb.database.Get(ctx, name).Result()
+
+    return book
+}
+</code></pre>
+<h3 id="pkgroutes"><strong>pkg/routes</strong></h3>
+<p>As rotas foram organizadas em arquivos separados para melhor legibilidade e manutenção. O arquivo <code>routes.go</code> inicializa todas as rotas, enquanto <code>book_router.go</code> define as rotas específicas para o recurso <code>book</code>.</p>
+<p>Trecho de <strong>routes.go</strong>:</p>
+<pre><code class="language-go">func AddRoutes(app *fiber.App) *fiber.App {
+    bookRouter(app)
+
+    return app
+}
+</code></pre>
+<p>Em <code>book_router.go</code>, as rotas, métodos e handlers são definidos. Uma vantagem dessa estrutura é a possibilidade de criar instâncias reutilizáveis, como a conexão com o Redis, que pode ser compartilhada entre os endpoints.</p>
+<p>Trecho de <code>book_router.go</code>:</p>
+<pre><code class="language-go">func bookRouter(app *fiber.App) *fiber.App {
+    bookRepository := repositories.NewRepository()
+
+    app.Get(&quot;/book/:name&quot;, handlers.GetBookHandler(bookRepository))
+    app.Put(&quot;/book&quot;, handlers.SetBookHandler(bookRepository))
+    app.Delete(&quot;/book/:name&quot;, handlers.DeleteBookHandler(bookRepository))
+
+    return app
+}
+</code></pre>
+<h3 id="pkghandlers"><strong>pkg/handlers</strong></h3>
+<p>Os handlers são as funções chamadas pelos endpoints. Por exemplo, o endpoint <code>PUT /book</code> chama a função <code>SetBookHandler</code>, localizada em <code>book_handler.go</code>, que retorna a função a ser executada quando o recurso é acessado.</p>
+<p>Código da função <strong>SetBookHandler</strong>:</p>
+<pre><code class="language-go">func SetBookHandler(bookRepository *repositories.Repository) fiber.Handler {
+    return func(c *fiber.Ctx) error {
+        book := new(entities.Book)
+        err := c.BodyParser(book)
+
+        if err != nil {
+            message := map[string]string{&quot;message&quot;: &quot;Invalid entry data&quot;}
+            return c.Status(400).JSON(message)
+        }
+
+        book_name_normalized := strings.ReplaceAll(
+            strings.ToLower(book.Name), &quot; &quot;, &quot;_&quot;,
+        )
+        key := &quot;book:&quot; + book_name_normalized
+        bookRepository.SetBook(key, book)
+        return c.Send(c.Body())
+    }
+}
+</code></pre>
+<h2 id="conclusao">Conclusão</h2>
+<p>Espero ter ajudado a esclarecer alguns dos desafios iniciais ao desenvolver uma API, especialmente em uma linguagem com a qual não temos muita familiaridade. Essa estrutura foi eficaz para mim, mas comentários e feedbacks são sempre bem-vindos para continuarmos melhorando. Até a próxima! :wave:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1055 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../Docker%20Compose%20-%20Observability%20made%20easy/">
+      
+      
+        <link rel="next" href="../Docker%20Compose%20-%20Simple%20Kafka/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.11">
+    
+    
+      
+        <title>Docker Compose SFTP: Managing files securely - Meus Textos</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.4af4bdda.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../css/style.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href="../.." title="Meus Textos" class="md-header__button md-logo" aria-label="Meus Textos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Meus Textos
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Docker Compose   SFTP: Managing files securely
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+      <div class="md-header__option">
+  <div class="md-select">
+    
+    <button class="md-header__button md-icon" aria-label="Selecione o idioma">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m12.87 15.07-2.54-2.51.03-.03A17.5 17.5 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2zm-2.62 7 1.62-4.33L19.12 17z"/></svg>
+    </button>
+    <div class="md-select__inner">
+      <ul class="md-select__list">
+        
+          <li class="md-select__item">
+            <a href="/português" hreflang="pt-BR" class="md-select__link">
+              Portuguese
+            </a>
+          </li>
+        
+          <li class="md-select__item">
+            <a href="/english" hreflang="en" class="md-select__link">
+              English
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</div>
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Meus Textos" class="md-nav__button md-logo" aria-label="Meus Textos" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Meus Textos
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    English
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            English
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Article Code
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Building%20an%20Organized%20API%20in%20Golang%20Using%20Fiber/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Building an Organized API in Golang Using Fiber
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20FTP%20Server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - FTP Server
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20MariaDB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - MariaDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20Observability%20made%20easy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Observability made easy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose   SFTP: Managing files securely
+    
+  </span>
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Docker%20Compose%20-%20Simple%20Kafka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Simple Kafka
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Dockerfile%20-%20Node%20with%20TypeScript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dockerfile - Node with TypeScript
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../How%20to%20Install%20Applications%20Using%20Snap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    How to Install Applications Using Snap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../Spinning%20Up%20PostgreSQL%20with%20Docker%20Compose%20%2B%20Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Spinning Up PostgreSQL with Docker Compose + Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%F0%9F%A7%A9%20Automated%20Documentation%20using%20MkDocs%20and%20Python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧩 Automated Documentation using MkDocs and Python
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Português
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Português
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Códigos de Artigos
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Como%20instalar%20pacotes%20Snap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Como instalar pacotes Snap
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Construindo%20uma%20API%20organizada%20em%20Golang%20usando%20Fiber/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Construindo uma API organizada em Golang usando Fiber
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Criando%20uma%20API%20de%20p%C3%A1ginas%20est%C3%A1ticas%20b%C3%A1sica%20com%20Deno%20%F0%9F%A6%95/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Criando uma API de páginas estáticas básica com Deno 🦕
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Docker%20Compose%20-%20Kafka%20simples/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Kafka simples
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Docker%20Compose%20-%20MariaDB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - MariaDB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Docker%20Compose%20-%20SFTP%20gerenciando%20arquivos%20com%20seguran%C3%A7a/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - SFTP gerenciando arquivos com segurança
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Docker%20Compose%20-%20Servidor%20FTP/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Servidor FTP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Docker%20Compose%20-%20Stack%20de%20Observabilidade%20sem%20complica%C3%A7%C3%A3o/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Docker Compose - Stack de Observabilidade sem complicação
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Dockerfile%20-%20Node%20com%20Typescript/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dockerfile - Node com Typescript
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Rodando%20PostgreSQL%20com%20Docker%20Compose%20%2B%20Dashboard/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rodando PostgreSQL com Docker Compose + Dashboard
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/Usando%20DDD%20com%20FastAPI%20e%20subaplica%C3%A7%C3%B5es/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usando DDD com FastAPI e subaplicações
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/%F0%9F%A5%96%20Bun%20e%20Node%20%E2%80%93%20Ser%C3%A1%20que%20o%20p%C3%A3ozinho%20tem%20chance%3F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🥖 Bun e Node – Será que o pãozinho tem chance?
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../portugu%C3%AAs/%F0%9F%A7%A9%20Documenta%C3%A7%C3%A3o%20Autom%C3%A1tica%20usando%20MkDocs%20e%20Python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    🧩 Documentação Automática usando MkDocs e Python
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+  <h1>Docker Compose   SFTP: Managing files securely</h1>
+
+<p>Docker Compose - SFTP: Managing files securely</p>
+<p>Good morning everyone! I hope this finds you well. Today I want to share with you almost a version 2.0 of my old article Docker Compose - Server FTP. This text was born from my desire to bring some security improvements and best practice tips.</p>
+<p>Don't get me wrong, the previous text has its charm. If you want to spin up a basic and fast FTP server, that's your go-to.</p>
+<p>Well, in case you don't know the SFTP protocol (Secure File Transfer Protocol or SSH File Transfer Protocol), it is a network file transfer protocol like FTP, but it uses SSH to encrypt commands and data (during transmission).
+Who can, can; who can't, won't</p>
+<p>I advise creating a directory with two subdirectories: one for files and another to persist credentials.</p>
+<p>sftp
+|-- files
+|-- creds</p>
+<p>To avoid permission problems, we should guarantee the correct access rights to prevent issues when erasing or editing files created by the Docker container.</p>
+<p>To do this, I advise finding out which user will be used and adding the directories to that user's group, as well as setting permissions via chmod.</p>
+<p>Note: If the user who created the directories is the same one who will execute the docker container, this step might not be necessary, though it is recommended.</p>
+<p>For simplicity's sake, I'll assume that the user being used in the shell is the same one running Docker, so let's go!</p>
+<p>1 - Discover the current user using whoami:</p>
+<p>➜ whoami
+alexandre</p>
+<p>2 - In my case, the user is alexandre. Now let's check the user's ID:</p>
+<p>➜ id
+uid=1000(alexandre) gid=1000(alexandre) grupos=1000(alexandre),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),100(users),116(lpadmin),987(docker)</p>
+<p>3 - Do you see the uid value preceding our username in parentheses? The value inside it is what we want. In my case, it's 1000. We'll need this when we create the users with access to SFTP.</p>
+<p>4 - Add the necessary directories to the group using the chown command on the folder we are working in, with the user and group in the following format: user:group.</p>
+<p>chown -R alexandre:alexandre ./sftp</p>
+<p>5 - Adding permissions: the creator of the file and the group can read, edit, and delete data, while others can only execute read operations (774).</p>
+<p>chmod 774 -R ./sftp</p>
+<p>Creating the users file</p>
+<p>The application we are using today allows users to be passed via a file. I think this method is easier to manage than via command line or env vars, so let's create this file.</p>
+<p>Just create a file named users.conf and add the user information in the following format username:password:uid. I will explain each field:</p>
+<pre><code>username: Can be any username, including your current user (my case).
+
+password: I will leave it blank because we'll use an SSH key to authenticate.
+
+uid: The UID we got in the previous step (if you're in a hurry, try 1000 or 1001).
+</code></pre>
+<p>My users.conf content will look like this:</p>
+<p>alexandre::1000</p>
+<p>Generating SSH keys</p>
+<p>To generate the keys, I will use ssh-keygen, which usually comes installed on Ubuntu.</p>
+<p>1 - Enter the creds directory inside /sftp.</p>
+<p>2 - Use the command ssh-keygen -t rsa and type the filename. It can be any name; I used key.</p>
+<p>3 - After that, it asks if you want to add a passphrase. It's optional. I usually don't set one, remembering that if added, it'll be requested upon every access.
+After the Odyssey, Ulysses returns home</p>
+<p>Now for the best part. Here is the docker compose of happiness:</p>
+<p>services:
+  sftp:
+    image: atmoz/sftp
+    restart: 'unless-stopped' 
+    volumes:
+        - ./files:/home/alexandre/upload                                  # The files will be maintained here
+        - ./creds/key.pub:/home/alexandre/.ssh/keys/key.pub:ro    # Sharing keys with the service
+        - ./users.conf:/etc/sftp/users.conf:ro                    # Adding users
+    ports:
+        - 2222:22                                                               # The exposed port will be 2222</p>
+<p>And to spin it up, you just need to execute:</p>
+<p>docker compose up -d</p>
+<p>How to connect</p>
+<p>If you want a tip for a client to connect to your freshly created service, I recommend the classic FileZilla. See below how to use it:</p>
+<p>1 - Open the Site Manager in the File tab:</p>
+<p><img alt="file/site manager" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/tools/sftp/media/guia_arquivo_en.png?raw=true" /></p>
+<p>2 - Follow the suggested config:</p>
+<p><img alt="site manager/config" src="https://github.com/XandeCoding/codigos-de-artigos/blob/main/tools/sftp/media/config_en.png?raw=true" /></p>
+<pre><code>Protocol: SFTP
+
+Host: localhost
+
+Port: 2222 - Normally port 22 is used, but I redirected it to 2222 to avoid conflicts with other ports.
+
+Logon Type: Key file
+
+User: alexandre - Add the user from the users.conf file.
+
+Key file: Use the private key (without .pub) we created in the step [Generating SSH keys].
+
+Background color: It depends on your taste.
+</code></pre>
+<p>3 - Voilá! Now just enjoy making your dubious deployments or keeping your "green steam" files on your favorite SFTP (a father's and mother's love knows no bounds).
+That's all, folks!</p>
+<p>I hope this text is useful for you. It became a little longer than I expected, but I wanted to explain everything thoroughly (I hope I achieved that 😅).</p>
+<p>However, if you have any questions, just leave a comment below and I'll be happy to answer them!</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.f8cc74c7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c8b220af.min.js"></script>
+      
+    
+  </body>
+</html>
