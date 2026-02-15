@@ -1,0 +1,62 @@
+services:
+  grafana:
+    image: "grafana/grafana:12.3.3"
+    volumes:
+      - grafana:/var/lib/grafana
+      - ./datasources.yaml:/etc/grafana/provisioning/datasources/datasources.yaml:ro
+    networks:
+      - monitoring 
+    ports:
+      - 3000:3000
+    environment:
+      GF_PLUGINS_PREINSTALL: victoriametrics-metrics-datasource,victoriametrics-logs-datasource
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+
+  otlp_collector:
+    image: "otel/opentelemetry-collector-contrib:0.145.0"
+    volumes:
+      - ./otel_config.yaml:/etc/otelcol/config.yaml:ro
+    command: ["--config=/etc/otelcol/config.yaml"]
+    ports:
+      - 4317:4317
+    networks:
+      - monitoring 
+
+  victoria_metrics:
+    image: "victoriametrics/victoria-metrics:v1.135.0"
+    volumes:
+      - metrics:/victoria-metrics-data
+    environment:
+      storageDataPath: "victoria-metrics-data"
+      retentionPeriod: "1d"
+    networks:
+      - monitoring 
+
+  victoria_logs:
+    image: "victoriametrics/victoria-logs:v1.45.0"
+    volumes:
+      - logs:/victoria-metrics-data
+    environment:
+      storageDataPath: "victoria-metrics-data"
+      retentionPeriod: "1d"
+    networks:
+      - monitoring 
+
+  jaeger:
+    image: "cr.jaegertracing.io/jaegertracing/jaeger:2.15.0" 
+    networks:
+      - monitoring 
+    ports:
+      - 16686:16686
+    environment:
+      MEMORY_MAX_TRACES: 10000
+
+volumes:
+  grafana:
+  metrics:
+  logs:
+
+networks:
+  monitoring:
+
