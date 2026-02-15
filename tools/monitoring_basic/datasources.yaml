@@ -1,0 +1,14 @@
+apiVersion: 1
+datasources:
+  - name: VictoriaMetrics
+    type: victoriametrics-metrics-datasource
+    access: proxy
+    url: http://victoria_metrics:8428
+    isDefault: true
+
+  - name: VictoriaLogs
+    type: victoriametrics-logs-datasource
+    access: proxy
+    url: http://victoria_logs:9428
+    isDefault: false
+    
