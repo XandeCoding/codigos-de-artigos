@@ -8,12 +8,11 @@ class SessionRepository extends BaseRepository {
 	}
 
 	public async save(username: string, value: Session) {
-		return super.set(this.transformKey(username), JSON.stringify(value))
+		super.set(this.transformKey(username), JSON.stringify(value))
 	}
 
 	public async read(username: string): Promise<null | Session> {
 		const data = await super.get(this.transformKey(username))
-
 		if (data === null) return data
 
 		return JSON.parse(data) as Session

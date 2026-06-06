@@ -14,6 +14,7 @@ import type { WebSocketData } from '../types/websocketCommons'
 import { NOT_FOUND_LABEL } from '../utils/constants'
 
 export function eventMessageReceivedSpan(
+	span: Span,
 	message: string,
 	remoteAddress: string,
 ): Span {
@@ -21,8 +22,10 @@ export function eventMessageReceivedSpan(
 
 	messagesReceivedMetric.add(1, { remoteAddress })
 
-	const span = Tracer.startSpan('Message Received')
-	span.setAttribute('context', JSON.stringify(context.active().getValue))
+	span
+		.addEvent('Message Received')
+		.setAttribute('context', JSON.stringify(context.active().getValue))
+
 	return span.setAttribute('message', message)
 }
 
@@ -55,8 +58,7 @@ export function eventPublishSpan(
 
 	messagesSentMetric.add(1, { username })
 
-	span.addEvent('Message was published')
-	span.end()
+	span.addEvent('Message was published').end()
 }
 
 export function eventGenericErrorSpan(span: Span, error: Error): void {

@@ -10,10 +10,15 @@ receivers:
 
 exporters:
 
-  otlp:
+  otlp/jaeger:
     endpoint: jaeger:4317
     tls:
       insecure: true
+
+  zipkin/nontls:
+    endpoint: http://zipkin:9411/api/v2/spans
+    format: proto
+    default_service_name: unknown-service
 
   otlphttp:
     logs_endpoint: http://victoria_logs:9428/insert/opentelemetry/v1/logs
@@ -33,5 +38,5 @@ service:
 
     traces:
       receivers: [otlp]
-      exporters: [otlp]
+      exporters: [otlp/jaeger, zipkin/nontls]
 

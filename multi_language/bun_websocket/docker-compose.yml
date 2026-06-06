@@ -5,8 +5,6 @@ services:
       - chat 
     ulimits:
       memlock: -1
-    ports:
-      - "6379:6379"
     command: ["--maxmemory", "256mb", "--proactor_threads", "1"]
 
   traefik:
@@ -124,7 +122,8 @@ services:
       - chat
 
   jaeger:
-    image: "cr.jaegertracing.io/jaegertracing/jaeger:2.13.0" 
+    image: "cr.jaegertracing.io/jaegertracing/jaeger:2.13.0" : 
+    port:
     networks:
     - chat 
     labels:
