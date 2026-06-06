@@ -1,19 +1,58 @@
+import { SpanKind } from '@opentelemetry/api'
+import { api } from '@opentelemetry/sdk-node'
 import type { ServerWebSocket } from 'bun'
 import Logger from '../infrastructure/log/logger'
+import { messagesReceivedMetric } from '../infrastructure/metrics/metrics'
 import type Publisher from '../infrastructure/pubsub/publisher'
 import Tracer from '../infrastructure/traces/tracer'
-import {
-	eventCloseSpan,
-	eventCreatedSessionSpan,
-	eventGenericErrorSpan,
-	eventMessageReceivedSpan,
-	eventPublishSpan,
-	eventSessionReceivedSpan,
-} from '../telemetry/messageEvents'
 import type { WebSocketData } from '../types/websocketCommons'
 import { TOPIC_NAME } from '../utils/constants'
 import { parseMessage, setConnectedData } from '../utils/websocket'
 import type SessionOperator from './sessionOperator'
+
+type HandleMessageFunction = (
+	ws: ServerWebSocket<WebSocketData>,
+	rawMessage: string,
+) => Promise<void>
+
+function handleMessageEventDecorator(
+	originalMethod: HandleMessageFunction,
+	context: ClassMethodDecoratorContext,
+) {
+	const decoratorName = context.name.toString()
+
+	return async function (
+		this: HandleMessageFunction,
+		ws: ServerWebSocket<WebSocketData>,
+		rawMessage: string,
+	) {
+		return Tracer.startActiveSpan(
+			'handle-message',
+			{ kind: SpanKind.SERVER },
+			async (span) => {
+				messagesReceivedMetric.add(1, { remote_address: ws.remoteAddress })
+				span
+					.setAttribute('decorator', decoratorName)
+					.setAttribute('ws-remote-addres', ws.remoteAddress)
+					.setAttribute('ws-ready-state', ws.readyState)
+					.setAttribute('raw-message', rawMessage)
+
+				try {
+					originalMethod.call(this, ws, rawMessage)
+				} catch (error) {
+					if (!(error instanceof Error)) return
+
+					Logger.error`An error happened: ${error.message}`
+
+					span.setStatus({ code: api.SpanStatusCode.ERROR })
+					span.recordException(error)
+				} finally {
+					span.end()
+				}
+			},
+		)
+	}
+}
 
 class MessageOperator {
 	private sessionOperator: SessionOperator
@@ -24,33 +63,21 @@ class MessageOperator {
 		this.publisher = publisher
 	}
 
+	@handleMessageEventDecorator
 	public async handleMessageEvent(
 		ws: ServerWebSocket<WebSocketData>,
 		rawMessage: string,
 	) {
-		Tracer.startActiveSpan('handle-message-event', async (span) => {
-			eventMessageReceivedSpan(span, rawMessage, ws.remoteAddress)
+		const { username } = parseMessage(rawMessage)
 
-			try {
-				const { username } = parseMessage(rawMessage)
+		const session = await this.sessionOperator.getSession(username)
 
-				const session = await this.sessionOperator.getSession(username)
-				eventSessionReceivedSpan(span, session)
+		if (!session) {
+			await this.sessionOperator.createSession(ws, username)
+			setConnectedData(ws, username)
+		}
 
-				if (!session) {
-					const session = await this.sessionOperator.createSession(ws, username)
-					setConnectedData(ws, username)
-					eventCreatedSessionSpan(span, session)
-				}
-
-				await this.publisher.publish(TOPIC_NAME, rawMessage)
-				eventPublishSpan(span, rawMessage, {
-					username: ws.data.username as string,
-				})
-			} catch (error) {
-				if (error instanceof Error) eventGenericErrorSpan(span, error)
-			}
-		})
+		await this.publisher.publish(TOPIC_NAME, rawMessage)
 	}
 
 	public async handleCloseEvent(
@@ -65,8 +92,6 @@ class MessageOperator {
 		if (!username) return
 
 		await this.sessionOperator.removeSession(username)
-
-		eventCloseSpan(ws, code, reason, { username })
 	}
 }
 

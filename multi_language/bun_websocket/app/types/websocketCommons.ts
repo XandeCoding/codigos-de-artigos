@@ -10,6 +10,4 @@ type WebSocketData = {
 	username?: string
 }
 
-type SubscribeCallback = (message: string, channel: string) => void
-
-export type { Message, WebSocketData, SubscribeCallback }
+export type { Message, WebSocketData }

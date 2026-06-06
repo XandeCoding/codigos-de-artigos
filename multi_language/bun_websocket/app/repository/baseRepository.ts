@@ -51,7 +51,7 @@ function getEventDecorator(
 
 	return async function (this: GetFunction, key: string) {
 		return Tracer.startActiveSpan(
-			'cache-set',
+			'cache-get',
 			{ kind: SpanKind.CLIENT },
 			async (span) => {
 				span
