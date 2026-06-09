@@ -1,5 +1,6 @@
 import { SpanKind } from '@opentelemetry/api'
 import type ValueKeyDatabase from '../../infrastructure/database/valueKeyDatabase'
+import { messagePublishLatency, messageSent } from '../metrics/metrics'
 import Tracer from '../traces/tracer'
 
 type PublishFunction = (topic: string, message: string) => Promise<number>
@@ -19,6 +20,7 @@ function publishEventDecorator(
 			'pubsub-publish',
 			{ kind: SpanKind.PRODUCER },
 			async (span) => {
+				const startFunctionTime = performance.now()
 				span
 					.setAttribute('decorator', decoratorName)
 					.setAttribute('topic', topic)
@@ -31,6 +33,8 @@ function publishEventDecorator(
 
 				const result = await originalMethod.call(this, topic, message)
 
+				messageSent.add(1)
+				messagePublishLatency.record(performance.now() - startFunctionTime)
 				span.setAttribute('result', result)
 				span.end()
 				return result

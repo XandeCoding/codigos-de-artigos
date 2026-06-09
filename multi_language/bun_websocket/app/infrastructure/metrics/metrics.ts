@@ -1,29 +1,60 @@
 import Meter from './meter'
 
-const requestsMetric = Meter.createCounter('requests', {
+const httpRequests = Meter.createCounter('http.requests', {
 	description: 'Requests counter',
 })
 
-const messagesSentMetric = Meter.createCounter('messages_sent_metric', {
+const httpRequestsLatency = Meter.createHistogram('http.requests.latency', {
+	description: 'Requests latency histogram',
+})
+
+const messageSent = Meter.createCounter('message.sent', {
 	description: 'Messages sent counter',
 })
 
-const messagesReceivedMetric = Meter.createCounter('messages_received_metric', {
+const messagePublishLatency = Meter.createHistogram('message.publish.latency', {
+	description: 'Messages publish latency histogram',
+})
+
+const messageReceived = Meter.createCounter('message.received', {
 	description: 'Messages received counter',
 })
 
-const sessionsCreatedMetric = Meter.createCounter('sessions_created_metric', {
+const messageReceivedLatency = Meter.createHistogram(
+	'message.received.latency',
+	{
+		description: 'Messages Received latency histogram',
+	},
+)
+
+const sessionCreated = Meter.createCounter('session.created', {
 	description: 'Sessions created counter',
 })
 
-const sessionsClosedMetric = Meter.createCounter('sessions_closed_metric', {
+const sessionClosed = Meter.createCounter('session.closed', {
 	description: 'Sessions closed counter',
 })
 
+const websocketMessageSent = Meter.createCounter('websocket.message.sent', {
+	description: 'Websocket messages sent counter',
+})
+
+const websocketMessageSentLatency = Meter.createHistogram(
+	'websocket.message.sent.latency',
+	{
+		description: 'Websocket messages sent latency histogram',
+	},
+)
+
 export {
-	requestsMetric,
-	messagesSentMetric,
-	messagesReceivedMetric,
-	sessionsCreatedMetric,
-	sessionsClosedMetric,
+	httpRequests,
+	httpRequestsLatency,
+	messageSent,
+	messageReceived,
+	sessionCreated,
+	sessionClosed,
+	messagePublishLatency,
+	messageReceivedLatency,
+	websocketMessageSent,
+	websocketMessageSentLatency,
 }

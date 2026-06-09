@@ -6,7 +6,7 @@ import type SessionRepository from '../repository/sessionRepository'
 import type { Session } from '../types/session'
 import type { WebSocketData } from '../types/websocketCommons'
 import { TOPIC_NAME } from '../utils/constants'
-import type ConnectionsOperator from './connectionOperator'
+import ConnectionsOperator from './connectionOperator'
 
 type CreateSessionFunction = (
 	connection: ServerWebSocket<WebSocketData>,
@@ -107,7 +107,7 @@ class SessionOperator {
 	}
 
 	public async removeAllSessions() {
-		for (const username in this.connectionsOperator.connections) {
+		for (const username in ConnectionsOperator.connections) {
 			await this.removeSession(username)
 		}
 	}

@@ -7,7 +7,8 @@ class ValueKeyDatabase {
 
 	constructor() {
 		this._client = new RedisClient(getConfig().redisUrl, {
-			connectionTimeout: 1000,
+			connectionTimeout: 5000,
+      idleTimeout: 5000,
 			maxRetries: 5,
 		})
 	}

@@ -1,6 +1,10 @@
 import { SpanKind } from '@opentelemetry/api'
 import type { ServerWebSocket } from 'bun'
 import Logger from '../infrastructure/log/logger'
+import {
+	websocketMessageSent,
+	websocketMessageSentLatency,
+} from '../infrastructure/metrics/metrics'
 import Tracer from '../infrastructure/traces/tracer'
 import type { Conections } from '../types/connection'
 import type { WebSocketData } from '../types/websocketCommons'
@@ -26,7 +30,19 @@ function subscriptionCallbackEventDecorator(
 					.setAttribute('decorator', decoratorName)
 					.setAttribute('message', channel)
 					.setAttribute('message', message)
+				const startFunctionTime = performance.now()
 				originalMethod.call(this, message, channel)
+
+				const connectionsCount = Object.keys(
+					ConnectionsOperator.connections,
+				).length
+
+				if (connectionsCount > 0) {
+					websocketMessageSent.add(connectionsCount)
+					websocketMessageSentLatency.record(
+						performance.now() - startFunctionTime,
+					)
+				}
 
 				span.end()
 			},

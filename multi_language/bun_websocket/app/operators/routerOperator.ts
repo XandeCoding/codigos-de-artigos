@@ -1,25 +1,26 @@
 import type { Server } from 'bun'
 import Logger from '../infrastructure/log/logger'
-import { requestsMetric } from '../infrastructure/metrics/metrics'
 import { getWebSocketData } from '../utils/websocket'
 
-async function routerOperatorHandler(req: Request, server: Server<object>) {
+async function routerOperatorHandler(
+	req: Request,
+	server: Server<object>,
+): Promise<Response | undefined> {
 	const { pathname } = new URL(req.url)
-	requestsMetric.add(1, { pathname })
 
 	if (req.headers.get('upgrade')?.toLowerCase() === 'websocket') {
 		return upgradeRouteHandler(req, server)
 	}
 
 	switch (pathname) {
-		case '/chat':
-			return chatRouteHandler()
+		case '/health':
+			return healthRouteHandler()
 		default:
-			return await staticFileHandler(pathname)
+			return staticFileHandler(pathname)
 	}
 }
 
-function chatRouteHandler() {
+function healthRouteHandler() {
 	return Response.json({
 		data: 'oi',
 	})
@@ -44,7 +45,10 @@ function getFilePath(pathname: string): string {
 	return `./public${pathname}`
 }
 
-function upgradeRouteHandler(req: Request, server: Server<object>) {
+function upgradeRouteHandler(
+	req: Request,
+	server: Server<object>,
+): Response | undefined {
 	if (server.upgrade(req, getWebSocketData(server, req))) {
 		Logger.debug`Connection upgraded`
 		return

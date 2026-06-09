@@ -2,7 +2,10 @@ import { SpanKind } from '@opentelemetry/api'
 import { api } from '@opentelemetry/sdk-node'
 import type { ServerWebSocket } from 'bun'
 import Logger from '../infrastructure/log/logger'
-import { messagesReceivedMetric } from '../infrastructure/metrics/metrics'
+import {
+	messageReceived,
+	messageReceivedLatency,
+} from '../infrastructure/metrics/metrics'
 import type Publisher from '../infrastructure/pubsub/publisher'
 import Tracer from '../infrastructure/traces/tracer'
 import type { WebSocketData } from '../types/websocketCommons'
@@ -30,7 +33,8 @@ function handleMessageEventDecorator(
 			'handle-message',
 			{ kind: SpanKind.SERVER },
 			async (span) => {
-				messagesReceivedMetric.add(1, { remote_address: ws.remoteAddress })
+				const startFunctionTime = performance.now()
+				messageReceived.add(1, { remote_address: ws.remoteAddress })
 				span
 					.setAttribute('decorator', decoratorName)
 					.setAttribute('ws-remote-addres', ws.remoteAddress)
@@ -47,6 +51,9 @@ function handleMessageEventDecorator(
 					span.setStatus({ code: api.SpanStatusCode.ERROR })
 					span.recordException(error)
 				} finally {
+					messageReceivedLatency.record(performance.now() - startFunctionTime, {
+						'http.route': '/',
+					})
 					span.end()
 				}
 			},
