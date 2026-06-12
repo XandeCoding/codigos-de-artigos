@@ -20,7 +20,6 @@ function publishEventDecorator(
 			'pubsub-publish',
 			{ kind: SpanKind.PRODUCER },
 			async (span) => {
-				const startFunctionTime = performance.now()
 				span
 					.setAttribute('decorator', decoratorName)
 					.setAttribute('topic', topic)
@@ -31,10 +30,11 @@ function publishEventDecorator(
 					.setAttribute('db.system.name', 'redis')
 					.setAttribute('db.operation.name', 'PUBLISH')
 
+				const startFunctionTime = performance.now()
 				const result = await originalMethod.call(this, topic, message)
+				messagePublishLatency.record(performance.now() - startFunctionTime)
 
 				messageSent.add(1)
-				messagePublishLatency.record(performance.now() - startFunctionTime)
 				span.setAttribute('result', result)
 				span.end()
 				return result

@@ -37,7 +37,7 @@ function routerOperatorHandlerEventClosure(
 				const startFunctionTime = performance.now()
 				const result = await originalMethod(req, server)
 
-				httpRequests.add(1)
+				httpRequests.add(1, { url: req.url })
 				httpRequestsLatency.record(performance.now() - startFunctionTime)
 
 				span.end()

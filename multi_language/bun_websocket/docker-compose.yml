@@ -134,6 +134,7 @@ services:
       - "traefik.http.routers.jaeger.service=jaeger_service"
       - "traefik.http.services.jaeger_service.loadbalancer.server.port=16686"
 
+
 networks:
   chat:
     name: chat

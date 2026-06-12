@@ -12,6 +12,8 @@ services:
     volumes:
       - ./otel_config.yaml:/etc/otelcol/config.yaml:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+    group_add:
+      - 987 # Docker group
     command: ["--config=/etc/otelcol/config.yaml"]
     ports:
       - "4317:4317"
@@ -37,7 +39,7 @@ services:
       - "traefik.http.routers.grafana.entrypoints=websecure"
       - "traefik.http.routers.grafana.tls=true"
       - "traefik.http.routers.grafana.service=grafana_service"
-      - "traefik.http.services.grafana_service.loadbalancer.server.port=3000"
+      -   
 
   victoria_metrics:
     image: "victoriametrics/victoria-metrics:v1.131.0"

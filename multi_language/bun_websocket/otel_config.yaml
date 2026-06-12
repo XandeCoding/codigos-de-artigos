@@ -43,4 +43,3 @@ service:
     traces:
       receivers: [otlp]
       exporters: [otlp/jaeger, zipkin/nontls]
-

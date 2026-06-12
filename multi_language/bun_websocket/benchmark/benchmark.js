@@ -1,7 +1,7 @@
 import { check } from 'k6'
 import ws from 'k6/ws'
 
-const iterations = 1000
+const iterations = 100
 const message = `{"username":"usuario_${__VU}","text":"Que a Força esteja com você?"}`
 
 export const options = {
@@ -9,8 +9,9 @@ export const options = {
 }
 
 export default function () {
-	const url = 'wss://chat.docker.localhost'
+	//const url = 'wss://chat.docker.localhost'
 	// const url = 'ws://localhost:3000'
+  const url = 'wss://201.23.84.173'
 	const params = {}
 
 	const res = ws.connect(url, params, (socket) => {
